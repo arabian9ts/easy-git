@@ -40,10 +40,13 @@ int write_index(std::vector<std::string> file_names_list){
                           file_names_list.end());
     
     std::ofstream writing_file;
-    writing_file.open(".eat/index", std::ios::out);
+    writing_file.open(".eat/index", std::ios::trunc);
     
-    for (auto v : file_names_list)
-        writing_file << v << std::endl;
+    for (auto v : file_names_list){
+        writing_file << v;
+        if(v!=file_names_list.back())
+            writing_file << std::endl;
+    }
     
     writing_file.close();
     
@@ -51,7 +54,7 @@ int write_index(std::vector<std::string> file_names_list){
 }
 
 /*---------------------------------------ファイル操作関数終了-------------------------------------------*/
-/*--------------------ここから下はコマンドの関数 ここから上はコマンドで使用する関数----------------------------*/
+/*--------------------ここから下はコマンドの関数,ここから上はコマンドで使用する関数-----------------------------*/
 
 /**
  * initコマンドを実行
@@ -193,12 +196,12 @@ int reset(){
  */
 int log(){
     std::vector<std::string> logs=getLogs(getBranch());
-    for(int i=1;i<logs.size();i++){
-        if(i%3==1)
+    for(int i=logs.size()-1;i>=1;i--){
+        if(i%3==0)
             std::cout << "\ncommit: " << logs[i] << std::endl;
         else if(i%3==2)
             std::cout << "data: " << logs[i] << std::endl;
-        if(i%3==0)
+        if(i%3==1)
             std::cout << "message: " << logs[i]+"\n" << std::endl;
     }
     return 0;

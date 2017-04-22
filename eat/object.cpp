@@ -161,7 +161,7 @@ void Object::copy_obj(){
  */
 void Object::make_commit_obj(std::string commit_msg){
     write(".eat/logs/"+getBranch(),
-          getHash()+"\n"+getTime()+"\n\""+commit_msg+"\"", std::ofstream::app);
+          commit_msg+"\n"+getTime()+"\n\""+getHash()+"\"", std::ofstream::app);
     make_tree_blob_obj();
 }
 
@@ -234,7 +234,6 @@ std::string Object::cyclic_getPath(std::string buff){
 
 /**
  * indexファイルに記述するためのファイル相対パスの集まりを返す
- * 返る文字列は改行コードを含む単一のstring変数の参照
  */
 std::vector<std::string> Object::index_path_set(){
     return split(cyclic_getPath(""),';');
