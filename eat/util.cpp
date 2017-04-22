@@ -22,7 +22,7 @@ std::string getTime(){
  * 現在のブランチを返す
  */
 std::string getBranch(){
-    std::vector<std::string> dirs=split(read(".eat/HEAD"), '/');
+    std::vector<std::string> dirs=split(read(".eat/HEAD","/"), '/');
     std::string branch=dirs.back();
     return branch;
 }
@@ -104,8 +104,19 @@ std::string last_commit(std::string branch){
     std::vector<std::string> commit_log=getLogs(branch);
     std::string last_commit_hash="";
     
-    if(commit_log.size()>=3)
-        last_commit_hash=commit_log[commit_log.size()-1-2];
+    if(commit_log.size()!=0){
+        last_commit_hash=commit_log[commit_log.size()-1];
+        std::cout << last_commit_hash << std::endl;
+    }
     
     return last_commit_hash;
+}
+
+/**
+* ファイルを作成する
+*/
+void touch(std::string filename){
+    std::ofstream strm;
+    strm.open(filename);
+    strm.close();
 }

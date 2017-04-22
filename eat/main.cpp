@@ -17,7 +17,7 @@ Object* root=NULL;
  * @param refer : 現在のブランチのパス
  */
 int write_head(std::string refer){
-    write(".eat/HEAD", refer, std::ofstream::out);
+    write(".eat/HEAD", refer, std::ofstream::trunc);
     return 0;
 }
 
@@ -25,7 +25,7 @@ int write_head(std::string refer){
  * refsファイルに書き出す
  */
 int write_refs(std::string hashcode){
-    write(".eat/refs/heads/"+getBranch(), hashcode, std::ofstream::out);
+    write(".eat/refs/heads/"+getBranch(), hashcode, std::ofstream::trunc);
     return 0;
 }
 
@@ -43,9 +43,8 @@ int write_index(std::vector<std::string> file_names_list){
     writing_file.open(".eat/index", std::ios::trunc);
     
     for (auto v : file_names_list){
-        writing_file << v;
         if(v!=file_names_list.back())
-            writing_file << std::endl;
+            writing_file << v << std::endl;
     }
     
     writing_file.close();
@@ -61,9 +60,14 @@ int write_index(std::vector<std::string> file_names_list){
  * index, refsなどを生成
  */
 int init(){
-    printf("this is init function \n");
-    /* create dirs such as objects, refs, ...*/
     struct stat st;
+     if(stat(".eat", &st) == 0){
+         std::cout << "directory is already administered by eat" <<
+         std::endl;
+         return 0;
+     }
+    
+    /* create dirs such as objects, refs, ...*/
     const char  *dir_name[]={
         ".eat",
         ".eat/objects",
@@ -71,27 +75,19 @@ int init(){
         ".eat/refs/heads",
         ".eat/logs"};
     
-    for(int i=0;i<sizeof(dir_name)/sizeof(dir_name[0]);i++){
-        if(stat(dir_name[i], &st) != 0){
+    for(int i=0;i<sizeof(dir_name)/sizeof(dir_name[0]);i++)
             mkdir(dir_name[i], 0775);
-        }
-        else{
-            std::cout << "directory is already administered by eat" <<
-            std::endl;
-            return 0;
-        }
-    }
     
     /* create files such as HEAD, master, ... */
-    const char *file_name[]={
+    const char *file_names[]={
         ".eat/index",
         ".eat/HEAD",
         ".eat/refs/heads/master",
         ".eat/config",
         ".eat/logs/master"};
     
-    for(int i=0;i<sizeof(file_name)/sizeof(file_name[0]);i++)
-        write(file_name[i], "", std::ofstream::out);
+    for(int i=0;i<sizeof(file_names)/sizeof(file_names[0]);i++)
+        touch(file_names[i]);
     
     write_head("./refs/heads/master");
     
@@ -123,7 +119,9 @@ int add(int argc, const char *argv[]){
     root->calc_hash();
     root->make_copy_objects();
     
+    /* indexにパスを書き込み*/
     write_index(root->index_path_set());
+    
 //    root->dump();
     return 0;
 }
@@ -134,11 +132,11 @@ int add(int argc, const char *argv[]){
 int commit(int tree_generated){
     if(!tree_generated){
         root=new Object(Object::Type::commit,"","");
-        index2tree(root, 0);
         root->calc_hash();
+        index2tree(root, 0);
 //        root->dump();
     }
-
+    
     if(last_commit(getBranch())==root->getHash()){
         std::cout << "no changes to commit" << std::endl;
         return 0;
@@ -159,8 +157,28 @@ int commit(int tree_generated){
  */
 int reflect(){
     const char* args[]={"dammy","./"};
-    add(1, args);
+    add(1, args)==0;
     commit(1);
+    return 0;
+}
+
+/**
+ * コミットログをダンプ
+ */
+int log(int count=0){
+    std::vector<std::string> logs=getLogs(getBranch());
+    count=(logs.size()/3-count)*3;
+    if(count<0)
+        count=0;
+    
+    for(int i=logs.size()-1;i>=count;i--){
+        if(i%3==0)
+            std::cout << "message: " << logs[i]+"\n" << std::endl;
+        else if(i%3==1)
+            std::cout << "date: " << logs[i] << std::endl;
+        if(i%3==2)
+            std::cout << "\ncommit: " << logs[i] << std::endl;
+    }
     return 0;
 }
 
@@ -191,22 +209,6 @@ int reset(){
     return 0;
 }
 
-/**
- * コミットログをダンプ
- */
-int log(){
-    std::vector<std::string> logs=getLogs(getBranch());
-    for(int i=logs.size()-1;i>=1;i--){
-        if(i%3==0)
-            std::cout << "\ncommit: " << logs[i] << std::endl;
-        else if(i%3==2)
-            std::cout << "data: " << logs[i] << std::endl;
-        if(i%3==1)
-            std::cout << "message: " << logs[i]+"\n" << std::endl;
-    }
-    return 0;
-}
-
 
 /*----------------------------------------コマンド関数終了--------------------------------------------*/
 /*-------------------------------------------メイン関数----------------------------------------------*/
@@ -227,7 +229,6 @@ int main(int argc, const char *argv[]) {
     
     /* excute command */
     const char *subcom=argv[1];
-    argv++;
     argc--;
     
     if(strcmp(subcom, "init")==0){
@@ -252,10 +253,13 @@ int main(int argc, const char *argv[]) {
         reset();
     }
     else if(strcmp(subcom, "log")==0){
-        log();
+        if(argc>0)
+            log(atoi(argv[2]));
+        else
+            log();
     }
     else{
-        printf("not eat command !  excute \"eat\" and check usage !\n");
+        std::cout << "not eat command !  execute \"eat\" and check usage !\n" << std::endl;
     }
     
 //    sha1Test();

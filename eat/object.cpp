@@ -133,24 +133,16 @@ void Object::copy_obj(){
     struct stat st;
     if(stat(forward.c_str(), &st)){
         std::ifstream ifs(src);
-        if(!ifs){
-            std::cerr << src << "cannot open" << '\n';
+        if(!ifs)
             return;
-        }
         std::ofstream ofs(forward, std::ios::trunc);
-        if(!ofs){
-            std::cerr << forward << "cannot open" << '\n';
+        if(!ofs)
             return;
-        }
         ofs << ifs.rdbuf() << std::flush;
-        if(!ifs){
-            std::cerr << forward << "cannot write" << '\n';
+        if(!ifs)
             return;
-        }
-        if(!ofs){
-            std::cerr << src << "cannot write" << '\n';
+        if(!ofs)
             return;
-        }
     }
 }
 
@@ -161,7 +153,7 @@ void Object::copy_obj(){
  */
 void Object::make_commit_obj(std::string commit_msg){
     write(".eat/logs/"+getBranch(),
-          commit_msg+"\n"+getTime()+"\n\""+getHash()+"\"", std::ofstream::app);
+          "\""+commit_msg+"\"\n"+getTime()+"\n"+getHash(), std::ofstream::app);
     make_tree_blob_obj();
 }
 

@@ -62,4 +62,9 @@ int write(std::string filepath, std::string msg, std::ios_base::openmode opt);
  */
 std::string last_commit(std::string branch);
 
+/**
+ * ファイルを作成する
+ */
+void touch(std::string filename);
+
 #endif /* util_hpp */
