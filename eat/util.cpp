@@ -68,8 +68,8 @@ std::vector<std::string> split(std::string input, char delimiter){
  * logをvectorで返す
  * vectorの中身はhash, date, msgのサイクル
  */
-std::vector<std::string> getLogs(){
-    return split(read(".eat/logs/"+getBranch(),"\n"),'\n');
+std::vector<std::string> getLogs(std::string branch){
+    return split(read(".eat/logs/"+branch,"\n"),'\n');
 }
 
 /**
@@ -95,4 +95,17 @@ int write(std::string filepath, std::string msg, std::ios_base::openmode opt){
     writing_file << msg << std::endl;
     writing_file.close();
     return 0;
+}
+
+/**
+ * 最新コミットのハッシュ値を返す
+ */
+std::string last_commit(std::string branch){
+    std::vector<std::string> commit_log=getLogs(branch);
+    std::string last_commit_hash="";
+    
+    if(commit_log.size()>=3)
+        last_commit_hash=commit_log[commit_log.size()-1-2];
+    
+    return last_commit_hash;
 }

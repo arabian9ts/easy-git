@@ -42,7 +42,7 @@ std::vector<std::string> split(std::string input, char delimiter);
  * logをvectorで返す
  * vectorの中身はhash, date, msgのサイクル
  */
-std::vector<std::string> getLogs();
+std::vector<std::string> getLogs(std::string branch);
 
 /**
  * 指定したパス先がファイルかどうかをてェックする
@@ -55,5 +55,11 @@ int isFile(std::string filename);
  * opt : 書き込みオプション
  */
 int write(std::string filepath, std::string msg, std::ios_base::openmode opt);
+
+/**
+ * 最新コミットのハッシュ値を返す
+ * branch: コミットログを取得したいブランチ
+ */
+std::string last_commit(std::string branch);
 
 #endif /* util_hpp */

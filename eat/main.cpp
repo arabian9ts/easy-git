@@ -102,10 +102,8 @@ int init(){
 int add(int argc, const char *argv[]){
     struct stat st;
     root=new Object(Object::Type::commit,"","");
-    std::cout << "root generated" << std::endl;
     if(read(".eat/index")!="")
         index2tree(root, 1);
-    std::cout << "tree generated" << std::endl;
     for(int i=1;i<=argc;i++){
         stat(argv[i], &st);
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
@@ -137,13 +135,8 @@ int commit(int tree_generated){
         root->calc_hash();
 //        root->dump();
     }
-    std::vector<std::string> commit_log=getLogs();
-    std::string last_commit_hash="";
-    
-    if(commit_log.size()>=3)
-        last_commit_hash=commit_log[commit_log.size()-1-2];
 
-    if(last_commit_hash==root->getHash()){
+    if(last_commit(getBranch())==root->getHash()){
         std::cout << "no changes to commit" << std::endl;
         return 0;
     }
@@ -199,7 +192,7 @@ int reset(){
  * コミットログをダンプ
  */
 int log(){
-    std::vector<std::string> logs=getLogs();
+    std::vector<std::string> logs=getLogs(getBranch());
     for(int i=1;i<logs.size();i++){
         if(i%3==1)
             std::cout << "\ncommit: " << logs[i] << std::endl;

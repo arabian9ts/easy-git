@@ -129,7 +129,7 @@ int index2tree(Object* root, int rehash){
                 parent=graft(parent,new Object(type,*dir,stored_path));
                 
                 /* 再度sha1の計算をすることを避けるため、indexで読んだsha1をセット */
-                if(rehash)
+                if(!rehash)
                     parent->setHash(filepath_hash[1]);
                 
                 /* 新たに登録したファイルパス/ディレクトリパスを記憶 */
