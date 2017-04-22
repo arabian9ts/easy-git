@@ -168,7 +168,7 @@ int reflect(){
 int log(int count=0){
     std::vector<std::string> logs=getLogs(getBranch());
     count=(logs.size()/3-count)*3;
-    if(count<0)
+    if(count<0 || count==logs.size())
         count=0;
     
     for(int i=logs.size()-1;i>=count;i--){
