@@ -110,6 +110,7 @@ void Object::dump(){
 
 /* Objectファイルを元のプロジェクトに復元 */
 void Object::restore(){
+    
     copy_obj(".eat/objects/"+getHash(), getPath());
     
     if(child!=NULL)
@@ -135,23 +136,22 @@ void Object::make_copy_objects(){
  * ファイルを.eat/objectsにコピー
  */
 void Object::copy_obj(std::string from, std::string to){
-    if(""==to)
-        return;
-    
     struct stat st;
-    if(stat(to.c_str(), &st)){
-        std::ifstream ifs(from);
-        if(!ifs)
-            return;
-        std::ofstream ofs(to, std::ios::trunc);
-        if(!ofs)
-            return;
-        ofs << ifs.rdbuf() << std::flush;
-        if(!ifs)
-            return;
-        if(!ofs)
-            return;
+    std::ifstream ifs(from);
+    if(!ifs){
+        std::cout << "cannot open " << from << std::endl;
+        return;
     }
+    std::ofstream ofs(to, std::ios::out);
+    if(!ofs){
+        std::cout << "cannot open " << to << std::endl;
+        return;
+    }
+    std::cout << "copy " << from << " to " << to <<std::endl;
+    ofs << ifs.rdbuf() << std::flush;
+    
+    ifs.close();
+    ofs.close();
 }
 
 /**
