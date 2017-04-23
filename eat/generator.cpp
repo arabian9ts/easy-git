@@ -33,7 +33,7 @@ Object* graft(Object *parent, Object *targ){
 }
 
 /**
- * blob と tree の木構造を再帰的に作成する
+ * blob と tree の木構造を再帰的に生成
  */
 std::string relative_path="";
 void read_native_tree(Object *subtree, std::string subroot){
@@ -56,20 +56,21 @@ void read_native_tree(Object *subtree, std::string subroot){
         
         /* ファイルなら、ジェネレータをコールしてノードを追加 */
         else {
-            graft(subtree, new Object(Object::Type::blob, v,relative_path));
+            graft(subtree, new Object(Object::Type::blob,v,relative_path));
         }
     }
 }
 
 
 /**
- * indexからコミットツリーを作成
+ * indexからコミットツリーを生成
  * rehash : add, reflectでは最新のファイル状態を取得するため再ハッシュ
  * commitでは再ハッシュは行わない
  */
-int index2tree(Object* root, int rehash){
+void index2tree(Object* root, int rehash){
     Object::Type type;
-    std::ifstream ifs(".eat/index");
+    std::vector<std::string> index_lines;
+    index_lines=split(read(".eat/index","",1), '\n');
     
     /* Object*のアドレスを格納するmap */
     std::map<std::string, Object*> mp;
@@ -87,8 +88,7 @@ int index2tree(Object* root, int rehash){
     Object* parent=root;
     
     /* 一行ずつindexを読み込む */
-    std::string line;
-    while(getline(ifs, line)){
+    for(auto line : index_lines){
         
         /*-------------------各行でリセットする値---------------------*/
         parent=root;
@@ -115,11 +115,10 @@ int index2tree(Object* root, int rehash){
                     type=Object::Type::tree;
                 
                 /* 接ぎ木して、追加したオブジェクトを親にセット */
-                parent=graft(parent,new Object(type,*dir,stored_path));
-                
-                /* 再度sha1の計算をすることを避けるため、indexで読んだsha1をセット */
                 if(!rehash)
-                    parent->setHash(filepath_hash[1]);
+                    parent=graft(parent,new Object(type,*dir,stored_path,filepath_hash[1]));
+                else
+                    parent=graft(parent,new Object(type,*dir,stored_path));
                 
                 /* 新たに登録したファイルパス/ディレクトリパスを記憶 */
                 mp.insert(std::pair<std::string,Object*>(stored_path,parent));
@@ -135,6 +134,43 @@ int index2tree(Object* root, int rehash){
                 stored_path+="/";
         }
     }
-    ifs.close();
-    return 0;
 }
+
+/**
+ * commitオブジェクトからツリーを生成
+ */
+void commit2tree(Object* root, std::string comhash){
+    std::vector<std::string> lines=split(read(".eat/objects/"+comhash,"\n",1), '\n');
+    
+    /* index各行のファイルパスとハッシュを分断したベクトル */
+    std::vector<std::string> type_name_hash;
+    
+    std::string type;
+    std::string name;
+    std::string hash;
+    
+    /* 一行ずつindexを読み込む */
+    for(auto line : lines){
+        type_name_hash=split(line, ' ');
+        type=type_name_hash[0];
+        name=type_name_hash[1];
+        hash=type_name_hash[2];
+        
+        std::string relative_path;
+        if(""!=(relative_path=root->getPath()))
+            relative_path+="/";
+        
+        if("tree"==type){
+            commit2tree(
+                        graft(root, new Object(Object::Type::tree,name,relative_path+name,hash)),
+                        hash);
+        }
+        else if("blob"==type){
+            graft(root, new Object(Object::Type::blob,name,relative_path+name,hash));
+        }
+    }
+}
+
+
+
+

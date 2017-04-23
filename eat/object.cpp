@@ -18,10 +18,11 @@
  * ノードの初期化用関数
  * コンストラクタのオーバーロードを擬似的に再現
  */
-void Object::initialize(Type type, std::string name, std::string path){
+void Object::initialize(Type type, std::string name, std::string path, std::string hash){
     this->type=type;
     this->name=name;
     this->path=path;
+    this->hash=hash;
     this->child=NULL;
     this->next=NULL;
 }
@@ -30,14 +31,21 @@ void Object::initialize(Type type, std::string name, std::string path){
  * デフォルトコンストラクタ
  */
 Object::Object(){
-    initialize(unknown, "", "");
+    initialize(unknown, "", "", "");
 }
 
 /**
  * 初期化用コンストラクタ
  */
 Object::Object(Type type, std::string name, std::string path){
-    initialize(type, name, path);
+    initialize(type, name, path, "");
+}
+
+/**
+ * 初期化用コンストラクタ(ハッシュが予め求まっている場合)
+ */
+Object::Object(Type type, std::string name, std::string path, std::string hash){
+    initialize(type, name, path, hash);
 }
 
 /**
@@ -60,27 +68,23 @@ Object::~Object(){
  * ハッシュ値の計算
  */
 void Object::calc_hash(){
-    /* すでにハッシュが計算されているものはスキップ */
-    if(getHash()==""){
-        std::ifstream ifs(path.c_str());
-        std::string line="";
-        std::string buff=getType()+" ";
-        
-        if(ifs){
-            buff+=getPath()+" ";
-            while(getline(ifs,line))
-            {
-                buff+=line;
-            }
+    std::ifstream ifs(path.c_str());
+    std::string line="";
+    std::string buff;
+    
+    if(ifs){
+        buff=getType()+" "+getPath()+" ";
+        while(getline(ifs,line)){
+            buff+=line;
         }
-        else{
-            buff+=read(".eat/index");
-        }
-        
-        hash=sha1(buff);
-        buff=std::string("");
     }
-
+    else{
+        buff+=read(".eat/index");
+    }
+    
+    hash=sha1(buff);
+    buff=std::string("");
+    
     if(child!=NULL)
         child->calc_hash();
     if(next!=NULL)
@@ -104,19 +108,23 @@ void Object::dump(){
         next->dump();
 }
 
-/**
- * すでに求めてあるハッシュ値をセットする
- */
-void Object::setHash(std::string hashCode){
-    hash=hashCode;
+/* Objectファイルを元のプロジェクトに復元 */
+void Object::restore(){
+    copy_obj(".eat/objects/"+getHash(), getPath());
+    
+    if(child!=NULL)
+        child->restore();
+    if(next!=NULL)
+        next->restore();
 }
+
 
 /**
  * 木構造をもとに.eat/Objects/にファイルを書き出す
  */
 void Object::make_copy_objects(){
     if(type==blob)
-        copy_obj();
+        copy_obj(getPath(), ".eat/objects/"+getHash());
     if(child!=NULL)
         child->make_copy_objects();
     if(next!=NULL)
@@ -126,16 +134,16 @@ void Object::make_copy_objects(){
 /**
  * ファイルを.eat/objectsにコピー
  */
-void Object::copy_obj(){
-    std::string forward=".eat/objects/"+getHash();
-    std::string src=getPath();
+void Object::copy_obj(std::string from, std::string to){
+    if(""==to)
+        return;
     
     struct stat st;
-    if(stat(forward.c_str(), &st)){
-        std::ifstream ifs(src);
+    if(stat(to.c_str(), &st)){
+        std::ifstream ifs(from);
         if(!ifs)
             return;
-        std::ofstream ofs(forward, std::ios::trunc);
+        std::ofstream ofs(to, std::ios::trunc);
         if(!ofs)
             return;
         ofs << ifs.rdbuf() << std::flush;
@@ -169,12 +177,12 @@ std::string Object::make_tree_blob_obj(){
     while(current!=NULL){
         buff+=current->getType()+" "+current->getName()+" "+current->getHash()+"\n";
         if(current->child!=NULL)
-            write(".eat/objects/"+this->getHash(), current->make_tree_blob_obj(), std::ofstream::out);
+            write(".eat/objects/"+getHash(), current->make_tree_blob_obj(), std::ofstream::trunc);
         current=current->next;
     }
     
     /* 連結した情報を書き出し */
-    write(".eat/objects/"+this->getHash(), buff, std::ofstream::out);
+    write(".eat/objects/"+this->getHash(), buff, std::ofstream::trunc);
 
     return buff;
 }
@@ -231,6 +239,10 @@ std::vector<std::string> Object::index_path_set(){
     return split(cyclic_getPath(""),';');
 }
 
+/* ルートのコミットハッシュの訂正 */
+void Object::rehash_root(){
+    hash=sha1Code(".eat/index");
+}
 
 /*-----------------------------------------ゲッター終了----------------------------------------------*/
 

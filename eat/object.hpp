@@ -34,13 +34,10 @@ private:
     
     /*-------------------------functions----------------------------*/
     /* コンストラクタオーバーライド用初期化関数 */
-    void initialize(Type type, std::string name, std::string path);
+    void initialize(Type type, std::string name, std::string path, std::string hash);
     
     /* blobオブジェクトのファイルパスを再帰的に連結する */
     std::string cyclic_getPath(std::string buff);
-    
-    /* ファイルをeat管理下にコピーする */
-    void copy_obj();
     
     /* tree, blobオブジェクトの生成 */
     std::string make_tree_blob_obj();
@@ -59,6 +56,7 @@ public:
     /*-------------------------functions----------------------------*/
     Object();
     Object(Type type, std::string name, std::string path);
+    Object(Type type, std::string name, std::string path, std::string hash);
     ~Object();
     
     /* blob, treeなどのオブジェクトの属性をstringで返す */
@@ -76,6 +74,12 @@ public:
     /* indexファイルに書き出すファイルパスの集合をstringで返す */
     std::vector<std::string> index_path_set();
     
+    /* Objectファイルを元のプロジェクトに復元 */
+    void restore();
+    
+    /* 指定したファイルを指定した場所にコピーする */
+    void copy_obj(std::string from, std::string to);
+    
     /* オブジェクトファイルを書き出す */
     void make_copy_objects();
     
@@ -90,6 +94,9 @@ public:
     
     /* コミットオブジェクトの生成 */
     void make_commit_obj(std::string commit_msg);
+    
+    /* ルートのコミットハッシュの訂正 */
+    void rehash_root();
     /*---------------------------END--------------------------------*/
 };
 

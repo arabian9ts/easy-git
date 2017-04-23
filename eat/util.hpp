@@ -27,7 +27,7 @@ std::string getTime();
  * 指定したファイルのすべての行を読み込んで返す
  * endline : 行末に付加する文字列
  */
-std::string read(std::string filename, std::string endline="");
+std::string read(std::string filename, std::string endline="", int skip_empty_line=0);
 
 /**
  * ファイルのハッシュ値を計算する

@@ -40,7 +40,7 @@ int write_index(std::vector<std::string> file_names_list){
                           file_names_list.end());
     
     std::ofstream writing_file;
-    writing_file.open(".eat/index", std::ios::trunc);
+    writing_file.open(".eat/index", std::ios::out);
     
     for (auto v : file_names_list){
         writing_file << v << std::endl;
@@ -116,12 +116,13 @@ int add(int argc, const char *argv[]){
     
     /* それぞれのsha1ハッシュを計算 */
     root->calc_hash();
-    root->make_copy_objects();
     
     /* indexにパスを書き込み*/
     write_index(root->index_path_set());
     
-    root->dump();
+    root->make_copy_objects();
+    
+//    root->dump();
     return 0;
 }
 
@@ -131,13 +132,10 @@ int add(int argc, const char *argv[]){
 int commit(int tree_generated){
     if(!tree_generated){
         root=new Object(Object::Type::commit,"","");
-        root->calc_hash();
         index2tree(root, 0);
+        root->calc_hash();
 //        root->dump();
     }
-    
-    /* indexにパスを書き込み*/
-    write_index(root->index_path_set());
     
     if(last_commit(getBranch())==root->getHash()){
         std::cout << "no changes to commit" << std::endl;
@@ -160,6 +158,7 @@ int commit(int tree_generated){
 int reflect(){
     const char* args[]={"dammy","./"};
     add(1, args)==0;
+    root->rehash_root();
     commit(1);
     return 0;
 }
@@ -203,9 +202,14 @@ int branch(std::string branch){
     return 0;
 }
 
+/**
+ * 作業ブランチを変更
+ */
 int checkout(std::string branch){
-    if(isExist(".eat/refs/heads/"+branch))
+    if(isExist(".eat/refs/heads/"+branch)){
         write_head(".eat/refs/heads/"+branch);
+        std::cout << "checkout to " << branch << std::endl;
+    }
     else
         std::cout << "branch: " << branch << "is not exist" << std::endl;
     return 0;
@@ -228,6 +232,10 @@ int merge(){
  * HEAD　-> 直前までリセット
  */
 int reset(){
+    root=new Object(Object::Type::commit,"","");
+    std::string commithash=read(".eat/refs/heads/"+getBranch());
+    commit2tree(root, commithash);
+    root->restore();
     return 0;
 }
 

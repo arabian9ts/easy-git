@@ -19,16 +19,21 @@
 Object* graft(Object *parent, Object *targ);
 
 /**
- * blob と tree の木構造を再帰的に作成する
+ * blob と tree の木構造を再帰的に生成
  */
 void read_native_tree(Object *subtree, std::string subroot);
 
 /**
- * indexからコミットツリーを作成
+ * indexからコミットツリーを生成
  * rehash : add, reflectでは最新のファイル状態を取得するため再ハッシュ
  * commitでは再ハッシュは行わない
  */
-int index2tree(Object* root, int rehash);
+void index2tree(Object* root, int rehash);
+
+/**
+ * commitオブジェクトからツリーを生成
+ */
+void commit2tree(Object* root, std::string objpath);
 
 
 #endif /* generator_hpp */

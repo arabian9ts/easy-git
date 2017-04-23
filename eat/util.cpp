@@ -22,7 +22,7 @@ std::string getTime(){
  * 現在のブランチを返す
  */
 std::string getBranch(){
-    std::vector<std::string> dirs=split(read(".eat/HEAD","/"), '/');
+    std::vector<std::string> dirs=split(read(".eat/HEAD"), '/');
     std::string branch=dirs.back();
     return branch;
 }
@@ -30,13 +30,14 @@ std::string getBranch(){
 /**
  * 指定したファイルのすべての行を読み込んで返す
  */
-std::string read(std::string filename, std::string endline){
+std::string read(std::string filename, std::string endline, int skip_empty_line){
     std::ifstream ifs(filename.c_str());
     std::string line="";
     std::string buff="";
     if(ifs){
         while(getline(ifs,line))
-            buff+=line+endline;
+            if(!(skip_empty_line && (line=="\r" || line=="\n" || line=="\0")))
+                buff+=line+endline;
     }
     ifs.close();
     return buff;
@@ -67,7 +68,7 @@ std::vector<std::string> split(std::string input, char delimiter){
  * vectorの中身はhash, date, msgのサイクル
  */
 std::vector<std::string> getLogs(std::string branch){
-    return split(read(".eat/logs/"+branch,"\n"),'\n');
+    return split(read(".eat/logs/"+branch,"\n",1),'\n');
 }
 
 /**
@@ -136,12 +137,7 @@ int write(std::string filepath, std::string msg, std::ios_base::openmode opt){
  * 最新コミットのハッシュ値を返す
  */
 std::string last_commit(std::string branch){
-    std::vector<std::string> commit_log=getLogs(branch);
-    std::string last_commit_hash="";
-    
-    if(commit_log.size()!=0)
-        last_commit_hash=commit_log[commit_log.size()-1];
-    
+    std::string last_commit_hash=read(".eat/refs/heads/"+branch);
     return last_commit_hash;
 }
 
