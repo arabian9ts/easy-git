@@ -10,9 +10,7 @@
 #ifndef object_hpp
 #define object_hpp
 
-#include "eat.hpp"
 #include "util.hpp"
-#include <dirent.h>
 
 
 

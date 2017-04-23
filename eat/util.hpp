@@ -11,6 +11,7 @@
 
 #include "eat.hpp"
 #include "sha1.hpp"
+#include <dirent.h>
 
 /**
  * 現在のブランチを返す
@@ -45,10 +46,21 @@ std::vector<std::string> split(std::string input, char delimiter);
 std::vector<std::string> getLogs(std::string branch);
 
 /**
- * 指定したパス先がファイルかどうかをてェックする
+ * 指定したパス先がファイルかどうかをチェックする
  * 1 : ファイル, 0 : ファイルでない
  */
 int isFile(std::string filename);
+
+/**
+ * ファイルが存在するか確認する
+ * return: 1: 存在する 0: 存在しない
+ */
+int isExist(std::string filename);
+
+/**
+ * 同階層のファイル、ディレクトリ名の一覧を取得
+ */
+std::vector<std::string> file_dir_list(std::string path);
 
 /**
  * 指定したファイルに文字列を書き込む

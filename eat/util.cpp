@@ -71,7 +71,7 @@ std::vector<std::string> getLogs(std::string branch){
 }
 
 /**
- * 指定したパス先がファイルかどうかをてェックする
+ * 指定したパス先がファイルかどうかをチェックする
  * 1 : ファイル, 0 : ファイルでない
  */
 int isFile(std::string filename){
@@ -81,6 +81,43 @@ int isFile(std::string filename){
         return 0;
     else
         return 1;
+}
+
+/**
+ * ファイルが存在するか確認する
+ * return: 1: 存在する 0: 存在しない
+ */
+int isExist(std::string filename){
+    struct stat st;
+    int result=stat(filename.c_str(), &st);
+    if(!result)
+        return 1;
+    return 0;
+}
+
+/**
+ * 同階層のファイル、ディレクトリ名の一覧を取得
+ */
+std::vector<std::string> file_dir_list(std::string path){
+    DIR *dir;
+    struct dirent *dp;
+    std::vector<std::string> result;
+    
+    /* subtreeが存在しないなら終了 */
+    if(NULL==(dir=opendir(path.c_str()))){
+        std::cout << "cannot open " << path << std::endl;
+        return result;
+    }
+    
+    /* すべてのディレクトリを読み込み */
+    for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
+        /* .で始まるものとeatはスキップ */
+        int start_with_dot=boost::algorithm::starts_with(dp->d_name, ".");
+        if(!start_with_dot && dp->d_name!=std::string("eat"))
+            result.push_back(dp->d_name);
+    }
+    
+    return result;
 }
 
 /**

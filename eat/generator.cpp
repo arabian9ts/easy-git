@@ -37,37 +37,26 @@ Object* graft(Object *parent, Object *targ){
  */
 std::string relative_path="";
 void read_native_tree(Object *subtree, std::string subroot){
-    DIR *dir;
-    struct dirent *dp;
     struct stat st;
-    
-    /* subtreeが存在しないなら終了 */
-    if(NULL==(dir=opendir(subroot.c_str()))){
-        printf("cannot open %s\n", subroot.c_str());
-        return;
-    }
+    std::vector<std::string> files_dirs=file_dir_list(subroot);
     
     /* すべてのディレクトリを読み込み */
-    for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
-        /* .で始まるものとeatはスキップ */
-        int start_with_dot=boost::algorithm::starts_with(dp->d_name, ".");
-        if(!start_with_dot && dp->d_name!=std::string("eat")){
-            if(subroot!="./")
-                relative_path=subroot+"/"+dp->d_name;
-            else
-                relative_path=dp->d_name;
-            stat(relative_path.c_str(), &st);
-            
-            /* ディレクトリなら、そのディレクトリをrootとしてコール */
-            if ((st.st_mode & S_IFMT) == S_IFDIR) {
-                // ツリーオブジェクトをルートにして部分木を生成
-                read_native_tree(graft(subtree,new Object(Object::Type::tree,dp->d_name,relative_path)),relative_path);
-            }
-            
-            /* ファイルなら、ジェネレータをコールしてノードを追加 */
-            else {
-                graft(subtree, new Object(Object::Type::blob, dp->d_name,relative_path));
-            }
+    for(auto v : files_dirs){
+        if(subroot!="./")
+            relative_path=subroot+"/"+v;
+        else
+            relative_path=v;
+        stat(relative_path.c_str(), &st);
+        
+        /* ディレクトリなら、そのディレクトリをrootとしてコール */
+        if ((st.st_mode & S_IFMT) == S_IFDIR) {
+            // ツリーオブジェクトをルートにして部分木を生成
+            read_native_tree(graft(subtree,new Object(Object::Type::tree,v,relative_path)),relative_path);
+        }
+        
+        /* ファイルなら、ジェネレータをコールしてノードを追加 */
+        else {
+            graft(subtree, new Object(Object::Type::blob, v,relative_path));
         }
     }
 }

@@ -43,8 +43,7 @@ int write_index(std::vector<std::string> file_names_list){
     writing_file.open(".eat/index", std::ios::trunc);
     
     for (auto v : file_names_list){
-        if(v!=file_names_list.back())
-            writing_file << v << std::endl;
+        writing_file << v << std::endl;
     }
     
     writing_file.close();
@@ -122,7 +121,7 @@ int add(int argc, const char *argv[]){
     /* indexにパスを書き込み*/
     write_index(root->index_path_set());
     
-//    root->dump();
+    root->dump();
     return 0;
 }
 
@@ -136,6 +135,9 @@ int commit(int tree_generated){
         index2tree(root, 0);
 //        root->dump();
     }
+    
+    /* indexにパスを書き込み*/
+    write_index(root->index_path_set());
     
     if(last_commit(getBranch())==root->getHash()){
         std::cout << "no changes to commit" << std::endl;
@@ -185,7 +187,27 @@ int log(int count=0){
 /**
  * 引数あり : ブランチ作成, 引数なし : ブランチリストをダンプ
  */
-int branch(){
+int branch(std::string branch){
+    if(""==branch){
+        std::vector<std::string> branch_list=file_dir_list(".eat/refs/heads");
+        for(auto v : branch_list)
+            std::cout << v << std::endl;
+        return 0;
+    }
+    
+    if(isExist(branch))
+        std::cout << "branch: " << branch << "is already exist" << std::endl;
+    else
+        touch(".eat/refs/heads/"+branch);
+    
+    return 0;
+}
+
+int checkout(std::string branch){
+    if(isExist(".eat/refs/heads/"+branch))
+        write_head(".eat/refs/heads/"+branch);
+    else
+        std::cout << "branch: " << branch << "is not exist" << std::endl;
     return 0;
 }
 
@@ -235,7 +257,7 @@ int main(int argc, const char *argv[]) {
         init();
     }
     else if(strcmp(subcom, "add")==0){
-        add(argc, argv);
+        add(argc, ++argv);
     }
     else if(strcmp(subcom, "commit")==0){
         commit(0);
@@ -243,8 +265,19 @@ int main(int argc, const char *argv[]) {
     else if(strcmp(subcom, "reflect")==0){
         reflect();
     }
-    else if(strcmp(subcom, "brabch")==0){
-        branch();
+    else if(strcmp(subcom, "branch")==0){
+        if(argc==0)
+            branch("");
+        else if(argc==1)
+            branch(argv[2]);
+        else
+            std::cout << "assert branch usage" << std::endl;
+    }
+    else if(strcmp(subcom, "checkout")==0){
+        if(argc==1)
+            checkout(argv[2]);
+        else
+            std::cout << "assert checkout usage" << std::endl;
     }
     else if(strcmp(subcom, "merge")==0){
         merge();
