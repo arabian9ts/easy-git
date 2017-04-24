@@ -183,6 +183,21 @@ int log(int count=0){
     return 0;
 }
 
+
+/**
+ * 引数に応じてresetを実行
+ * commit id -> その時点のコミットまでリセット
+ * HEAD　-> 直前までリセット
+ */
+int reset(){
+    root=new Object(Object::Type::commit,"","");
+    std::string commithash=read(".eat/refs/heads/"+getBranch());
+    commit2tree(root, commithash);
+    root->restore();
+    return 0;
+}
+
+
 /**
  * 引数あり : ブランチ作成, 引数なし : ブランチリストをダンプ
  */
@@ -210,8 +225,10 @@ int checkout(std::string branch){
         write_head(".eat/refs/heads/"+branch);
         std::cout << "checkout to " << branch << std::endl;
     }
-    else
+    else{
         std::cout << "branch: " << branch << "is not exist" << std::endl;
+        reset();
+    }
     return 0;
 }
 
@@ -223,19 +240,6 @@ int checkout(std::string branch){
  * --force引数で強制的にマージし、masterのCONFLICTファイルをすべてマージ元のファイルで置き換える
  */
 int merge(){
-    return 0;
-}
-
-/**
- * 引数に応じてresetを実行
- * commit id -> その時点のコミットまでリセット
- * HEAD　-> 直前までリセット
- */
-int reset(){
-    root=new Object(Object::Type::commit,"","");
-    std::string commithash=read(".eat/refs/heads/"+getBranch());
-    commit2tree(root, commithash);
-    root->restore();
     return 0;
 }
 

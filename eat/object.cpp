@@ -111,7 +111,10 @@ void Object::dump(){
 /* Objectファイルを元のプロジェクトに復元 */
 void Object::restore(){
     
-    copy_obj(".eat/objects/"+getHash(), getPath());
+    if("blob"==getType())
+        copy_obj(".eat/objects/"+getHash(), getPath());
+    else if("tree"==getType())
+        mkdir(getPath().c_str(), 0755);
     
     if(child!=NULL)
         child->restore();
