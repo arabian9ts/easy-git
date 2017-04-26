@@ -79,4 +79,14 @@ std::string last_commit(std::string branch);
  */
 void touch(std::string filename);
 
+/**
+ * ファイルを一括削除する
+ */
+void rmfiles(std::vector<std::string> filelist);
+
+/**
+ * ignoreを考慮した削除リストを作成
+ */
+void ignored_list(std::vector<std::string> filelist);
+
 #endif /* util_hpp */

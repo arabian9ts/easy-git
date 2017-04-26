@@ -149,3 +149,24 @@ void touch(std::string filename){
     strm.open(filename);
     strm.close();
 }
+
+/**
+ * ファイルを一括削除する
+ */
+void rmfiles(std::vector<std::string> filelist){
+    int count=0;
+    for (auto file : filelist){
+        if(isFile(file)){
+            std::remove(file.c_str());
+            std::cout << count << " rm " << file << std::endl;
+            count++;
+        }
+    }
+}
+
+/**
+ * ignoreを考慮した削除リストを作成
+ */
+void ignored_list(std::vector<std::string> filelist){
+    
+}

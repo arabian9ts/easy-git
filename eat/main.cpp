@@ -101,15 +101,15 @@ int add(int argc, const char *argv[]){
     struct stat st;
     root=new Object(Object::Type::commit,"","");
     if(read(".eat/index")!="")
-        index2tree(root, 1);
-    for(int i=1;i<=argc;i++){
+        index2tree(root, 0);
+    for(int i=1;i<argc;i++){
         stat(argv[i], &st);
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
         if ((st.st_mode & S_IFMT) == S_IFDIR) {
             // ツリーオブジェクトをルートにして部分木を生成
             read_native_tree(root,argv[i]);
         }
-        else{
+        else if(isFile(argv[i])){
             graft(root, new Object(Object::Type::blob,argv[i],argv[i]));
         }
     }
@@ -122,7 +122,7 @@ int add(int argc, const char *argv[]){
     
     root->make_copy_objects();
     
-//    root->dump();
+    root->dump();
     return 0;
 }
 
@@ -134,7 +134,7 @@ int commit(int tree_generated){
         root=new Object(Object::Type::commit,"","");
         index2tree(root, 0);
         root->calc_hash();
-//        root->dump();
+        root->dump();
     }
     
     if(last_commit(getBranch())==root->getHash()){
@@ -189,10 +189,19 @@ int log(int count=0){
  * commit id -> その時点のコミットまでリセット
  * HEAD　-> 直前までリセット
  */
-int reset(){
+int reset(int vers=1){
+    std::vector<std::string> rmlist=split(read(".eat/index"), '\n');
+    for(int i=0;i<rmlist.size();i++)
+        rmlist[i]=split(rmlist[i], ' ')[0];
+    rmfiles(rmlist);
+    
+    std::vector<std::string> logs=getLogs(getBranch());
+    std::string commithash=logs[logs.size()-1-3*vers];
+    std::cout << commithash << std::endl;
+    
     root=new Object(Object::Type::commit,"","");
-    std::string commithash=read(".eat/refs/heads/"+getBranch());
     commit2tree(root, commithash);
+    root->dump();
     root->restore();
     return 0;
 }
@@ -209,10 +218,14 @@ int branch(std::string branch){
         return 0;
     }
     
+    root=new Object(Object::Type::commit,"","");
     if(isExist(branch))
         std::cout << "branch: " << branch << "is already exist" << std::endl;
-    else
+    else{
         touch(".eat/refs/heads/"+branch);
+        root->copy_obj(".eat/logs/"+getBranch(), ".eat/logs/"+branch);
+        root->copy_obj(".eat/refs/heads/"+getBranch(), ".eat/refs/heads/"+branch);
+    }
     
     return 0;
 }
@@ -223,11 +236,12 @@ int branch(std::string branch){
 int checkout(std::string branch){
     if(isExist(".eat/refs/heads/"+branch)){
         write_head(".eat/refs/heads/"+branch);
-        std::cout << "checkout to " << branch << std::endl;
+        std::cout << "switch to " << branch << std::endl;
     }
     else{
         std::cout << "branch: " << branch << "is not exist" << std::endl;
         reset();
+        write_index(root->index_path_set());
     }
     return 0;
 }

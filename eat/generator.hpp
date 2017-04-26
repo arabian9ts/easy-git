@@ -33,7 +33,7 @@ void index2tree(Object* root, int rehash);
 /**
  * commitオブジェクトからツリーを生成
  */
-void commit2tree(Object* root, std::string objpath);
+void commit2tree(Object* root, std::string compath);
 
 
 #endif /* generator_hpp */

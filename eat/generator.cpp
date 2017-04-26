@@ -70,7 +70,7 @@ void read_native_tree(Object *subtree, std::string subroot){
 void index2tree(Object* root, int rehash){
     Object::Type type;
     std::vector<std::string> index_lines;
-    index_lines=split(read(".eat/index","",1), '\n');
+    index_lines=split(read(".eat/index","\n",1), '\n');
     
     /* Object*のアドレスを格納するmap */
     std::map<std::string, Object*> mp;
