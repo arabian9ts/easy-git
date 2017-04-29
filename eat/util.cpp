@@ -22,7 +22,7 @@ std::string getTime(){
  * 現在のブランチを返す
  */
 std::string getBranch(){
-    std::vector<std::string> dirs=split(read(".eat/HEAD"), '/');
+    std::vector<std::string> dirs=split(read(".eat/HEAD","",1), '/');    
     std::string branch=dirs.back();
     return branch;
 }
@@ -36,7 +36,7 @@ std::string read(std::string filename, std::string endline, int skip_empty_line)
     std::string buff="";
     if(ifs){
         while(getline(ifs,line))
-            if(!(skip_empty_line && (line=="\r" || line=="\n" || line=="\0")))
+            if(!(skip_empty_line & (line=="\r" || line=="\n" || line=="\0")))
                 buff+=line+endline;
     }
     ifs.close();
@@ -75,7 +75,7 @@ std::vector<std::string> getLogs(std::string branch){
  * 指定したパス先がファイルかどうかをチェックする
  * 1 : ファイル, 0 : ファイルでない
  */
-int isFile(std::string filename){
+int isFile(std::string filename){    
     struct stat st;
     stat(filename.c_str(), &st);
     if ((st.st_mode & S_IFMT) == S_IFDIR)
@@ -85,13 +85,13 @@ int isFile(std::string filename){
 }
 
 /**
- * ファイルが存在するか確認する
+ * ファイル/ディレクトリが存在するか確認する
  * return: 1: 存在する 0: 存在しない
  */
 int isExist(std::string filename){
     struct stat st;
     int result=stat(filename.c_str(), &st);
-    if(!result)
+    if(0==result)
         return 1;
     return 0;
 }

@@ -37,7 +37,6 @@ Object* graft(Object *parent, Object *targ){
  */
 std::string relative_path="";
 void read_native_tree(Object *subtree, std::string subroot){
-    struct stat st;
     std::vector<std::string> files_dirs=file_dir_list(subroot);
     
     /* すべてのディレクトリを読み込み */
@@ -46,10 +45,11 @@ void read_native_tree(Object *subtree, std::string subroot){
             relative_path=subroot+"/"+v;
         else
             relative_path=v;
-        stat(relative_path.c_str(), &st);
         
+        if(!isExist(relative_path))
+            return;
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
-        if ((st.st_mode & S_IFMT) == S_IFDIR) {
+        if (!isFile(relative_path)) {
             // ツリーオブジェクトをルートにして部分木を生成
             read_native_tree(graft(subtree,new Object(Object::Type::tree,v,relative_path)),relative_path);
         }
@@ -105,6 +105,11 @@ void index2tree(Object* root, int rehash){
             /* 確認済みのパス(初期はrootと同地)に連結 */
             stored_path+=*dir;
             
+            if(!isExist(stored_path)){
+                std::cout << "not exists " << stored_path << " of " << line << std::endl;
+                break;
+            }
+            
             /* まだ登録されていないディレクトリなら新規登録 */
             if(mp.count(stored_path)==0){
                 
@@ -132,6 +137,7 @@ void index2tree(Object* root, int rehash){
             /* 最後のディレクトリ名/ファイル名でなければ'/'を付加 */
             if((++dir)!=dirs.end())
                 stored_path+="/";
+            
         }
     }
 }

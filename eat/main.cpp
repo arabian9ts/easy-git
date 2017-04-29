@@ -88,7 +88,7 @@ int init(){
     for(int i=0;i<sizeof(file_names)/sizeof(file_names[0]);i++)
         touch(file_names[i]);
     
-    write_head("./refs/heads/master");
+    write_head(".eat/refs/heads/master");
     
     return 0;
 }
@@ -98,20 +98,19 @@ int init(){
  * addコマンドを実行する
  */
 int add(int argc, const char *argv[]){
-    struct stat st;
     root=new Object(Object::Type::commit,"","");
     if(read(".eat/index")!="")
         index2tree(root, 0);
-    for(int i=1;i<argc;i++){
-        stat(argv[i], &st);
+    for(int i=1;i<=argc;i++){
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
-        if ((st.st_mode & S_IFMT) == S_IFDIR) {
+        if (!isFile(argv[i])) {
             // ツリーオブジェクトをルートにして部分木を生成
             read_native_tree(root,argv[i]);
         }
         else if(isFile(argv[i])){
             graft(root, new Object(Object::Type::blob,argv[i],argv[i]));
         }
+        std::cout << argv[i] << std::endl;
     }
     
     /* それぞれのsha1ハッシュを計算 */
@@ -142,9 +141,10 @@ int commit(int tree_generated){
         return 0;
     }
     std::string msg="";
-    std::cout << "commit message : ";
-    while(msg=="")
+    while(msg==""){
+        std::cout << "commit message : ";
         std::getline(std::cin, msg);
+    }
     
     root->make_commit_obj(msg);
     write_refs(root->getHash());
@@ -157,7 +157,7 @@ int commit(int tree_generated){
  */
 int reflect(){
     const char* args[]={"dammy","./"};
-    add(1, args)==0;
+    add(1, args);
     root->rehash_root();
     commit(1);
     return 0;
@@ -189,19 +189,34 @@ int log(int count=0){
  * commit id -> その時点のコミットまでリセット
  * HEAD　-> 直前までリセット
  */
-int reset(int vers=1){
-    std::vector<std::string> rmlist=split(read(".eat/index"), '\n');
-    for(int i=0;i<rmlist.size();i++)
+int reset(int vers=0){
+    std::vector<std::string> rmlist=split(read(".eat/index","\n",1), '\n');
+    std::cout << rmlist.size() << std::endl;
+    for(int i=0;i<rmlist.size();i++){
         rmlist[i]=split(rmlist[i], ' ')[0];
+        std::cout << "delete " << rmlist[i] << std::endl;
+    }
     rmfiles(rmlist);
     
     std::vector<std::string> logs=getLogs(getBranch());
-    std::string commithash=logs[logs.size()-1-3*vers];
+    if(logs.size()<3){
+        std::cout << "no commits in this branch: " << getBranch() << std::endl;
+        return 0;
+    }
+    
+    int comidx=logs.size()-3*(vers-1)-1;
+    if(comidx<=0){
+        std::cout << vers << std::endl;
+        std::cout << comidx << std::endl;
+        comidx=logs.size()-1;
+    }
+    
+    std::string commithash=logs[comidx];
     std::cout << commithash << std::endl;
     
     root=new Object(Object::Type::commit,"","");
     commit2tree(root, commithash);
-    root->dump();
+//    root->dump();
     root->restore();
     return 0;
 }
@@ -240,7 +255,7 @@ int checkout(std::string branch){
     }
     else{
         std::cout << "branch: " << branch << "is not exist" << std::endl;
-        reset();
+        reset(0);
         write_index(root->index_path_set());
     }
     return 0;
@@ -309,10 +324,13 @@ int main(int argc, const char *argv[]) {
         merge();
     }
     else if(strcmp(subcom, "reset")==0){
-        reset();
+        if(argc==0)
+            reset(0);
+        else if(argc==1)
+            reset(atoi(argv[2]));
     }
     else if(strcmp(subcom, "log")==0){
-        if(argc>0)
+        if(argc==1)
             log(atoi(argv[2]));
         else
             log();
