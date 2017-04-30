@@ -191,7 +191,6 @@ int log(int count=0){
  */
 int reset(int vers=0){
     std::vector<std::string> rmlist=split(read(".eat/index","\n",1), '\n');
-    std::cout << rmlist.size() << std::endl;
     for(int i=0;i<rmlist.size();i++){
         rmlist[i]=split(rmlist[i], ' ')[0];
         std::cout << "delete " << rmlist[i] << std::endl;
@@ -199,12 +198,17 @@ int reset(int vers=0){
     rmfiles(rmlist);
     
     std::vector<std::string> logs=getLogs(getBranch());
+    
+    for (int i=0;i<logs.size();i++) {
+        std::cout << "log : " << logs[i] << std::endl;
+    }
+    
     if(logs.size()<3){
         std::cout << "no commits in this branch: " << getBranch() << std::endl;
         return 0;
     }
     
-    int comidx=logs.size()-3*(vers-1)-1;
+    int comidx=logs.size()-3*vers-1;
     if(comidx<=0){
         std::cout << vers << std::endl;
         std::cout << comidx << std::endl;
@@ -216,8 +220,9 @@ int reset(int vers=0){
     
     root=new Object(Object::Type::commit,"","");
     commit2tree(root, commithash);
-//    root->dump();
+    root->dump();
     root->restore();
+    write_index(root->index_path_set());
     return 0;
 }
 
@@ -252,11 +257,10 @@ int checkout(std::string branch){
     if(isExist(".eat/refs/heads/"+branch)){
         write_head(".eat/refs/heads/"+branch);
         std::cout << "switch to " << branch << std::endl;
+        reset(0);
     }
     else{
         std::cout << "branch: " << branch << "is not exist" << std::endl;
-        reset(0);
-        write_index(root->index_path_set());
     }
     return 0;
 }
