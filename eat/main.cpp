@@ -235,6 +235,7 @@ int branch(std::string branch){
         std::vector<std::string> branch_list=file_dir_list(".eat/refs/heads");
         for(auto v : branch_list)
             std::cout << v << std::endl;
+        std::cout << "\nnow: @" << getBranch() << std::endl;
         return 0;
     }
     
