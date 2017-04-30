@@ -144,11 +144,11 @@ std::string last_commit(std::string branch){
 /**
  * commitファイルidのリストを取得
  */
-std::vector<std::string> commitlist(){
+std::vector<std::string> commitlist(std::string branch){
     std::vector<std::string> comlist;
-    std::vector<std::string> logs=getLogs(getBranch());
+    std::vector<std::string> logs=getLogs(branch);
     
-    for (int idx=logs.size()-2; idx>=0; idx--) {
+    for (int idx=logs.size()-1; idx>=0; idx--) {
         if(2==idx%3)
             comlist.push_back(logs[idx]);
     }
@@ -193,6 +193,16 @@ void diff(std::string f1, std::string f2){
     
 }
 
-
+/**
+ * commit messageを取得
+ */
+std::string fetch_commit_msg(){
+    std::string msg="";
+    while(msg==""){
+        std::cout << "commit message : ";
+        std::getline(std::cin, msg);
+    }
+    return msg;
+}
 
 

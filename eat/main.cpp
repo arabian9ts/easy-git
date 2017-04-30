@@ -51,6 +51,12 @@ int write_index(std::vector<std::string> file_names_list){
     return 0;
 }
 
+int write_log(std::string commit_msg){
+    write(".eat/logs/"+getBranch(),
+          "\""+commit_msg+"\"\n"+getTime()+"\n"+root->getHash(), std::ofstream::app);
+    return 0;
+}
+
 /*---------------------------------------ファイル操作関数終了-------------------------------------------*/
 /*--------------------ここから下はコマンドの関数,ここから上はコマンドで使用する関数-----------------------------*/
 
@@ -99,8 +105,8 @@ int init(){
  */
 int add(int argc, const char *argv[]){
     root=new Object(Object::Type::commit,"","");
-    if(read(".eat/index")!="")
-        index2tree(root, 0);
+//    if(read(".eat/index")!="")
+//        index2tree(root, 0);
     for(int i=1;i<=argc;i++){
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
         if (!isFile(argv[i])) {
@@ -133,20 +139,16 @@ int commit(int tree_generated){
         root=new Object(Object::Type::commit,"","");
         index2tree(root, 0);
         root->calc_hash();
-        root->dump();
+//        root->dump();
     }
     
     if(last_commit(getBranch())==root->getHash()){
         std::cout << "no changes to commit" << std::endl;
         return 0;
     }
-    std::string msg="";
-    while(msg==""){
-        std::cout << "commit message : ";
-        std::getline(std::cin, msg);
-    }
     
-    root->make_commit_obj(msg);
+    root->make_tree_blob_obj();
+    write_log(fetch_commit_msg());
     write_refs(root->getHash());
     
     return 0;
@@ -197,7 +199,7 @@ int reset(int version=0){
     }
     rmfiles(rmlist);
     
-    std::vector<std::string> commits=commitlist();
+    std::vector<std::string> commits=commitlist(getBranch());
     
     if(version>commits.size()-1)
         version=commits.size()-1;
@@ -207,6 +209,7 @@ int reset(int version=0){
     
     root=new Object(Object::Type::commit,"","");
     commit2tree(root, commithash);
+    std::cout << "-------------------------" << std::endl;
     root->dump();
     root->restore();
     write_index(root->index_path_set());
@@ -260,7 +263,25 @@ int checkout(std::string branch){
  * そうでなければCONFLICTアラート
  * --force引数で強制的にマージし、masterのCONFLICTファイルをすべてマージ元のファイルで置き換える
  */
-int merge(){
+int merge(std::string targ_branch){
+    std::string base_branch=getBranch();
+    
+    std::vector<std::string> targ_commits=commitlist(targ_branch);
+    std::vector<std::string>::iterator itr=find(targ_commits.begin(),targ_commits.end(),last_commit(base_branch));
+    
+    if(itr!=targ_commits.end()){
+        std::cout << "fast-forward : " << std::endl;
+        root=new Object(Object::Type::commit,"","");
+        commit2tree(root, last_commit(targ_branch));
+        write_index(root->index_path_set());
+        root->rehash_root();
+        commit(1);
+        reset(0);
+    }
+    else{
+        std::cout << "non fast-forward : " << std::endl;
+    }
+    
     return 0;
 }
 
@@ -313,7 +334,10 @@ int main(int argc, const char *argv[]) {
             std::cout << "assert checkout usage" << std::endl;
     }
     else if(strcmp(subcom, "merge")==0){
-        merge();
+        if(argc==1)
+            merge(argv[2]);
+        else
+            std::cout << "assert merge usage" << std::endl;
     }
     else if(strcmp(subcom, "reset")==0){
         if(argc==0)

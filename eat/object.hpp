@@ -38,9 +38,6 @@ private:
     
     /* blobオブジェクトのファイルパスを再帰的に連結する */
     std::string cyclic_getPath(std::string buff);
-    
-    /* tree, blobオブジェクトの生成 */
-    std::string make_tree_blob_obj();
     /*---------------------------END--------------------------------*/
     
     
@@ -83,6 +80,9 @@ public:
     /* オブジェクトファイルを書き出す */
     void make_copy_objects();
     
+    /* tree, blobオブジェクトの生成 */
+    std::string make_tree_blob_obj();
+    
     /* ファイルのハッシュ値を計算する */
     void calc_hash();
     
@@ -91,9 +91,6 @@ public:
     
     /* すでに求めてあるハッシュ値をセットする */
     void setHash(std::string hashcode);
-    
-    /* コミットオブジェクトの生成 */
-    void make_commit_obj(std::string commit_msg);
     
     /* ルートのコミットハッシュの訂正 */
     void rehash_root();

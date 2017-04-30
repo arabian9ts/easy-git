@@ -77,7 +77,7 @@ std::string last_commit(std::string branch);
 /**
  * commitファイルidのリストを取得
  */
-std::vector<std::string> commitlist();
+std::vector<std::string> commitlist(std::string);
 
 /**
  * ファイルを作成する
@@ -98,5 +98,10 @@ void ignored_list(std::vector<std::string> filelist);
  * ファイルの差分を抽出する
  */
 void diff(std::string f1, std::string f2);
+
+/**
+ * commit messageを取得
+ */
+std::string fetch_commit_msg();
 
 #endif /* util_hpp */

@@ -158,17 +158,6 @@ void Object::copy_obj(std::string from, std::string to){
 }
 
 /**
- * コミットオブジェクトを生成する
- * logにコミットオブジェクトのハッシュとコメントをダンプする
- * 木構造のcommit, tree, blobオブジェクトを生成する
- */
-void Object::make_commit_obj(std::string commit_msg){
-    write(".eat/logs/"+getBranch(),
-          "\""+commit_msg+"\"\n"+getTime()+"\n"+getHash(), std::ofstream::app);
-    make_tree_blob_obj();
-}
-
-/**
  * tree, blobオブジェクトの生成
  */
 std::string Object::make_tree_blob_obj(){
@@ -230,7 +219,7 @@ std::string Object::cyclic_getPath(std::string buff){
     if(next!=NULL)
         buff+=next->cyclic_getPath(buff);
     if(type==blob || type==tree)
-        buff+=getPath()+" "+getHash()+";";
+        buff+=getPath()+" "+getHash()+"\n";
 
     return buff;
 }
@@ -239,12 +228,13 @@ std::string Object::cyclic_getPath(std::string buff){
  * indexファイルに記述するためのファイル相対パスの集まりを返す
  */
 std::vector<std::string> Object::index_path_set(){
-    return split(cyclic_getPath(""),';');
+    return split(cyclic_getPath(""),'\n');
 }
 
 /* ルートのコミットハッシュの訂正 */
 void Object::rehash_root(){
     hash=sha1Code(".eat/index");
+//    hash=sha1(cyclic_getPath(""));
 }
 
 /*-----------------------------------------ゲッター終了----------------------------------------------*/
