@@ -75,6 +75,11 @@ int write(std::string filepath, std::string msg, std::ios_base::openmode opt);
 std::string last_commit(std::string branch);
 
 /**
+ * commitファイルidのリストを取得
+ */
+std::vector<std::string> commitlist();
+
+/**
  * ファイルを作成する
  */
 void touch(std::string filename);
@@ -88,5 +93,10 @@ void rmfiles(std::vector<std::string> filelist);
  * ignoreを考慮した削除リストを作成
  */
 void ignored_list(std::vector<std::string> filelist);
+
+/**
+ * ファイルの差分を抽出する
+ */
+void diff(std::string f1, std::string f2);
 
 #endif /* util_hpp */

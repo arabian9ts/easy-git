@@ -142,6 +142,21 @@ std::string last_commit(std::string branch){
 }
 
 /**
+ * commitファイルidのリストを取得
+ */
+std::vector<std::string> commitlist(){
+    std::vector<std::string> comlist;
+    std::vector<std::string> logs=getLogs(getBranch());
+    
+    for (int idx=logs.size()-2; idx>=0; idx--) {
+        if(2==idx%3)
+            comlist.push_back(logs[idx]);
+    }
+    
+    return comlist;
+}
+
+/**
 * ファイルを作成する
 */
 void touch(std::string filename){
@@ -170,3 +185,14 @@ void rmfiles(std::vector<std::string> filelist){
 void ignored_list(std::vector<std::string> filelist){
     
 }
+
+/**
+ * ファイルの差分を抽出する
+ */
+void diff(std::string f1, std::string f2){
+    
+}
+
+
+
+
