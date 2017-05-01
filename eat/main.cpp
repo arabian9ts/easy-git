@@ -16,23 +16,23 @@ Object* root=NULL;
  * headsファイルに書き出す
  * @param refer : 現在のブランチのパス
  */
-int write_head(std::string refer){
+void write_head(std::string refer){
     write(".eat/HEAD", refer, std::ofstream::trunc);
-    return 0;
 }
 
 /**
  * refsファイルに書き出す
+ * @param hashcode : ヘッドの参照コミットハッシュ
  */
-int write_refs(std::string hashcode){
+void write_refs(std::string hashcode){
     write(".eat/refs/heads/"+getBranch(), hashcode, std::ofstream::trunc);
-    return 0;
 }
 
 /**
  * blobオブジェクトのパスをindexに書き出す
+ * @oaram file_name_list : indexに書き出すファイルのリスト
  */
-int write_index(std::vector<std::string> file_names_list){
+void write_index(std::vector<std::string> file_names_list){
 
     std::sort(file_names_list.begin(), file_names_list.end());
     file_names_list.erase(std::unique(file_names_list.begin(),
@@ -47,14 +47,15 @@ int write_index(std::vector<std::string> file_names_list){
     }
     
     writing_file.close();
-    
-    return 0;
 }
 
-int write_log(std::string commit_msg){
+/**
+ * コミットログを書き出す
+ * @param commit_msg : コミットログに記録するコミットメッセージ
+ */
+void write_log(std::string commit_msg){
     write(".eat/logs/"+getBranch(),
           "\""+commit_msg+"\"\n"+getTime()+"\n"+root->getHash(), std::ofstream::app);
-    return 0;
 }
 
 /*---------------------------------------ファイル操作関数終了-------------------------------------------*/
@@ -64,12 +65,12 @@ int write_log(std::string commit_msg){
  * initコマンドを実行
  * index, refsなどを生成
  */
-int init(){
+void init(){
     struct stat st;
      if(stat(".eat", &st) == 0){
          std::cout << "directory is already administered by eat" <<
          std::endl;
-         return 0;
+         return;
      }
     
     /* create dirs such as objects, refs, ...*/
@@ -96,14 +97,15 @@ int init(){
     
     write_head(".eat/refs/heads/master");
     
-    return 0;
 }
 
 
 /**
  * addコマンドを実行する
+ * @param argc : 指定されたファイル/ディレクトリの数
+ * @param argv : 指定されたファイル/ディレクトリの名前
  */
-int add(int argc, const char *argv[]){
+void add(int argc, const char *argv[]){
     root=new Object(Object::Type::commit,"","");
 //    if(read(".eat/index")!="")
 //        index2tree(root, 0);
@@ -128,13 +130,13 @@ int add(int argc, const char *argv[]){
     root->make_copy_objects();
     
     root->dump();
-    return 0;
 }
 
 /**
  * indexからコミットツリーを作成し、commitファイルを生成する
+ * @param tree_generated : すでにコミットツリーが生成されているかどうか
  */
-int commit(int tree_generated){
+void commit(int tree_generated){
     if(!tree_generated){
         root=new Object(Object::Type::commit,"","");
         index2tree(root, 0);
@@ -144,31 +146,30 @@ int commit(int tree_generated){
     
     if(last_commit(getBranch())==root->getHash()){
         std::cout << "no changes to commit" << std::endl;
-        return 0;
+        return;
     }
     
     root->make_tree_blob_obj();
     write_log(fetch_commit_msg());
     write_refs(root->getHash());
     
-    return 0;
 }
 
 /**
  * リポジトリ内のすべてのファイルをaddし、内部でcommitする
  */
-int reflect(){
+void reflect(){
     const char* args[]={"dammy","./"};
     add(1, args);
     root->rehash_root();
     commit(1);
-    return 0;
 }
 
 /**
  * コミットログをダンプ
+ * @param count : 何個前までのログを表示するか
  */
-int log(int count=0){
+void log(int count=0){
     std::vector<std::string> logs=getLogs(getBranch());
     count=(logs.size()/3-count)*3;
     if(count<0 || count==logs.size())
@@ -182,7 +183,6 @@ int log(int count=0){
         if(i%3==2)
             std::cout << "\ncommit: " << logs[i] << std::endl;
     }
-    return 0;
 }
 
 
@@ -190,8 +190,9 @@ int log(int count=0){
  * 引数に応じてresetを実行
  * commit id -> その時点のコミットまでリセット
  * HEAD　-> 直前までリセット
+ * @param version : 何個前のバージョンの状態に戻すか
  */
-int reset(int version=0){
+void reset(int version=0){
     std::vector<std::string> rmlist=split(read(".eat/index","\n",1), '\n');
     for(int i=0;i<rmlist.size();i++){
         rmlist[i]=split(rmlist[i], ' ')[0];
@@ -213,20 +214,20 @@ int reset(int version=0){
     root->dump();
     root->restore();
     write_index(root->index_path_set());
-    return 0;
 }
 
 
 /**
  * 引数あり : ブランチ作成, 引数なし : ブランチリストをダンプ
+ * @param branch : 作成するブランチ名, 空文字の場合はブランチリストの要求と解釈
  */
-int branch(std::string branch){
+void branch(std::string branch){
     if(""==branch){
         std::vector<std::string> branch_list=file_dir_list(".eat/refs/heads");
         for(auto v : branch_list)
             std::cout << v << std::endl;
         std::cout << "\nnow: @" << getBranch() << std::endl;
-        return 0;
+        return;
     }
     
     root=new Object(Object::Type::commit,"","");
@@ -237,14 +238,13 @@ int branch(std::string branch){
         root->copy_obj(".eat/logs/"+getBranch(), ".eat/logs/"+branch);
         root->copy_obj(".eat/refs/heads/"+getBranch(), ".eat/refs/heads/"+branch);
     }
-    
-    return 0;
 }
 
 /**
  * 作業ブランチを変更
+ * @param branch : チェックアウトするブランチ名
  */
-int checkout(std::string branch){
+void checkout(std::string branch){
     if(isExist(".eat/refs/heads/"+branch)){
         write_head(".eat/refs/heads/"+branch);
         std::cout << "switch to " << branch << std::endl;
@@ -253,7 +253,6 @@ int checkout(std::string branch){
     else{
         std::cout << "branch: " << branch << "is not exist" << std::endl;
     }
-    return 0;
 }
 
 /**
@@ -262,8 +261,9 @@ int checkout(std::string branch){
  * masterの最新コミットidがブランチに含まれているなら、fast-forward
  * そうでなければCONFLICTアラート
  * --force引数で強制的にマージし、masterのCONFLICTファイルをすべてマージ元のファイルで置き換える
+ * @param branxh : 取り込むブランチ名
  */
-int merge(std::string targ_branch){
+void merge(std::string targ_branch){
     std::string base_branch=getBranch();
     
     std::vector<std::string> targ_commits=commitlist(targ_branch);
@@ -281,8 +281,6 @@ int merge(std::string targ_branch){
     else{
         std::cout << "non fast-forward : " << std::endl;
     }
-    
-    return 0;
 }
 
 
@@ -292,6 +290,9 @@ int merge(std::string targ_branch){
 /**
  * メイン関数
  * コマンドライン引数からコマンドを識別し、実行する
+ * @param argc : サブコマンド,引数の数(プログラム名含む)
+ * @param argv : サブコマンド,引数(プログラム名含む)
+ * @return : プログラム終了コード
  */
 
 int main(int argc, const char *argv[]) {

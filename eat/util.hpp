@@ -66,7 +66,7 @@ std::vector<std::string> file_dir_list(std::string path);
  * 指定したファイルに文字列を書き込む
  * opt : 書き込みオプション
  */
-int write(std::string filepath, std::string msg, std::ios_base::openmode opt);
+void write(std::string filepath, std::string msg, std::ios_base::openmode opt);
 
 /**
  * 最新コミットのハッシュ値を返す

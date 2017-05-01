@@ -11,6 +11,9 @@
 /**
  * ノードジェネレータ
  * make_tree 内で利用
+ * @param *parent : 接ぎ木する親オブジェクトのポインタ
+ * @param *targ : 接ぎ木するオブジェクトのポインタ
+ * @return : 接ぎ木したオブジェクトのポインタ
  */
 Object* graft(Object *parent, Object *targ){
     /* rootノードが存在しないなら終了 */
@@ -34,6 +37,8 @@ Object* graft(Object *parent, Object *targ){
 
 /**
  * blob と tree の木構造を再帰的に生成
+ * @param *subtree : 再帰呼び出しでの各階層の親のポインタ
+ * @param subroot : 再帰呼び出しでの各階層の親の名前
  */
 std::string relative_path="";
 void read_native_tree(Object *subtree, std::string subroot){
@@ -66,6 +71,8 @@ void read_native_tree(Object *subtree, std::string subroot){
  * indexからコミットツリーを生成
  * rehash : add, reflectでは最新のファイル状態を取得するため再ハッシュ
  * commitでは再ハッシュは行わない
+ * @param *root : 作業空間ディレクトリ
+ * @param rehash : オブジェクトのハッシュを計算しなおすかどうか
  */
 void index2tree(Object* root, int rehash){
     Object::Type type;
@@ -144,6 +151,8 @@ void index2tree(Object* root, int rehash){
 
 /**
  * commitオブジェクトからツリーを生成
+ * @param *root : 作業空間のディレクトリ
+ * @param comhash : コミットツリーを生成する対象のコミットハッシュ
  */
 void commit2tree(Object* root, std::string comhash){
     std::vector<std::string> lines=split(read(".eat/objects/"+comhash,"\n",1), '\n');

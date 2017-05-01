@@ -17,6 +17,10 @@
 /**
  * ノードの初期化用関数
  * コンストラクタのオーバーロードを擬似的に再現
+ * @oaram type : 自身がどの種類のオブジェクトか指定
+ * @param name : 自身が作業空間でもっている名前
+ * @param path : 自身が作業空間でもっているルートからの相対パス
+ * @param hash : 自身がもっているsha1ハッシュ値
  */
 void Object::initialize(Type type, std::string name, std::string path, std::string hash){
     this->type=type;
@@ -36,6 +40,9 @@ Object::Object(){
 
 /**
  * 初期化用コンストラクタ
+ * @oaram type : 自身がどの種類のオブジェクトか指定
+ * @param name : 自身が作業空間でもっている名前
+ * @param path : 自身が作業空間でもっているルートからの相対パス
  */
 Object::Object(Type type, std::string name, std::string path){
     initialize(type, name, path, "");
@@ -43,13 +50,17 @@ Object::Object(Type type, std::string name, std::string path){
 
 /**
  * 初期化用コンストラクタ(ハッシュが予め求まっている場合)
+ * @oaram type : 自身がどの種類のオブジェクトか指定
+ * @param name : 自身が作業空間でもっている名前
+ * @param path : 自身が作業空間でもっているルートからの相対パス
+ * @param hash : 自身がもっているsha1ハッシュ値
  */
 Object::Object(Type type, std::string name, std::string path, std::string hash){
     initialize(type, name, path, hash);
 }
 
 /**
- * 再帰的にデストラクタを呼びだせる
+ * 再帰的にデストラクタを呼び出し、コミットツリーを解放
  */
 Object::~Object(){
     if(this->child!=NULL){
@@ -93,6 +104,13 @@ void Object::calc_hash(){
 }
 
 /**
+ * ルートのコミットハッシュの訂正
+ */
+void Object::rehash_root(){
+    hash=sha1Code(".eat/index");
+}
+
+/**
  * ファイルの詳細を出力
  */
 void Object::dump(){
@@ -108,7 +126,9 @@ void Object::dump(){
         next->dump();
 }
 
-/* Objectファイルを元のプロジェクトに復元 */
+/**
+ * Objectファイルを指定したバージョンに復元
+ */
 void Object::restore(){
     
     if("blob"==getType())
@@ -137,6 +157,8 @@ void Object::make_copy_objects(){
 
 /**
  * ファイルを.eat/objectsにコピー
+ * @param from : ファイルのコピー元
+ * @param to : ファイルのコピー先
  */
 void Object::copy_obj(std::string from, std::string to){
     struct stat st;
@@ -159,6 +181,7 @@ void Object::copy_obj(std::string from, std::string to){
 
 /**
  * tree, blobオブジェクトの生成
+ * @return : 同階層のオブジェクトパスを連結した文字列
  */
 std::string Object::make_tree_blob_obj(){
     /* カレント以下のオブジェクトをすべて取得 */
@@ -184,6 +207,7 @@ std::string Object::make_tree_blob_obj(){
 
 /**
  * オブジェクトのタイプを返す
+ * @return : オブジェクトの種類
  */
 std::string Object::getType(){
     return type_strs[type];
@@ -191,6 +215,7 @@ std::string Object::getType(){
 
 /**
  * オブジェクトのネイティブ名を返す
+ * @return : オブジェクトの作業空間での名前
  */
 std::string Object::getName(){
     return name;
@@ -198,6 +223,7 @@ std::string Object::getName(){
 
 /**
  * オブジェクトのハッシュ値を返す
+ * @return : ファイルのハッシュ値
  */
 std::string Object::getHash(){
     return hash;
@@ -205,6 +231,7 @@ std::string Object::getHash(){
 
 /**
  * オブジェクトの相対パスを返す
+ * @return : オブジェクトのルートからの相対パス
  */
 std::string Object::getPath(){
     return path;
@@ -212,6 +239,8 @@ std::string Object::getPath(){
 
 /**
  * 再帰的に相対パスを連結する
+ * @param buff : 再帰的にすべてのtree,blobオブジェクトのパスを連結
+ * @return : パスの連結結果
  */
 std::string Object::cyclic_getPath(std::string buff){
     if(child!=NULL)
@@ -226,15 +255,10 @@ std::string Object::cyclic_getPath(std::string buff){
 
 /**
  * indexファイルに記述するためのファイル相対パスの集まりを返す
+ * @return : すべてのtree,blobオブジェクトのパスのリスト
  */
 std::vector<std::string> Object::index_path_set(){
     return split(cyclic_getPath(""),'\n');
-}
-
-/* ルートのコミットハッシュの訂正 */
-void Object::rehash_root(){
-    hash=sha1Code(".eat/index");
-//    hash=sha1(cyclic_getPath(""));
 }
 
 /*-----------------------------------------ゲッター終了----------------------------------------------*/

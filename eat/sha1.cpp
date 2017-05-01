@@ -13,6 +13,8 @@ typedef boost::array<boost::uint8_t,20> HashArray;
 
 /**
  * ファイル名とファイル内容からハッシュ値を計算し、その結果を返す
+ * @param targ : sha1ハッシュ化する対象の文字列
+ * @return : sha1ハッシュコード
  */
 std::string sha1(std::string targ){
     

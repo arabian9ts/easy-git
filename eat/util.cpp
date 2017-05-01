@@ -10,6 +10,7 @@
 
 /**
  * 現在の時刻を返す
+ * @return : 現在時刻を"%Y-%m-%d %H:%M:%S"フォーマットしたもの
  */
 std::string getTime(){
     time_t now = std::time(nullptr);
@@ -20,6 +21,7 @@ std::string getTime(){
 
 /**
  * 現在のブランチを返す
+ * @return : 現在ヘッドの向いているブランチ
  */
 std::string getBranch(){
     std::vector<std::string> dirs=split(read(".eat/HEAD","",1), '/');    
@@ -29,6 +31,10 @@ std::string getBranch(){
 
 /**
  * 指定したファイルのすべての行を読み込んで返す
+ * @param filename : 読み込む対象のファイル名
+ * @param endline : 一行読み込むごとに行末に書き込む文字
+ * @param skip_empty_line : 空行をスキップするかどうか
+ * @return ; 読み込んで連結した文字列
  */
 std::string read(std::string filename, std::string endline, int skip_empty_line){
     std::ifstream ifs(filename.c_str());
@@ -45,6 +51,8 @@ std::string read(std::string filename, std::string endline, int skip_empty_line)
 
 /**
  * ファイルのハッシュ値を計算する
+ * @param filepath : sha1化したいファイルのルートからの相対パス
+ * @return : sha1ハッシュコード
  */
 std::string sha1Code(std::string filepath){
     return sha1(read(filepath));
@@ -52,6 +60,9 @@ std::string sha1Code(std::string filepath){
 
 /**
  * 文字列を指定のデリミタで分割した結果をvectorで返す
+ * @param input : 分割対象の文字列
+ * @param delimiter : 区切り文字
+ * @return : 分割したリスト
  */
 std::vector<std::string> split(std::string input, char delimiter){
     std::istringstream stream(input);
@@ -66,6 +77,8 @@ std::vector<std::string> split(std::string input, char delimiter){
 /**
  * logをvectorで返す
  * vectorの中身はhash, date, msgのサイクル
+ * @param branch : ログを取得したいブランチ名
+ * @return : ログを一行ずつに分割したリスト
  */
 std::vector<std::string> getLogs(std::string branch){
     return split(read(".eat/logs/"+branch,"\n",1),'\n');
@@ -73,7 +86,8 @@ std::vector<std::string> getLogs(std::string branch){
 
 /**
  * 指定したパス先がファイルかどうかをチェックする
- * 1 : ファイル, 0 : ファイルでない
+ * @param filename : チェック対象のファイル名
+ * @return : 1 -> ファイル, 0 -> ファイルでない
  */
 int isFile(std::string filename){    
     struct stat st;
@@ -86,7 +100,8 @@ int isFile(std::string filename){
 
 /**
  * ファイル/ディレクトリが存在するか確認する
- * return: 1: 存在する 0: 存在しない
+ * @param filename : チェック対象のファイル名
+ * @return : 1 -> 存在する, 0 -> 存在しない
  */
 int isExist(std::string filename){
     struct stat st;
@@ -98,6 +113,8 @@ int isExist(std::string filename){
 
 /**
  * 同階層のファイル、ディレクトリ名の一覧を取得
+ * @param path : ファイル/ディレクトリの一覧を取得したい階層のルートからの相対パス
+ * @return : 同階層のすべてのファイルとディレクトリ名のリスト
  */
 std::vector<std::string> file_dir_list(std::string path){
     DIR *dir;
@@ -123,18 +140,21 @@ std::vector<std::string> file_dir_list(std::string path){
 
 /**
  * 指定したファイルに文字列を書き込む
- * opt : 書き込みオプション
+ * @param filepath : 書き出すファイルのパス
+ * @param msg : 書き込む文字列
+ * @param opt : 書き込みオプション
  */
-int write(std::string filepath, std::string msg, std::ios_base::openmode opt){
+void write(std::string filepath, std::string msg, std::ios_base::openmode opt){
     std::ofstream writing_file;
     writing_file.open(filepath, opt);
     writing_file << msg << std::endl;
     writing_file.close();
-    return 0;
 }
 
 /**
  * 最新コミットのハッシュ値を返す
+ * @param branch : 最新コミットを取得するブランチ名
+ * @return : 指定したブランチの最終コミットのハッシュ値
  */
 std::string last_commit(std::string branch){
     std::string last_commit_hash=read(".eat/refs/heads/"+branch);
@@ -143,22 +163,23 @@ std::string last_commit(std::string branch){
 
 /**
  * commitファイルidのリストを取得
+ * @param branch : コミットのハッシュリストを取得したいブランチ名
+ * @return : 指定したブランチでのコミットハッシュリスト
  */
 std::vector<std::string> commitlist(std::string branch){
     std::vector<std::string> comlist;
     std::vector<std::string> logs=getLogs(branch);
     
-    for (int idx=logs.size()-1; idx>=0; idx--) {
+    for (int idx=logs.size()-1; idx>=0; idx--)
         if(2==idx%3)
             comlist.push_back(logs[idx]);
-    }
-    
     return comlist;
 }
 
 /**
-* ファイルを作成する
-*/
+ * ファイルを作成する
+ * @param filename : 作成するファイル名
+ */
 void touch(std::string filename){
     std::ofstream strm;
     strm.open(filename);
@@ -167,6 +188,7 @@ void touch(std::string filename){
 
 /**
  * ファイルを一括削除する
+ * @param filelist : 削除するファイル名のリスト
  */
 void rmfiles(std::vector<std::string> filelist){
     int count=0;
@@ -181,6 +203,8 @@ void rmfiles(std::vector<std::string> filelist){
 
 /**
  * ignoreを考慮した削除リストを作成
+ * @param filelist : eat管理ファイルのリスト
+ * @return : ignoreを考慮したコミット対象ファイルリスト
  */
 void ignored_list(std::vector<std::string> filelist){
     
@@ -188,6 +212,8 @@ void ignored_list(std::vector<std::string> filelist){
 
 /**
  * ファイルの差分を抽出する
+ * @param f1 : 差分抽出対象ファイル1
+ * @param f2 : 差分抽出対象ファイル2
  */
 void diff(std::string f1, std::string f2){
     
@@ -195,6 +221,8 @@ void diff(std::string f1, std::string f2){
 
 /**
  * commit messageを取得
+ * コミットメッセージを入力するまでループ
+ * @return : コミットメッセージ
  */
 std::string fetch_commit_msg(){
     std::string msg="";
