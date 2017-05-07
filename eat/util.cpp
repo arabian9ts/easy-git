@@ -41,9 +41,16 @@ std::string read(std::string filename, std::string endline, int skip_empty_line)
     std::string line="";
     std::string buff="";
     if(ifs){
-        while(getline(ifs,line))
-            if(!(skip_empty_line & (line=="\r" || line=="\n" || line=="\0")))
+        while(getline(ifs,line)){
+            if(line=="\r" || line=="\n" || line=="\0"){
+//                std::cout << "empty line" << std::endl;
+                if(!skip_empty_line){
+                    buff+="\n"+endline;
+                }
+            }
+            else
                 buff+=line+endline;
+        }
     }
     ifs.close();
     return buff;

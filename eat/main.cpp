@@ -7,6 +7,7 @@
 //
 
 #include "generator.hpp"
+#include "readerTest.hpp"
 
 Object* root=NULL;
 
@@ -311,6 +312,11 @@ int main(int argc, const char *argv[]) {
     if(strcmp(subcom, "init")==0){
         init();
     }
+    
+    if(!isExist(".eat")){
+        std::cout << "this dir is not eat repository" << std::endl;
+        return 0;
+    }
     else if(strcmp(subcom, "add")==0){
         add(argc, ++argv);
     }
@@ -357,6 +363,7 @@ int main(int argc, const char *argv[]) {
     }
     
 //    sha1Test();
+    readerTest();
     
     if(root!=NULL)
         delete root;

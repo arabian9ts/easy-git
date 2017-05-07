@@ -13,6 +13,7 @@
 		FF2CCFCA1E9904B300779690 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2CCFC61E9904B300779690 /* sha1.cpp */; };
 		FF3E29091EA6798000F222A1 /* generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3E29071EA6798000F222A1 /* generator.cpp */; };
 		FF43FAB61EA3291600C99430 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF43FAB41EA3291600C99430 /* util.cpp */; };
+		FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB082291EBEF09100EC2F1B /* readerTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,8 @@
 		FF3E29081EA6798000F222A1 /* generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = generator.hpp; sourceTree = "<group>"; };
 		FF43FAB41EA3291600C99430 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = util.cpp; sourceTree = "<group>"; };
 		FF43FAB51EA3291600C99430 /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
+		FFB082291EBEF09100EC2F1B /* readerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readerTest.cpp; path = test/readerTest.cpp; sourceTree = "<group>"; };
+		FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = readerTest.hpp; path = test/readerTest.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +62,8 @@
 			children = (
 				FF0EB58E1EA2BE630086BA6C /* sha1Test.cpp */,
 				FF0EB58F1EA2BE630086BA6C /* sha1Test.hpp */,
+				FFB082291EBEF09100EC2F1B /* readerTest.cpp */,
+				FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */,
 			);
 			name = test;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF2CCFC91E9904B300779690 /* object.cpp in Sources */,
+				FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */,
 				FF2CCFC81E9904B300779690 /* main.cpp in Sources */,
 				FF0EB5901EA2BE630086BA6C /* sha1Test.cpp in Sources */,
 				FF43FAB61EA3291600C99430 /* util.cpp in Sources */,
