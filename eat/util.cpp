@@ -8,11 +8,13 @@
 
 #include "util.hpp"
 
+using namespace util;
+
 /**
  * 現在の時刻を返す
  * @return : 現在時刻を"%Y-%m-%d %H:%M:%S"フォーマットしたもの
  */
-std::string getTime(){
+std::string util::getTime(){
     time_t now = std::time(nullptr);
     char clock[20];
     strftime(clock, 20, "%Y-%m-%d %H:%M:%S", localtime(&now));
@@ -23,7 +25,7 @@ std::string getTime(){
  * 現在のブランチを返す
  * @return : 現在ヘッドの向いているブランチ
  */
-std::string getBranch(){
+std::string util::getBranch(){
     std::vector<std::string> dirs=split(read(".eat/HEAD","",1), '/');    
     std::string branch=dirs.back();
     return branch;
@@ -36,7 +38,7 @@ std::string getBranch(){
  * @param skip_empty_line : 空行をスキップするかどうか
  * @return ; 読み込んで連結した文字列
  */
-std::string read(std::string filename, std::string endline, int skip_empty_line){
+std::string util::read(std::string filename, std::string endline, int skip_empty_line){
     std::ifstream ifs(filename.c_str());
     std::string line="";
     std::string buff="";
@@ -61,8 +63,8 @@ std::string read(std::string filename, std::string endline, int skip_empty_line)
  * @param filepath : sha1化したいファイルのルートからの相対パス
  * @return : sha1ハッシュコード
  */
-std::string sha1Code(std::string filepath){
-    return sha1(read(filepath));
+std::string util::sha1Code(std::string filepath){
+    return hash::sha1(read(filepath));
 }
 
 /**
@@ -71,7 +73,7 @@ std::string sha1Code(std::string filepath){
  * @param delimiter : 区切り文字
  * @return : 分割したリスト
  */
-std::vector<std::string> split(std::string input, char delimiter){
+std::vector<std::string> util::split(std::string input, char delimiter){
     std::istringstream stream(input);
     std::string field;
     std::vector<std::string> result;
@@ -87,7 +89,7 @@ std::vector<std::string> split(std::string input, char delimiter){
  * @param branch : ログを取得したいブランチ名
  * @return : ログを一行ずつに分割したリスト
  */
-std::vector<std::string> getLogs(std::string branch){
+std::vector<std::string> util::getLogs(std::string branch){
     return split(read(".eat/logs/"+branch,"\n",1),'\n');
 }
 
@@ -96,7 +98,7 @@ std::vector<std::string> getLogs(std::string branch){
  * @param filename : チェック対象のファイル名
  * @return : 1 -> ファイル, 0 -> ファイルでない
  */
-int isFile(std::string filename){    
+int util::isFile(std::string filename){
     struct stat st;
     stat(filename.c_str(), &st);
     if ((st.st_mode & S_IFMT) == S_IFDIR)
@@ -110,7 +112,7 @@ int isFile(std::string filename){
  * @param filename : チェック対象のファイル名
  * @return : 1 -> 存在する, 0 -> 存在しない
  */
-int isExist(std::string filename){
+int util::isExist(std::string filename){
     struct stat st;
     int result=stat(filename.c_str(), &st);
     if(0==result)
@@ -123,7 +125,7 @@ int isExist(std::string filename){
  * @param path : ファイル/ディレクトリの一覧を取得したい階層のルートからの相対パス
  * @return : 同階層のすべてのファイルとディレクトリ名のリスト
  */
-std::vector<std::string> file_dir_list(std::string path){
+std::vector<std::string> util::file_dir_list(std::string path){
     DIR *dir;
     struct dirent *dp;
     std::vector<std::string> result;
@@ -151,7 +153,7 @@ std::vector<std::string> file_dir_list(std::string path){
  * @param msg : 書き込む文字列
  * @param opt : 書き込みオプション
  */
-void write(std::string filepath, std::string msg, std::ios_base::openmode opt){
+void util::write(std::string filepath, std::string msg, std::ios_base::openmode opt){
     std::ofstream writing_file;
     writing_file.open(filepath, opt);
     writing_file << msg << std::endl;
@@ -163,7 +165,7 @@ void write(std::string filepath, std::string msg, std::ios_base::openmode opt){
  * @param branch : 最新コミットを取得するブランチ名
  * @return : 指定したブランチの最終コミットのハッシュ値
  */
-std::string last_commit(std::string branch){
+std::string util::last_commit(std::string branch){
     std::string last_commit_hash=read(".eat/refs/heads/"+branch);
     return last_commit_hash;
 }
@@ -173,7 +175,7 @@ std::string last_commit(std::string branch){
  * @param branch : コミットのハッシュリストを取得したいブランチ名
  * @return : 指定したブランチでのコミットハッシュリスト
  */
-std::vector<std::string> commitlist(std::string branch){
+std::vector<std::string> util::commitlist(std::string branch){
     std::vector<std::string> comlist;
     std::vector<std::string> logs=getLogs(branch);
     
@@ -187,7 +189,7 @@ std::vector<std::string> commitlist(std::string branch){
  * ファイルを作成する
  * @param filename : 作成するファイル名
  */
-void touch(std::string filename){
+void util::touch(std::string filename){
     std::ofstream strm;
     strm.open(filename);
     strm.close();
@@ -197,7 +199,7 @@ void touch(std::string filename){
  * ファイルを一括削除する
  * @param filelist : 削除するファイル名のリスト
  */
-void rmfiles(std::vector<std::string> filelist){
+void util::rmfiles(std::vector<std::string> filelist){
     int count=0;
     for (auto file : filelist){
         if(isFile(file)){
@@ -213,7 +215,7 @@ void rmfiles(std::vector<std::string> filelist){
  * @param filelist : eat管理ファイルのリスト
  * @return : ignoreを考慮したコミット対象ファイルリスト
  */
-void ignored_list(std::vector<std::string> filelist){
+void util::ignored_list(std::vector<std::string> filelist){
     
 }
 
@@ -222,7 +224,7 @@ void ignored_list(std::vector<std::string> filelist){
  * @param f1 : 差分抽出対象ファイル1
  * @param f2 : 差分抽出対象ファイル2
  */
-void diff(std::string f1, std::string f2){
+void util::diff(std::string f1, std::string f2){
     
 }
 
@@ -231,7 +233,7 @@ void diff(std::string f1, std::string f2){
  * コミットメッセージを入力するまでループ
  * @return : コミットメッセージ
  */
-std::string fetch_commit_msg(){
+std::string util::fetch_commit_msg(){
     std::string msg="";
     while(msg==""){
         std::cout << "commit message : ";

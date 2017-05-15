@@ -14,7 +14,11 @@
 #include <boost/cstdint.hpp>
 #include <boost/array.hpp>
 
-/* ファイルのハッシュ値を計算し、その結果を返す */
-std::string sha1(std::string targ);
+namespace hash{
+    
+    /* ファイルのハッシュ値を計算し、その結果を返す */
+    std::string sha1(std::string targ);
+    
+}
 
 #endif /* sha1_hpp */

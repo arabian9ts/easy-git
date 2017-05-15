@@ -12,6 +12,9 @@
 #include "eat.hpp"
 #include "sha1.hpp"
 
+/**
+ * sha1ハッシュのテスト
+ */
 int sha1Test();
 
 #endif /* sha1Test_hpp */

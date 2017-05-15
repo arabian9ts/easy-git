@@ -11,29 +11,32 @@
 
 #include "object.hpp"
 
+namespace gen {
+    
+    /**
+     * ノードジェネレータ
+     * make_tree 内で利用
+     */
+    Object* graft(Object *parent, Object *targ);
+    
+    /**
+     * blob と tree の木構造を再帰的に生成
+     */
+    void read_native_tree(Object *subtree, std::string subroot);
+    
+    /**
+     * indexからコミットツリーを生成
+     * rehash : add, reflectでは最新のファイル状態を取得するため再ハッシュ
+     * commitでは再ハッシュは行わない
+     */
+    void index2tree(Object* root, int rehash);
+    
+    /**
+     * commitオブジェクトからツリーを生成
+     */
+    void commit2tree(Object* root, std::string compath);
 
-/**
- * ノードジェネレータ
- * make_tree 内で利用
- */
-Object* graft(Object *parent, Object *targ);
-
-/**
- * blob と tree の木構造を再帰的に生成
- */
-void read_native_tree(Object *subtree, std::string subroot);
-
-/**
- * indexからコミットツリーを生成
- * rehash : add, reflectでは最新のファイル状態を取得するため再ハッシュ
- * commitでは再ハッシュは行わない
- */
-void index2tree(Object* root, int rehash);
-
-/**
- * commitオブジェクトからツリーを生成
- */
-void commit2tree(Object* root, std::string compath);
+}
 
 
 #endif /* generator_hpp */

@@ -16,7 +16,7 @@ typedef boost::array<boost::uint8_t,20> HashArray;
  * @param targ : sha1ハッシュ化する対象の文字列
  * @return : sha1ハッシュコード
  */
-std::string sha1(std::string targ){
+std::string hash::sha1(std::string targ){
     
     boost::uuids::detail::sha1 sha1;
     unsigned int inthash[5];

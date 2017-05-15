@@ -90,10 +90,10 @@ void Object::calc_hash(){
         }
     }
     else{
-        buff+=read(".eat/index");
+        buff+=util::read(".eat/index");
     }
     
-    hash=sha1(buff);
+    hash=hash::sha1(buff);
     buff=std::string("");
     
     if(child!=NULL)
@@ -107,7 +107,7 @@ void Object::calc_hash(){
  * ルートのコミットハッシュの訂正
  */
 void Object::rehash_root(){
-    hash=sha1Code(".eat/index");
+    hash=util::sha1Code(".eat/index");
 }
 
 /**
@@ -192,12 +192,12 @@ std::string Object::make_tree_blob_obj(){
     while(current!=NULL){
         buff+=current->getType()+" "+current->getName()+" "+current->getHash()+"\n";
         if(current->child!=NULL)
-            write(".eat/objects/"+getHash(), current->make_tree_blob_obj(), std::ofstream::trunc);
+            util::write(".eat/objects/"+getHash(), current->make_tree_blob_obj(), std::ofstream::trunc);
         current=current->next;
     }
     
     /* 連結した情報を書き出し */
-    write(".eat/objects/"+this->getHash(), buff, std::ofstream::trunc);
+    util::write(".eat/objects/"+this->getHash(), buff, std::ofstream::trunc);
 
     return buff;
 }
@@ -258,7 +258,7 @@ std::string Object::cyclic_getPath(std::string buff){
  * @return : すべてのtree,blobオブジェクトのパスのリスト
  */
 std::vector<std::string> Object::index_path_set(){
-    return split(cyclic_getPath(""),'\n');
+    return util::split(cyclic_getPath(""),'\n');
 }
 
 /*-----------------------------------------ゲッター終了----------------------------------------------*/

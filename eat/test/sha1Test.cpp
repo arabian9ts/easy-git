@@ -8,6 +8,9 @@
 
 #include "sha1Test.hpp"
 
+/**
+ * sha1ハッシュのテスト
+ */
 int sha1Test(){
     std::string testArray[]={"abc","1243err33",":;ads"};
     std::string expected[]={"a9993e364706816aba3e25717850c26c9cd0d89d",
@@ -17,7 +20,7 @@ int sha1Test(){
     std::string result;
 
     for(int i=0;i<sizeof(testArray)/sizeof(testArray[0]);i++){
-        result=sha1(testArray[i]);
+        result=hash::sha1(testArray[i]);
         std::cout << "TEST : " << testArray[i] << std::endl;
         if(result==expected[i]){
             std::cout << "OK : " << testArray[i] << " -> " << result << std::endl;

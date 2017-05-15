@@ -8,6 +8,8 @@
 
 #include "generator.hpp"
 
+using namespace gen;
+
 /**
  * ノードジェネレータ
  * make_tree 内で利用
@@ -15,7 +17,7 @@
  * @param *targ : 接ぎ木するオブジェクトのポインタ
  * @return : 接ぎ木したオブジェクトのポインタ
  */
-Object* graft(Object *parent, Object *targ){
+Object* gen::graft(Object *parent, Object *targ){
     /* rootノードが存在しないなら終了 */
     if(parent==NULL)
         return NULL;
@@ -41,8 +43,8 @@ Object* graft(Object *parent, Object *targ){
  * @param subroot : 再帰呼び出しでの各階層の親の名前
  */
 std::string relative_path="";
-void read_native_tree(Object *subtree, std::string subroot){
-    std::vector<std::string> files_dirs=file_dir_list(subroot);
+void gen::read_native_tree(Object *subtree, std::string subroot){
+    std::vector<std::string> files_dirs=util::file_dir_list(subroot);
     
     /* すべてのディレクトリを読み込み */
     for(auto v : files_dirs){
@@ -51,10 +53,10 @@ void read_native_tree(Object *subtree, std::string subroot){
         else
             relative_path=v;
         
-        if(!isExist(relative_path))
+        if(!util::isExist(relative_path))
             return;
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
-        if (!isFile(relative_path)) {
+        if (!util::isFile(relative_path)) {
             // ツリーオブジェクトをルートにして部分木を生成
             read_native_tree(graft(subtree,new Object(Object::Type::tree,v,relative_path)),relative_path);
         }
@@ -74,10 +76,10 @@ void read_native_tree(Object *subtree, std::string subroot){
  * @param *root : 作業空間ディレクトリ
  * @param rehash : オブジェクトのハッシュを計算しなおすかどうか
  */
-void index2tree(Object* root, int rehash){
+void gen::index2tree(Object* root, int rehash){
     Object::Type type;
     std::vector<std::string> index_lines;
-    index_lines=split(read(".eat/index","\n",1), '\n');
+    index_lines=util::split(util::read(".eat/index","\n",1), '\n');
     
     /* Object*のアドレスを格納するmap */
     std::map<std::string, Object*> mp;
@@ -100,9 +102,9 @@ void index2tree(Object* root, int rehash){
         /*-------------------各行でリセットする値---------------------*/
         parent=root;
         stored_path="";
-        filepath_hash=split(line, ' ');
+        filepath_hash=util::split(line, ' ');
         line=filepath_hash[0];
-        dirs=split(line, '/');
+        dirs=util::split(line, '/');
         std::vector<std::string>::iterator dir = dirs.begin();
         /*---------------------------------------------------------*/
         
@@ -112,7 +114,7 @@ void index2tree(Object* root, int rehash){
             /* 確認済みのパス(初期はrootと同地)に連結 */
             stored_path+=*dir;
             
-            if(!isExist(stored_path)){
+            if(!util::isExist(stored_path)){
                 std::cout << "not exists " << stored_path << " of " << line << std::endl;
                 break;
             }
@@ -121,7 +123,7 @@ void index2tree(Object* root, int rehash){
             if(mp.count(stored_path)==0){
                 
                 /* ファイル化かディレクトリでtypeを決定しておく */
-                if(isFile(stored_path))
+                if(util::isFile(stored_path))
                     type=Object::Type::blob;
                 else
                     type=Object::Type::tree;
@@ -154,8 +156,8 @@ void index2tree(Object* root, int rehash){
  * @param *root : 作業空間のディレクトリ
  * @param comhash : コミットツリーを生成する対象のコミットハッシュ
  */
-void commit2tree(Object* root, std::string comhash){
-    std::vector<std::string> lines=split(read(".eat/objects/"+comhash,"\n",1), '\n');
+void gen::commit2tree(Object* root, std::string comhash){
+    std::vector<std::string> lines=util::split(util::read(".eat/objects/"+comhash,"\n",1), '\n');
     
     /* index各行のファイルパスとハッシュを分断したベクトル */
     std::vector<std::string> type_name_hash;
@@ -166,7 +168,7 @@ void commit2tree(Object* root, std::string comhash){
     
     /* 一行ずつindexを読み込む */
     for(auto line : lines){
-        type_name_hash=split(line, ' ');
+        type_name_hash=util::split(line, ' ');
         type=type_name_hash[0];
         name=type_name_hash[1];
         hash=type_name_hash[2];
