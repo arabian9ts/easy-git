@@ -132,6 +132,7 @@ void add(int argc, const char *argv[]){
     root -> make_copy_objects();
     
     root -> dump();
+    
 }
 
 /**
@@ -330,6 +331,7 @@ int main(int argc, const char *argv[]) {
     }
     else if(strcmp(subcom, "add") == 0){
         add(argc, ++argv);
+        std::cout << "Warning : this formula is deprecated !" << std::endl;
     }
     else if(strcmp(subcom, "commit") == 0){
         commit(0);
@@ -343,19 +345,19 @@ int main(int argc, const char *argv[]) {
         else if(argc == 1)
             branch(argv[2]);
         else
-            std::cout << "assert branch usage" << std::endl;
+            std::cout << "check for branch fomula by using: eat help branch" << std::endl;
     }
     else if(strcmp(subcom, "checkout") == 0){
         if(argc == 1)
             checkout(argv[2]);
         else
-            std::cout << "assert checkout usage" << std::endl;
+            std::cout << "check for checkout fomula by using: eat help checkout" << std::endl;
     }
     else if(strcmp(subcom, "merge") == 0){
         if(argc == 1)
             merge(argv[2]);
         else
-            std::cout << "assert merge usage" << std::endl;
+            std::cout << "check for merge fomula by using: eat help merge" << std::endl;
     }
     else if(strcmp(subcom, "reset") == 0){
         if(argc == 0)
@@ -370,7 +372,7 @@ int main(int argc, const char *argv[]) {
             log();
     }
     else{
-        std::cout << "not eat command !  execute \"eat\" and check usage !\n" << std::endl;
+        std::cout << "ERROR : not eat command !  check formulae by using: eat help" << std::endl;
     }
     
 //    sha1Test();
@@ -379,4 +381,6 @@ int main(int argc, const char *argv[]) {
     if(root != NULL)
         delete root;
     return 0;
+    
+/*----------------------------------------PROGRAM END-------------------------------------------*/
 }
