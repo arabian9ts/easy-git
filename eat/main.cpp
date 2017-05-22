@@ -183,12 +183,13 @@ void reflect(){
  * コミットログをダンプ
  * @param count : 何個前までのログを表示するか
  */
-void log(int count=1){
+void log(int count = 5){
     std::vector<Log> logs=util::getLogs(util::getBranch());
     
     if(logs.size() < count)
         count = logs.size();
     
+    std::cout << std::endl;
     for (int i = 0; i < count; i++) {
         logs[i].dump();
     }

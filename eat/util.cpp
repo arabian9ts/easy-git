@@ -93,7 +93,8 @@ std::vector<Log> util::getLogs(std::string branch){
     std::vector<Log> logs;
     std::vector<std::string> elem=split(read(".eat/logs/"+branch,"\n",1),'\n');
     
-    for(int i=elem.size()-1;i>=2;i--){
+    
+    for(int i = elem.size()-1; i-2 >= 0; i -= 3){
         logs.push_back(*new Log(elem[i], elem[i-1], elem[i-2]));
     }
     
