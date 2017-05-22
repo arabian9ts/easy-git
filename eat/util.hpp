@@ -9,7 +9,7 @@
 #ifndef util_hpp
 #define util_hpp
 
-#include "eat.hpp"
+#include "log.hpp"
 #include "sha1.hpp"
 #include <dirent.h>
 
@@ -30,8 +30,8 @@ namespace util{
     /** 文字列を指定のデリミタで分割した結果をvectorで返す */
     std::vector<std::string> split(std::string input, char delimiter);
     
-    /** logをvectorで返す vectorの中身はhash, date, msgのサイクル */
-    std::vector<std::string> getLogs(std::string branch);
+    /** logをvectorで返す vectorの中身はhash, date, msgを含むLogインスタンス */
+    std::vector<Log> getLogs(std::string branch);
     
     /** 指定したパス先がファイルかどうかをチェックする 1 : ファイル, 0 : ファイルでない */
     int isFile(std::string filename);

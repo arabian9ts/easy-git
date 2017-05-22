@@ -87,10 +87,17 @@ std::vector<std::string> util::split(std::string input, char delimiter){
  * logをvectorで返す
  * vectorの中身はhash, date, msgのサイクル
  * @param branch : ログを取得したいブランチ名
- * @return : ログを一行ずつに分割したリスト
+ * @return : ログのリスト
  */
-std::vector<std::string> util::getLogs(std::string branch){
-    return split(read(".eat/logs/"+branch,"\n",1),'\n');
+std::vector<Log> util::getLogs(std::string branch){
+    std::vector<Log> logs;
+    std::vector<std::string> elem=split(read(".eat/logs/"+branch,"\n",1),'\n');
+    
+    for(int i=elem.size()-1;i>=2;i--){
+        logs.push_back(*new Log(elem[i], elem[i-1], elem[i-2]));
+    }
+    
+    return logs;
 }
 
 /**
@@ -177,7 +184,7 @@ std::string util::last_commit(std::string branch){
  */
 std::vector<std::string> util::commitlist(std::string branch){
     std::vector<std::string> comlist;
-    std::vector<std::string> logs=getLogs(branch);
+    std::vector<std::string> logs=split(read(".eat/logs/"+branch,"\n",1),'\n');
     
     for (int idx=logs.size()-1; idx>=0; idx--)
         if(2==idx%3)

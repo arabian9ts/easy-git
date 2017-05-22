@@ -9,6 +9,7 @@
 #include "generator.hpp"
 #include "readerTest.hpp"
 
+
 Object* root=NULL;
 
 /*----------------------------------------ファイル操作関数--------------------------------------------*/
@@ -182,20 +183,16 @@ void reflect(){
  * コミットログをダンプ
  * @param count : 何個前までのログを表示するか
  */
-void log(int count=0){
-    std::vector<std::string> logs=util::getLogs(util::getBranch());
-    count=(logs.size()/3-count)*3;
-    if(count<0 || count==logs.size())
-        count=0;
+void log(int count=1){
+    std::vector<Log> logs=util::getLogs(util::getBranch());
     
-    for(int i=logs.size()-1;i>=count;i--){
-        if(i%3==0)
-            std::cout << "message: " << logs[i]+"\n" << std::endl;
-        else if(i%3==1)
-            std::cout << "date: " << logs[i] << std::endl;
-        if(i%3==2)
-            std::cout << "\ncommit: " << logs[i] << std::endl;
+    if(logs.size() < count)
+        count = logs.size();
+    
+    for (int i = 0; i < count; i++) {
+        logs[i].dump();
     }
+
 }
 
 

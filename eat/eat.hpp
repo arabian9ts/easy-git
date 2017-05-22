@@ -23,3 +23,24 @@
 #include <boost/algorithm/string.hpp>
 
 #endif /* eat_h */
+
+
+
+/**
+ 
+ 
+
+eat.hpp
+->
+ util.hpp(needs log)
+ ->
+  object.hpp
+  ->
+   generator.hpp
+   ->
+    main.cpp(needs log)
+
+
+
+
+*/
