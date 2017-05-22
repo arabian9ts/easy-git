@@ -57,7 +57,7 @@ void write_index(std::vector<std::string> file_names_list){
  */
 void write_log(std::string commit_msg){
     util::write(".eat/logs/"+util::getBranch(),
-                "\""+commit_msg+"\"\n"+util::getTime()+"\n"+root->getHash(), std::ofstream::app);
+                "\""+commit_msg+"\"\n"+util::getTime()+"\n"+root -> getHash(), std::ofstream::app);
 }
 
 /*---------------------------------------ファイル操作関数終了-------------------------------------------*/
@@ -76,25 +76,25 @@ void init(){
      }
     
     /* create dirs such as objects, refs, ...*/
-    const char  *dir_name[]={
+    const char  *dir_name[] = {
         ".eat",
         ".eat/objects",
         ".eat/refs",
         ".eat/refs/heads",
         ".eat/logs"};
     
-    for(int i=0;i<sizeof(dir_name)/sizeof(dir_name[0]);i++)
+    for(int i = 0; i < sizeof(dir_name)/sizeof(dir_name[0]); i++)
             mkdir(dir_name[i], 0775);
     
     /* create files such as HEAD, master, ... */
-    const char *file_names[]={
+    const char* file_names[] = {
         ".eat/index",
         ".eat/HEAD",
         ".eat/refs/heads/master",
         ".eat/config",
         ".eat/logs/master"};
     
-    for(int i=0;i<sizeof(file_names)/sizeof(file_names[0]);i++)
+    for(int i = 0; i < sizeof(file_names)/sizeof(file_names[0]); i++)
         util::touch(file_names[i]);
     
     write_head(".eat/refs/heads/master");
@@ -108,30 +108,30 @@ void init(){
  * @param argv : 指定されたファイル/ディレクトリの名前
  */
 void add(int argc, const char *argv[]){
-    root=new Object(Object::Type::commit,"","");
-    if(util::read(".eat/index")!="")
+    root = new Object(Object::Type::commit,"","");
+    if(util::read(".eat/index") != "")
         gen::index2tree(root, 0);
-    for(int i=1;i<=argc;i++){
+    for(int i = 1; i <= argc; i++){
         /* ディレクトリなら、そのディレクトリをrootとしてコール */
         if (!util::isFile(argv[i])) {
             // ツリーオブジェクトをルートにして部分木を生成
-            gen::read_native_tree(root,argv[i]);
+            gen::read_native_tree(root, argv[i]);
         }
         else if(util::isFile(argv[i])){
-            gen::graft(root, new Object(Object::Type::blob,argv[i],argv[i]));
+            gen::graft(root, new Object(Object::Type::blob, argv[i], argv[i]));
         }
         std::cout << argv[i] << std::endl;
     }
     
     /* それぞれのsha1ハッシュを計算 */
-    root->calc_hash();
+    root -> calc_hash();
     
     /* indexにパスを書き込み*/
-    write_index(root->index_path_set());
+    write_index(root -> index_path_set());
     
-    root->make_copy_objects();
+    root -> make_copy_objects();
     
-    root->dump();
+    root -> dump();
 }
 
 /**
@@ -140,20 +140,20 @@ void add(int argc, const char *argv[]){
  */
 void commit(int tree_generated){
     if(!tree_generated){
-        root=new Object(Object::Type::commit,"","");
+        root = new Object(Object::Type::commit, "", "");
         gen::index2tree(root, 0);
-        root->calc_hash();
+        root -> calc_hash();
 //        root->dump();
     }
     
-    if(util::last_commit(util::getBranch())==root->getHash()){
+    if(util::last_commit(util::getBranch()) == root -> getHash()){
         std::cout << "no changes to commit" << std::endl;
         return;
     }
     
-    root->make_tree_blob_obj();
+    root -> make_tree_blob_obj();
     write_log(util::fetch_commit_msg());
-    write_refs(root->getHash());
+    write_refs(root -> getHash());
     
 }
 
@@ -161,21 +161,21 @@ void commit(int tree_generated){
  * リポジトリ内のすべてのファイルをaddし、内部でcommitする
  */
 void reflect(){
-    const char* args[]={"dammy","./"};
+    const char* args[] = {"dammy", "./"};
 //    add(1, args);
-    root=new Object(Object::Type::commit,"","");
-    gen::read_native_tree(root,"./");
+    root = new Object(Object::Type::commit, "", "");
+    gen::read_native_tree(root, "./");
     
     /* それぞれのsha1ハッシュを計算 */
-    root->calc_hash();
+    root -> calc_hash();
     
     /* indexにパスを書き込み*/
-    write_index(root->index_path_set());
+    write_index(root -> index_path_set());
     
-    root->make_copy_objects();
+    root -> make_copy_objects();
     
-    root->dump();
-    root->rehash_root();
+    root -> dump();
+    root -> rehash_root();
     commit(1);
 }
 
@@ -203,28 +203,28 @@ void log(int count = 5){
  * HEAD　-> 直前までリセット
  * @param version : 何個前のバージョンの状態に戻すか
  */
-void reset(int version=0){
-    std::vector<std::string> rmlist=util::split(util::read(".eat/index","\n",1), '\n');
-    for(int i=0;i<rmlist.size();i++){
-        rmlist[i]=util::split(rmlist[i], ' ')[0];
+void reset(int version = 0){
+    std::vector<std::string> rmlist = util::split(util::read(".eat/index", "\n", 1),  '\n');
+    for(int i = 0; i < rmlist.size(); i++){
+        rmlist[i] = util::split(rmlist[i], ' ')[0];
         std::cout << "delete " << rmlist[i] << std::endl;
     }
     util::rmfiles(rmlist);
     
-    std::vector<std::string> commits=util::commitlist(util::getBranch());
+    std::vector<std::string> commits = util::commitlist(util::getBranch());
     
-    if(version>commits.size()-1)
-        version=commits.size()-1;
+    if(version > commits.size()-1)
+        version = commits.size()-1;
     
-    std::string commithash=commits[version];
+    std::string commithash = commits[version];
     std::cout << commithash << std::endl;
     
-    root=new Object(Object::Type::commit,"","");
+    root = new Object(Object::Type::commit,"","");
     gen::commit2tree(root, commithash);
     std::cout << "-------------------------" << std::endl;
-    root->dump();
-    root->restore();
-    write_index(root->index_path_set());
+    root -> dump();
+    root -> restore();
+    write_index(root -> index_path_set());
 }
 
 
@@ -233,21 +233,21 @@ void reset(int version=0){
  * @param branch : 作成するブランチ名, 空文字の場合はブランチリストの要求と解釈
  */
 void branch(std::string branch){
-    if(""==branch){
-        std::vector<std::string> branch_list=util::file_dir_list(".eat/refs/heads");
+    if("" == branch){
+        std::vector<std::string> branch_list = util::file_dir_list(".eat/refs/heads");
         for(auto v : branch_list)
             std::cout << v << std::endl;
         std::cout << "\nnow: @" << util::getBranch() << std::endl;
         return;
     }
     
-    root=new Object(Object::Type::commit,"","");
+    root = new Object(Object::Type::commit,"","");
     if(util::isExist(branch))
         std::cout << "branch: " << branch << "is already exist" << std::endl;
     else{
         util::touch(".eat/refs/heads/"+branch);
-        root->copy_obj(".eat/logs/"+util::getBranch(), ".eat/logs/"+branch);
-        root->copy_obj(".eat/refs/heads/"+util::getBranch(), ".eat/refs/heads/"+branch);
+        root -> copy_obj(".eat/logs/"+util::getBranch(), ".eat/logs/"+branch);
+        root -> copy_obj(".eat/refs/heads/"+util::getBranch(), ".eat/refs/heads/"+branch);
     }
 }
 
@@ -275,17 +275,17 @@ void checkout(std::string branch){
  * @param branxh : 取り込むブランチ名
  */
 void merge(std::string targ_branch){
-    std::string base_branch=util::getBranch();
+    std::string base_branch = util::getBranch();
     
-    std::vector<std::string> targ_commits=util::commitlist(targ_branch);
-    std::vector<std::string>::iterator itr=find(targ_commits.begin(),targ_commits.end(),util::last_commit(base_branch));
+    std::vector<std::string> targ_commits = util::commitlist(targ_branch);
+    std::vector<std::string>::iterator itr = find(targ_commits.begin(), targ_commits.end(), util::last_commit(base_branch));
     
-    if(itr!=targ_commits.end()){
+    if(itr != targ_commits.end()){
         std::cout << "fast-forward : " << std::endl;
-        root=new Object(Object::Type::commit,"","");
+        root = new Object(Object::Type::commit,"","");
         gen::commit2tree(root, util::last_commit(targ_branch));
-        write_index(root->index_path_set());
-        root->rehash_root();
+        write_index(root -> index_path_set());
+        root -> rehash_root();
         commit(1);
         reset(0);
     }
@@ -308,7 +308,7 @@ void merge(std::string targ_branch){
 
 int main(int argc, const char *argv[]) {
     /* without argument */
-    if(1==argc){
+    if(1 == argc){
         printf("Usage: hogehoge\n");
         return 0;
     }
@@ -316,10 +316,10 @@ int main(int argc, const char *argv[]) {
     argc--;
     
     /* excute command */
-    const char *subcom=argv[1];
+    const char *subcom = argv[1];
     argc--;
     
-    if(strcmp(subcom, "init")==0){
+    if(strcmp(subcom, "init") == 0){
         init();
         return 0;
     }
@@ -328,43 +328,43 @@ int main(int argc, const char *argv[]) {
         std::cout << "this dir is not eat repository" << std::endl;
         return 0;
     }
-    else if(strcmp(subcom, "add")==0){
+    else if(strcmp(subcom, "add") == 0){
         add(argc, ++argv);
     }
-    else if(strcmp(subcom, "commit")==0){
+    else if(strcmp(subcom, "commit") == 0){
         commit(0);
     }
-    else if(strcmp(subcom, "reflect")==0){
+    else if(strcmp(subcom, "reflect") == 0){
         reflect();
     }
-    else if(strcmp(subcom, "branch")==0){
-        if(argc==0)
+    else if(strcmp(subcom, "branch") == 0){
+        if(argc == 0)
             branch("");
-        else if(argc==1)
+        else if(argc == 1)
             branch(argv[2]);
         else
             std::cout << "assert branch usage" << std::endl;
     }
-    else if(strcmp(subcom, "checkout")==0){
-        if(argc==1)
+    else if(strcmp(subcom, "checkout") == 0){
+        if(argc == 1)
             checkout(argv[2]);
         else
             std::cout << "assert checkout usage" << std::endl;
     }
-    else if(strcmp(subcom, "merge")==0){
-        if(argc==1)
+    else if(strcmp(subcom, "merge") == 0){
+        if(argc == 1)
             merge(argv[2]);
         else
             std::cout << "assert merge usage" << std::endl;
     }
-    else if(strcmp(subcom, "reset")==0){
-        if(argc==0)
+    else if(strcmp(subcom, "reset") == 0){
+        if(argc == 0)
             reset(0);
-        else if(argc==1)
+        else if(argc == 1)
             reset(atoi(argv[2]));
     }
-    else if(strcmp(subcom, "log")==0){
-        if(argc==1)
+    else if(strcmp(subcom, "log") == 0){
+        if(argc == 1)
             log(atoi(argv[2]));
         else
             log();
@@ -376,7 +376,7 @@ int main(int argc, const char *argv[]) {
 //    sha1Test();
 //    readerTest();
     
-    if(root!=NULL)
+    if(root != NULL)
         delete root;
     return 0;
 }

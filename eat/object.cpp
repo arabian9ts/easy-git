@@ -23,12 +23,12 @@
  * @param hash : 自身がもっているsha1ハッシュ値
  */
 void Object::initialize(Type type, std::string name, std::string path, std::string hash){
-    this->type=type;
-    this->name=name;
-    this->path=path;
-    this->hash=hash;
-    this->child=NULL;
-    this->next=NULL;
+    this -> type = type;
+    this -> name = name;
+    this -> path = path;
+    this -> hash = hash;
+    this -> child = NULL;
+    this -> next = NULL;
 }
 
 /**
@@ -63,11 +63,11 @@ Object::Object(Type type, std::string name, std::string path, std::string hash){
  * 再帰的にデストラクタを呼び出し、コミットツリーを解放
  */
 Object::~Object(){
-    if(this->child!=NULL){
-        delete this->child;
+    if(this -> child != NULL){
+        delete this -> child;
     }
-    if(this->next!=NULL){
-        delete this->next;
+    if(this -> next != NULL){
+        delete this -> next;
     }
 }
 
@@ -80,26 +80,26 @@ Object::~Object(){
  */
 void Object::calc_hash(){
     std::ifstream ifs(path.c_str());
-    std::string line="";
+    std::string line = "";
     std::string buff;
     
     if(ifs){
         buff=getType()+" "+getPath()+" ";
         while(getline(ifs,line)){
-            buff+=line;
+            buff += line;
         }
     }
     else{
-        buff+=util::read(".eat/index");
+        buff += util::read(".eat/index");
     }
     
-    hash=hash::sha1(buff);
-    buff=std::string("");
+    hash = hash::sha1(buff);
+    buff = std::string("");
     
-    if(child!=NULL)
-        child->calc_hash();
-    if(next!=NULL)
-        next->calc_hash();
+    if(child != NULL)
+        child -> calc_hash();
+    if(next != NULL)
+        next -> calc_hash();
     
 }
 
@@ -107,7 +107,7 @@ void Object::calc_hash(){
  * ルートのコミットハッシュの訂正
  */
 void Object::rehash_root(){
-    hash=util::sha1Code(".eat/index");
+    hash = util::sha1Code(".eat/index");
 }
 
 /**
@@ -119,11 +119,12 @@ void Object::dump(){
     std::cout << "Object type = " << getType() << std::endl;
     std::cout << "Object path = " << getPath() << std::endl;
     std::cout << "Object hash = " << getHash() << std::endl;
+    std::cout << std::endl;
     
-    if(child!=NULL)
-        child->dump();
-    if(next!=NULL)
-        next->dump();
+    if(child != NULL)
+        child -> dump();
+    if(next != NULL)
+        next -> dump();
 }
 
 /**
@@ -131,15 +132,15 @@ void Object::dump(){
  */
 void Object::restore(){
     
-    if("blob"==getType())
+    if("blob" == getType())
         copy_obj(".eat/objects/"+getHash(), getPath());
-    else if("tree"==getType())
+    else if("tree" == getType())
         mkdir(getPath().c_str(), 0755);
     
-    if(child!=NULL)
-        child->restore();
-    if(next!=NULL)
-        next->restore();
+    if(child != NULL)
+        child -> restore();
+    if(next != NULL)
+        next -> restore();
 }
 
 
@@ -147,12 +148,12 @@ void Object::restore(){
  * 木構造をもとに.eat/Objects/にファイルを書き出す
  */
 void Object::make_copy_objects(){
-    if(type==blob)
+    if(type == blob)
         copy_obj(getPath(), ".eat/objects/"+getHash());
-    if(child!=NULL)
-        child->make_copy_objects();
-    if(next!=NULL)
-        next->make_copy_objects();
+    if(child != NULL)
+        child -> make_copy_objects();
+    if(next != NULL)
+        next -> make_copy_objects();
 }
 
 /**
@@ -185,19 +186,19 @@ void Object::copy_obj(std::string from, std::string to){
  */
 std::string Object::make_tree_blob_obj(){
     /* カレント以下のオブジェクトをすべて取得 */
-    Object* current=this->child;
-    std::string buff="";
+    Object* current = this -> child;
+    std::string buff = "";
     
     /* 同階層のすべてオブジェクトの情報を連結 */
-    while(current!=NULL){
-        buff+=current->getType()+" "+current->getName()+" "+current->getHash()+"\n";
-        if(current->child!=NULL)
-            util::write(".eat/objects/"+getHash(), current->make_tree_blob_obj(), std::ofstream::trunc);
-        current=current->next;
+    while(current != NULL){
+        buff += current -> getType()+" "+current -> getName()+" "+current -> getHash()+"\n";
+        if(current -> child != NULL)
+            util::write(".eat/objects/"+getHash(), current -> make_tree_blob_obj(), std::ofstream::trunc);
+        current = current -> next;
     }
     
     /* 連結した情報を書き出し */
-    util::write(".eat/objects/"+this->getHash(), buff, std::ofstream::trunc);
+    util::write(".eat/objects/"+this -> getHash(), buff, std::ofstream::trunc);
 
     return buff;
 }
@@ -243,12 +244,12 @@ std::string Object::getPath(){
  * @return : パスの連結結果
  */
 std::string Object::cyclic_getPath(std::string buff){
-    if(child!=NULL)
-        buff+=child->cyclic_getPath(buff);
-    if(next!=NULL)
-        buff+=next->cyclic_getPath(buff);
-    if(type==blob || type==tree)
-        buff+=getPath()+" "+getHash()+"\n";
+    if(child != NULL)
+        buff += child -> cyclic_getPath(buff);
+    if(next != NULL)
+        buff += next -> cyclic_getPath(buff);
+    if(type == blob || type == tree)
+        buff += getPath()+" "+getHash()+"\n";
 
     return buff;
 }
@@ -258,7 +259,7 @@ std::string Object::cyclic_getPath(std::string buff){
  * @return : すべてのtree,blobオブジェクトのパスのリスト
  */
 std::vector<std::string> Object::index_path_set(){
-    return util::split(cyclic_getPath(""),'\n');
+    return util::split(cyclic_getPath(""), '\n');
 }
 
 /*-----------------------------------------ゲッター終了----------------------------------------------*/

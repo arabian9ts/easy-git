@@ -12,15 +12,15 @@
  * read()関数のテスト
  */
 int readerTest(){
-    std::string data1=util::read("read1","",0);
-    std::string data2=util::read("read1","",1);
+    std::string data1 = util::read("read1", "", 0);
+    std::string data2 = util::read("read1", "", 1);
     
     std::cout << "not skip : " << data1 << std::endl;
     std::cout << "skip : " << data2 << std::endl;
     
-    data1=util::read("read2","",1);
+    data1 = util::read("read2", "", 1);
     
-    if(data1!=data2){
+    if(data1 != data2){
         std::cout << "skip test ERROR" << std::endl;
         return 1;
     }

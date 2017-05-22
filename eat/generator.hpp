@@ -14,10 +14,10 @@
 namespace gen {
     
     /** ノードジェネレータ make_tree 内で利用 */
-    Object* graft(Object *parent, Object *targ);
+    Object* graft(Object* parent, Object* targ);
     
     /** blob と tree の木構造を再帰的に生成 */
-    void read_native_tree(Object *subtree, std::string subroot);
+    void read_native_tree(Object* subtree, std::string subroot);
     
     /** indexからコミットツリーを生成 rehash : 再ハッシュフラグ */
     void index2tree(Object* root, int rehash);

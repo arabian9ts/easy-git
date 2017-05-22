@@ -26,8 +26,8 @@ std::string util::getTime(){
  * @return : 現在ヘッドの向いているブランチ
  */
 std::string util::getBranch(){
-    std::vector<std::string> dirs=split(read(".eat/HEAD","",1), '/');    
-    std::string branch=dirs.back();
+    std::vector<std::string> dirs = split(read(".eat/HEAD", "" ,1), '/');
+    std::string branch = dirs.back();
     return branch;
 }
 
@@ -40,18 +40,18 @@ std::string util::getBranch(){
  */
 std::string util::read(std::string filename, std::string endline, int skip_empty_line){
     std::ifstream ifs(filename.c_str());
-    std::string line="";
-    std::string buff="";
+    std::string line = "";
+    std::string buff = "";
     if(ifs){
-        while(getline(ifs,line)){
-            if(line=="\r" || line=="\n" || line=="\0"){
+        while(getline(ifs, line)){
+            if(line == "\r" || line == "\n" || line == "\0"){
 //                std::cout << "empty line" << std::endl;
                 if(!skip_empty_line){
-                    buff+="\n"+endline;
+                    buff += "\n"+endline;
                 }
             }
             else
-                buff+=line+endline;
+                buff += line+endline;
         }
     }
     ifs.close();
@@ -91,7 +91,7 @@ std::vector<std::string> util::split(std::string input, char delimiter){
  */
 std::vector<Log> util::getLogs(std::string branch){
     std::vector<Log> logs;
-    std::vector<std::string> elem=split(read(".eat/logs/"+branch,"\n",1),'\n');
+    std::vector<std::string> elem = split(read(".eat/logs/"+branch, "\n", 1), '\n');
     
     
     for(int i = elem.size()-1; i-2 >= 0; i -= 3){
@@ -122,8 +122,8 @@ int util::isFile(std::string filename){
  */
 int util::isExist(std::string filename){
     struct stat st;
-    int result=stat(filename.c_str(), &st);
-    if(0==result)
+    int result = stat(filename.c_str(), &st);
+    if(0 == result)
         return 1;
     return 0;
 }
@@ -134,22 +134,22 @@ int util::isExist(std::string filename){
  * @return : 同階層のすべてのファイルとディレクトリ名のリスト
  */
 std::vector<std::string> util::file_dir_list(std::string path){
-    DIR *dir;
+    DIR* dir;
     struct dirent *dp;
     std::vector<std::string> result;
     
     /* subtreeが存在しないなら終了 */
-    if(NULL==(dir=opendir(path.c_str()))){
+    if(NULL == (dir = opendir(path.c_str()))){
         std::cout << "cannot open " << path << std::endl;
         return result;
     }
     
     /* すべてのディレクトリを読み込み */
-    for(dp=readdir(dir);dp!=NULL;dp=readdir(dir)){
+    for(dp = readdir(dir); dp != NULL; dp = readdir(dir)){
         /* .で始まるものとeatはスキップ */
-        int start_with_dot=boost::algorithm::starts_with(dp->d_name, ".");
-        if(!start_with_dot && dp->d_name!=std::string("eat"))
-            result.push_back(dp->d_name);
+        int start_with_dot = boost::algorithm::starts_with(dp -> d_name, ".");
+        if(!start_with_dot && dp -> d_name != std::string("eat"))
+            result.push_back(dp -> d_name);
     }
     
     return result;
@@ -174,7 +174,7 @@ void util::write(std::string filepath, std::string msg, std::ios_base::openmode 
  * @return : 指定したブランチの最終コミットのハッシュ値
  */
 std::string util::last_commit(std::string branch){
-    std::string last_commit_hash=read(".eat/refs/heads/"+branch);
+    std::string last_commit_hash = read(".eat/refs/heads/"+branch);
     return last_commit_hash;
 }
 
@@ -185,10 +185,10 @@ std::string util::last_commit(std::string branch){
  */
 std::vector<std::string> util::commitlist(std::string branch){
     std::vector<std::string> comlist;
-    std::vector<std::string> logs=split(read(".eat/logs/"+branch,"\n",1),'\n');
+    std::vector<std::string> logs = split(read(".eat/logs/"+branch, "\n", 1), '\n');
     
-    for (int idx=logs.size()-1; idx>=0; idx--)
-        if(2==idx%3)
+    for (int idx = logs.size()-1; idx >= 0; idx--)
+        if(2 == idx%3)
             comlist.push_back(logs[idx]);
     return comlist;
 }
@@ -208,7 +208,7 @@ void util::touch(std::string filename){
  * @param filelist : 削除するファイル名のリスト
  */
 void util::rmfiles(std::vector<std::string> filelist){
-    int count=0;
+    int count = 0;
     for (auto file : filelist){
         if(isFile(file)){
             std::remove(file.c_str());
@@ -242,8 +242,8 @@ void util::diff(std::string f1, std::string f2){
  * @return : コミットメッセージ
  */
 std::string util::fetch_commit_msg(){
-    std::string msg="";
-    while(msg==""){
+    std::string msg = "";
+    while(msg == ""){
         std::cout << "commit message : ";
         std::getline(std::cin, msg);
     }

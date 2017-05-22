@@ -18,17 +18,17 @@ class Object{
     
     /** オブジェクトが何を表しているかを識別するパラメータ */
 private:
-    char type_strs[10][10]={"commit", "tree", "blob", "unknown"};
+    char type_strs[10][10] = {"commit", "tree", "blob", "unknown"};
 public:
-    enum Type{commit=0, tree=1, blob=2, unknown=3};
+    enum Type{commit = 0, tree = 1, blob = 2, unknown = 3};
  
     
 private:
     /*-------------------------fields-------------------------------*/
     Type type; // data type of this obj
-    std::string name="";
-    std::string path="";
-    std::string hash=""; // sha-1 hash of (path echo(file))
+    std::string name = "";
+    std::string path = "";
+    std::string hash = ""; // sha-1 hash of (path echo(file))
     /*---------------------------END--------------------------------*/
     
     
@@ -45,8 +45,8 @@ private:
 public:
     /*-------------------------fields-------------------------------*/
     /** 木構造の子供と兄弟 */
-    Object *child=NULL;
-    Object *next=NULL;
+    Object* child = NULL;
+    Object* next = NULL;
     /*---------------------------END--------------------------------*/
     
     
