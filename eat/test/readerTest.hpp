@@ -12,9 +12,7 @@
 #include <stdio.h>
 #include "util.hpp"
 
-/**
- * read()関数のテスト
- */
+/**　read()関数のテスト　*/
 int readerTest();
 
 #endif /* readerTest_hpp */

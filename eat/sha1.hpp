@@ -16,7 +16,7 @@
 
 namespace hash{
     
-    /* ファイルのハッシュ値を計算し、その結果を返す */
+    /** ファイルのハッシュ値を計算し、その結果を返す */
     std::string sha1(std::string targ);
     
 }
