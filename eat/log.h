@@ -44,4 +44,4 @@ public:
 };
 
 
-#endif /* log_hpp */
+#endif /* log_h */

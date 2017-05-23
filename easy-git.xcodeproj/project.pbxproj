@@ -42,9 +42,10 @@
 		FF3E29081EA6798000F222A1 /* generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = generator.hpp; sourceTree = "<group>"; };
 		FF43FAB41EA3291600C99430 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = util.cpp; sourceTree = "<group>"; };
 		FF43FAB51EA3291600C99430 /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
-		FFA2156A1ED2868300C3946D /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = log.hpp; sourceTree = "<group>"; };
+		FFA2156A1ED2868300C3946D /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		FFB082291EBEF09100EC2F1B /* readerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readerTest.cpp; path = test/readerTest.cpp; sourceTree = "<group>"; };
 		FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = readerTest.hpp; path = test/readerTest.hpp; sourceTree = "<group>"; };
+		FFBB11F21ED415960077EDE9 /* help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = help.h; path = help/help.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +89,7 @@
 		FF2CCFBA1E99047B00779690 /* eat */ = {
 			isa = PBXGroup;
 			children = (
+				FFBB11F11ED415610077EDE9 /* help */,
 				FF2CCFC31E9904B300779690 /* main.cpp */,
 				FF2CCFC41E9904B300779690 /* object.cpp */,
 				FF2CCFC51E9904B300779690 /* object.hpp */,
@@ -98,10 +100,18 @@
 				FF43FAB51EA3291600C99430 /* util.hpp */,
 				FF3E29071EA6798000F222A1 /* generator.cpp */,
 				FF3E29081EA6798000F222A1 /* generator.hpp */,
-				FFA2156A1ED2868300C3946D /* log.hpp */,
+				FFA2156A1ED2868300C3946D /* log.h */,
 				FF0EB58D1EA2BDC00086BA6C /* test */,
 			);
 			path = eat;
+			sourceTree = "<group>";
+		};
+		FFBB11F11ED415610077EDE9 /* help */ = {
+			isa = PBXGroup;
+			children = (
+				FFBB11F21ED415960077EDE9 /* help.h */,
+			);
+			name = help;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
