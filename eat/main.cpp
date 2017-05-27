@@ -8,6 +8,7 @@
 
 #include "generator.hpp"
 #include "readerTest.hpp"
+#include "help.h"
 
 
 Object* root=NULL;
@@ -76,12 +77,13 @@ void init(){
      }
     
     /* create dirs such as objects, refs, ...*/
-    const char  *dir_name[] = {
+    const char* dir_name[] = {
         ".eat",
         ".eat/objects",
         ".eat/refs",
         ".eat/refs/heads",
-        ".eat/logs"};
+        ".eat/logs",
+    };
     
     for(int i = 0; i < sizeof(dir_name)/sizeof(dir_name[0]); i++)
             mkdir(dir_name[i], 0775);
@@ -92,7 +94,8 @@ void init(){
         ".eat/HEAD",
         ".eat/refs/heads/master",
         ".eat/config",
-        ".eat/logs/master"};
+        ".eat/logs/master",
+    };
     
     for(int i = 0; i < sizeof(file_names)/sizeof(file_names[0]); i++)
         util::touch(file_names[i]);
@@ -366,6 +369,12 @@ int main(int argc, const char *argv[]) {
             reset(atoi(argv[2]));
     }
     else if(strcmp(subcom, "log") == 0){
+        if(argc == 1)
+            log(atoi(argv[2]));
+        else
+            log();
+    }
+    else if(strcmp(subcom, "help") == 0){
         if(argc == 1)
             log(atoi(argv[2]));
         else

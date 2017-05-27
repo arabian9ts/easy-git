@@ -46,6 +46,16 @@
 		FFB082291EBEF09100EC2F1B /* readerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readerTest.cpp; path = test/readerTest.cpp; sourceTree = "<group>"; };
 		FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = readerTest.hpp; path = test/readerTest.hpp; sourceTree = "<group>"; };
 		FFBB11F21ED415960077EDE9 /* help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = help.h; path = help/help.h; sourceTree = "<group>"; };
+		FFEA645F1ED9CA5D00004817 /* add_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = add_help.h; sourceTree = "<group>"; };
+		FFEA64601ED9CA6A00004817 /* init_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = init_help.h; sourceTree = "<group>"; };
+		FFEA64611ED9CA7200004817 /* commit_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commit_help.h; sourceTree = "<group>"; };
+		FFEA64621ED9CA8500004817 /* reflect_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reflect_help.h; sourceTree = "<group>"; };
+		FFEA64631ED9CA9500004817 /* branch_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = branch_help.h; sourceTree = "<group>"; };
+		FFEA64641ED9CA9C00004817 /* checkout_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkout_help.h; sourceTree = "<group>"; };
+		FFEA64651ED9CAB300004817 /* merge_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = merge_help.h; sourceTree = "<group>"; };
+		FFEA64661ED9CAB900004817 /* log_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = log_help.h; sourceTree = "<group>"; };
+		FFEA64671ED9CAC400004817 /* reset_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reset_help.h; sourceTree = "<group>"; };
+		FFEA64681ED9CACD00004817 /* help_help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = help_help.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +120,16 @@
 			isa = PBXGroup;
 			children = (
 				FFBB11F21ED415960077EDE9 /* help.h */,
+				FFEA645F1ED9CA5D00004817 /* add_help.h */,
+				FFEA64601ED9CA6A00004817 /* init_help.h */,
+				FFEA64611ED9CA7200004817 /* commit_help.h */,
+				FFEA64621ED9CA8500004817 /* reflect_help.h */,
+				FFEA64631ED9CA9500004817 /* branch_help.h */,
+				FFEA64641ED9CA9C00004817 /* checkout_help.h */,
+				FFEA64651ED9CAB300004817 /* merge_help.h */,
+				FFEA64661ED9CAB900004817 /* log_help.h */,
+				FFEA64671ED9CAC400004817 /* reset_help.h */,
+				FFEA64681ED9CACD00004817 /* help_help.h */,
 			);
 			name = help;
 			sourceTree = "<group>";

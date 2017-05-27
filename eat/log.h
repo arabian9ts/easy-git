@@ -6,8 +6,8 @@
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef log_hpp
-#define log_hpp
+#ifndef log_h
+#define log_h
 
 #include <stdio.h>
 #include "eat.hpp"
