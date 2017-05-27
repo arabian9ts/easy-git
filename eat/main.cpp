@@ -8,7 +8,7 @@
 
 #include "generator.hpp"
 #include "readerTest.hpp"
-#include "help.h"
+#include "helper.h"
 
 
 Object* root=NULL;
@@ -311,6 +311,10 @@ void merge(std::string targ_branch){
  */
 
 int main(int argc, const char *argv[]) {
+    Helper* helper = new Helper();
+    helper -> describe();
+    delete helper;
+    
     /* without argument */
     if(1 == argc){
         printf("Usage: hogehoge\n");

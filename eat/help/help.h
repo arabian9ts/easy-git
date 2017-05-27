@@ -9,26 +9,9 @@
 #ifndef help_h
 #define help_h
 
-namespace help {
+class Help {
     
-    std::map<std::string, std::string> help;
-    
-    enum Commands{
-        init = 0,
-        add = 1,
-        commit = 2,
-        reflect = 3,
-        branch = 4,
-        checkout = 5,
-        merge = 6,
-        reset = 7,
-        log = 8,
-    };
-    
-    const char* command_str[] = {
-        "init", "add", "commit", "reflect", "branch", "checkout", "merge", "reset", "log",
-    };
-    
+    /*
     const char* help_msg[] = {
         "init cmd places under the management of eat\nformula: eat init\n",
         "add cmd add files or dirs to repo\nformula: eat add file ...",
@@ -41,13 +24,26 @@ namespace help {
         "log cmd displays commit logs\nformula: eat log <count>",
         
     };
+     */
+public:
     
+    enum commands{
+        init,
+        add,
+        commit,
+        reflect,
+        branch,
+        checkout,
+        merge,
+        reset,
+        log,
+    };
     
-    void description(Commands command){
-        std::cout << help_msg[command] << std::endl;
-    }
+    Help(){}
+    
+    virtual void description(commands command) = 0;
     
 
-}
+};
 
 #endif /* help_h */
