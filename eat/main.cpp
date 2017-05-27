@@ -8,7 +8,7 @@
 
 #include "generator.hpp"
 #include "readerTest.hpp"
-#include "helper.h"
+#include "help/helper.h"
 
 
 Object* root=NULL;
