@@ -18,7 +18,7 @@ public:
     _Init(){}
     
     void description() override {
-        std::cout << "this is add help" << std::endl;
+        std::cout << "this is init help" << std::endl;
     }
         
 };
