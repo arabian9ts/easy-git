@@ -28,6 +28,9 @@ public:
         << "     or: git add ."
         << std::endl
         << std::endl
+        << "*** add cmd add files or dirs to repos ***"
+        << std::endl
+        << std::endl
         << "----------------------------------------"
         << std::endl
         << std::endl;

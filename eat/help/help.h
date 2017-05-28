@@ -28,6 +28,7 @@ class Help {
 public:
     
     enum commands{
+        unknown,
         init,
         add,
         commit,

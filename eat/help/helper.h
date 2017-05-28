@@ -58,8 +58,9 @@ public:
     void describe(std::string cmd_str){
         Help::commands command = helper[cmd_str];
         
-        if(command == NULL)
-            command = Help::commands::help;
+        std::cout << command << std::endl;
+        
+        std::cout << command << std::endl;
         
         switch (command) {
             case Help::init:
@@ -67,7 +68,9 @@ public:
                 break;
             case Help::add:
                 this -> policy = new _Add();
+                break;
             default:
+                this -> policy = new _Add();
                 break;
         }
         this -> policy -> description();

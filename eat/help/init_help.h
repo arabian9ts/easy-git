@@ -18,7 +18,20 @@ public:
     _Init(){}
     
     void description() override {
-        std::cout << "this is init help" << std::endl;
+        std::cout
+        << std::endl
+        << "--------------- init help --------------"
+        << std::endl
+        << std::endl
+        << "Formula: git init"
+        << std::endl
+        << std::endl
+        << "*** init cmd places under the management of eat system ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
