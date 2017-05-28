@@ -63,10 +63,10 @@ public:
         
         switch (command) {
             case Help::init:
-                this -> policy = new Init();
+                this -> policy = new _Init();
                 break;
             case Help::add:
-                this -> policy = new Add();
+                this -> policy = new _Add();
             default:
                 break;
         }
