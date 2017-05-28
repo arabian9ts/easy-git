@@ -8,6 +8,18 @@
 
 #ifndef init_help_h
 #define init_help_h
+#include "help.h"
 
+class Init : public Help{
+    
+public:
+    
+    Init(){}
+    
+    void description() override {
+        std::cout << "this is add help" << std::endl;
+    }
+        
+};
 
 #endif /* init_help_h */

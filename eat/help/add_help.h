@@ -16,7 +16,7 @@ public:
     
     Add(){}
     
-    void description(commands command) override {
+    void description() override {
         std::cout << "this is add help" << std::endl;
     }
     

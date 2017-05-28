@@ -25,21 +25,52 @@ class Helper {
 private:
     
     Help* policy;
-    std::map<std::string, std::string> helper;
-    
-    const char* command_str[10] = {
-        "init", "add", "commit", "reflect", "branch", "checkout", "merge", "reset", "log", "help",
-    };
+    std::map<std::string, Help::commands> helper;
     
 public:
     
     Helper(){
-        this -> policy = new Add();
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("init", Help::commands::init));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("add", Help::commands::add));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("commit", Help::commands::commit));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("reflect", Help::commands::reflect));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("merge", Help::commands::merge));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("log", Help::commands::log));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("reset", Help::commands::reset));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("branch", Help::commands::branch));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("checkout", Help::commands::checkout));
+        helper.insert(std::pair<std::string,Help::commands>
+                      ("help", Help::commands::help));
+
+
         std::cout << "helper constructor" << std::endl;
     }
     
-    void describe(){
-        this -> policy -> description(Help::commands::add);
+    void describe(std::string cmd_str){
+        Help::commands command = helper[cmd_str];
+        
+        if(command == NULL)
+            command = Help::commands::help;
+        
+        switch (command) {
+            case Help::init:
+                this -> policy = new Init();
+                break;
+            case Help::add:
+                this -> policy = new Add();
+            default:
+                break;
+        }
+        this -> policy -> description();
     }
     
     ~Helper(){

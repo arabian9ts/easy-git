@@ -37,11 +37,12 @@ public:
         merge,
         reset,
         log,
+        help,
     };
     
     Help(){}
     
-    virtual void description(commands command) = 0;
+    virtual void description() = 0;
     
 
 };

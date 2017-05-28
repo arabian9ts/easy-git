@@ -312,7 +312,7 @@ void merge(std::string targ_branch){
 
 int main(int argc, const char *argv[]) {
     Helper* helper = new Helper();
-    helper -> describe();
+    helper -> describe("add");
     delete helper;
     
     /* without argument */
