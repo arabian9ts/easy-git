@@ -18,15 +18,18 @@ public:
     _Add(){}
     
     void description() override {
-        std::cout << "------------------------------"
+        std::cout
         << std::endl
         << "--------------- add help ---------------"
+        << std::endl
         << std::endl
         << "Formula: git add <file names ...>"
         <<std::endl
         << "     or: git add ."
         << std::endl
-        << "------------------------------"
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
         << std::endl;
     }
     
