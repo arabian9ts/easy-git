@@ -10,4 +10,17 @@
 #define log_help_h
 
 
+class _Log : public Help{
+    
+public:
+    
+    _Log(){}
+    
+    void description() override {
+        std::cout << "this is log help" << std::endl;
+    }
+        
+};
+
+        
 #endif /* log_help_h */

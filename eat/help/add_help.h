@@ -10,11 +10,12 @@
 #define add_help_h
 #include "help.h"
 
-class Add : public Help{
+
+class _Add : public Help{
     
 public:
     
-    Add(){}
+    _Add(){}
     
     void description() override {
         std::cout << "this is add help" << std::endl;

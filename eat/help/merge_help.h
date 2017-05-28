@@ -10,4 +10,17 @@
 #define merge_help_h
 
 
+class _Merge : public Help{
+    
+public:
+    
+    _Merge(){}
+    
+    void description() override {
+        std::cout << "this is merge help" << std::endl;
+    }
+        
+};
+
+        
 #endif /* merge_help_h */

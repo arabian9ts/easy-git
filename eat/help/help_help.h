@@ -10,4 +10,17 @@
 #define help_help_h
 
 
+class _Help : public Help{
+    
+public:
+    
+    _Help(){}
+    
+    void description() override {
+        std::cout << "this is _help help" << std::endl;
+    }
+        
+};
+
+
 #endif /* help_help_h */

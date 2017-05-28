@@ -10,4 +10,17 @@
 #define checkout_help_h
 
 
+class _Checkout : public Help{
+    
+public:
+    
+    _Checkout(){}
+    
+    void description() override {
+        std::cout << "this is checkout help" << std::endl;
+    }
+        
+};
+
+        
 #endif /* checkout_help_h */

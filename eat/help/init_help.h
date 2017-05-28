@@ -10,16 +10,18 @@
 #define init_help_h
 #include "help.h"
 
-class Init : public Help{
+
+class _Init : public Help{
     
 public:
     
-    Init(){}
+    _Init(){}
     
     void description() override {
         std::cout << "this is add help" << std::endl;
     }
         
 };
+
 
 #endif /* init_help_h */

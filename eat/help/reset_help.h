@@ -10,4 +10,17 @@
 #define reset_help_h
 
 
+class _Reset : public Help{
+    
+public:
+    
+    _Reset(){}
+    
+    void description() override {
+        std::cout << "this is reset help" << std::endl;
+    }
+        
+};
+
+
 #endif /* reset_help_h */

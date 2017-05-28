@@ -10,4 +10,17 @@
 #define branch_help_h
 
 
+class _Branch : public Help{
+    
+public:
+    
+    _Branch(){}
+    
+    void description() override {
+        std::cout << "this is branch help" << std::endl;
+    }
+        
+};
+
+
 #endif /* branch_help_h */

@@ -10,4 +10,17 @@
 #define commit_help_h
 
 
+class _Commit : public Help{
+    
+public:
+    
+    _Commit(){}
+    
+    void description() override {
+        std::cout << "this is commit help" << std::endl;
+    }
+    
+};
+
+        
 #endif /* commit_help_h */
