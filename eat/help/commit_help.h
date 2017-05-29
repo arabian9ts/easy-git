@@ -17,7 +17,22 @@ public:
     _Commit(){}
     
     void description() override {
-        std::cout << "this is commit help" << std::endl;
+        std::cout
+        << std::endl
+        << "------------- commit help --------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat commit"
+        << std::endl
+        << std::endl
+        << "*** commit cmd saves project tree structure ***"
+        << std::endl
+        << "*** then, you will be able to write commit message ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
     
 };
