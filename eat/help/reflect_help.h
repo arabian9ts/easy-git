@@ -17,7 +17,22 @@ public:
     _Reflect(){}
     
     void description() override {
-        std::cout << "this is reflect help" << std::endl;
+        std::cout
+        << std::endl
+        << "------------- reflect help -------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat reflect"
+        << std::endl
+        << std::endl
+        << "*** reflect cmd adds all files and saves them ***"
+        << std::endl
+        << "*** then, you will be able to write commit message ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
