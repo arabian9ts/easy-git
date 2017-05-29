@@ -17,7 +17,24 @@ public:
     _Branch(){}
     
     void description() override {
-        std::cout << "this is branch help" << std::endl;
+        std::cout
+        << std::endl
+        << "------------- branch help --------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat branch <branch_name>"
+        << std::endl
+        << "     or: eat branch"
+        << std::endl
+        << std::endl
+        << "*** branch cmd makes new working branch ***"
+        << std::endl
+        << "*** if no args, list-up existing working branches ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
