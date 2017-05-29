@@ -17,7 +17,22 @@ public:
     _Log(){}
     
     void description() override {
-        std::cout << "this is log help" << std::endl;
+        std::cout
+        << std::endl
+        << "--------------- log help ---------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat log"
+        << std::endl
+        << "     or: eat log <N: Integer>"
+        << std::endl
+        << std::endl
+        << "*** log cmd displays commit logs ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
