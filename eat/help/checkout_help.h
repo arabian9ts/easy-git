@@ -17,7 +17,20 @@ public:
     _Checkout(){}
     
     void description() override {
-        std::cout << "this is checkout help" << std::endl;
+        std::cout
+        << std::endl
+        << "------------ checkout help -------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat checkout <branch_name>"
+        << std::endl
+        << std::endl
+        << "*** checkout cmd swiches branch to the other ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
