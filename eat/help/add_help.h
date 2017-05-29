@@ -23,9 +23,9 @@ public:
         << "--------------- add help ---------------"
         << std::endl
         << std::endl
-        << "Formula: git add <file names ...>"
+        << "Formula: eat add <file names ...>"
         <<std::endl
-        << "     or: git add ."
+        << "     or: eat add ."
         << std::endl
         << std::endl
         << "*** add cmd add files or dirs to repos ***"
