@@ -17,7 +17,20 @@ public:
     _Merge(){}
     
     void description() override {
-        std::cout << "this is merge help" << std::endl;
+        std::cout
+        << std::endl
+        << "-------------- merge help --------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat merge <branch_name>"
+        << std::endl
+        << std::endl
+        << "*** merge cmd merges branches from specific to base_branch(now) ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
