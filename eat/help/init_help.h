@@ -23,7 +23,7 @@ public:
         << "--------------- init help --------------"
         << std::endl
         << std::endl
-        << "Formula: git init"
+        << "Formula: eat init"
         << std::endl
         << std::endl
         << "*** init cmd places under the management of eat system ***"
