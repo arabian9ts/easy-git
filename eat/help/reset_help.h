@@ -17,7 +17,25 @@ public:
     _Reset(){}
     
     void description() override {
-        std::cout << "this is reset help" << std::endl;
+        std::cout
+        << std::endl
+        << "-------------- reset help --------------"
+        << std::endl
+        << std::endl
+        << "Formula: eat reset"
+        << std::endl
+        << "     or: eat reset <N: Integer>"
+        << std::endl
+        << std::endl
+        << "*** reset cmd resets workspace status based on specified version ***"
+        << std::endl
+        << std::endl
+        << "*** N is 0 in default. you can go back to N vers ago. ***"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
