@@ -51,17 +51,10 @@ public:
                       ("checkout", Help::commands::checkout));
         helper.insert(std::pair<std::string,Help::commands>
                       ("help", Help::commands::help));
-
-
-        std::cout << "helper constructor" << std::endl;
     }
     
     void describe(std::string cmd_str){
         Help::commands command = helper[cmd_str];
-        
-        std::cout << command << std::endl;
-        
-        std::cout << command << std::endl;
         
         switch (command) {
             case Help::commands::init:

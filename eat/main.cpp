@@ -311,9 +311,6 @@ void merge(std::string targ_branch){
  */
 
 int main(int argc, const char *argv[]) {
-    Helper* helper = new Helper();
-    helper -> describe("help");
-    delete helper;
     
     /* without argument */
     if(1 == argc){
@@ -379,10 +376,14 @@ int main(int argc, const char *argv[]) {
             log();
     }
     else if(strcmp(subcom, "help") == 0){
+        Helper* helper = new Helper();
+
         if(argc == 1)
-            log(atoi(argv[2]));
+            helper -> describe(argv[2]);
         else
-            log();
+            helper -> describe("help");
+        
+        delete helper;
     }
     else{
         std::cout << "ERROR : not eat command !  check formulae by using: eat help" << std::endl;
