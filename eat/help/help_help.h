@@ -17,7 +17,28 @@ public:
     _Help(){}
     
     void description() override {
-        std::cout << "this is _help help" << std::endl;
+        std::cout
+        << std::endl
+        << "----------------  help -----------------"
+        << std::endl
+        << std::endl
+        << "command...: init     \n"
+        << "            add      \n"
+        << "            commit   \n"
+        << "            reflect  \n"
+        << "            log      \n"
+        << "            reset    \n"
+        << "            merge    \n"
+        << "            branch   \n"
+        << "            checkout \n"
+        << "            help     \n"
+        << std::endl
+        << "Formula: eat <command>"
+        << std::endl
+        << std::endl
+        << "----------------------------------------"
+        << std::endl
+        << std::endl;
     }
         
 };
