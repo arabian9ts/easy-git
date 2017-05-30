@@ -10,7 +10,7 @@
 #define checkout_help_h
 
 
-class _Checkout : public Help{
+class _Checkout : public Help {
     
 public:
     

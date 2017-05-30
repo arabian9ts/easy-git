@@ -11,7 +11,7 @@
 #include "help.h"
 
 
-class _Add : public Help{
+class _Add : public Help {
     
 public:
     
@@ -24,7 +24,7 @@ public:
         << std::endl
         << std::endl
         << "Formula: eat add <file names ...>"
-        <<std::endl
+        << std::endl
         << "     or: eat add ."
         << std::endl
         << std::endl

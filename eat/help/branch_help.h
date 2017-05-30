@@ -10,7 +10,7 @@
 #define branch_help_h
 
 
-class _Branch : public Help{
+class _Branch : public Help {
     
 public:
     

@@ -10,7 +10,7 @@
 #define log_help_h
 
 
-class _Log : public Help{
+class _Log : public Help {
     
 public:
     

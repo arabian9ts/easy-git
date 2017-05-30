@@ -10,7 +10,7 @@
 #define merge_help_h
 
 
-class _Merge : public Help{
+class _Merge : public Help {
     
 public:
     

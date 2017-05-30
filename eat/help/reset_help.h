@@ -10,7 +10,7 @@
 #define reset_help_h
 
 
-class _Reset : public Help{
+class _Reset : public Help {
     
 public:
     

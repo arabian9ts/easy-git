@@ -16,6 +16,7 @@
 #include "log_help.h"
 #include "merge_help.h"
 #include "branch_help.h"
+#include "checkout_help.h"
 #include "merge_help.h"
 #include "reflect_help.h"
 #include "help_help.h"
@@ -63,14 +64,32 @@ public:
         std::cout << command << std::endl;
         
         switch (command) {
-            case Help::init:
+            case Help::commands::init:
                 this -> policy = new _Init();
                 break;
-            case Help::add:
+            case Help::commands::add:
                 this -> policy = new _Add();
                 break;
+            case Help::commands::commit:
+                this -> policy = new _Commit();
+                break;
+            case Help::commands::reflect:
+                this -> policy = new _Reflect();
+                break;
+            case Help::commands::branch:
+                this -> policy = new _Branch();
+                break;
+            case Help::commands::checkout:
+                this -> policy = new _Checkout();
+                break;
+            case Help::commands::merge:
+                this -> policy = new _Merge();
+                break;
+            case Help::commands::log:
+                this -> policy = new _Log();
+                break;
             default:
-                this -> policy = new _Add();
+                this -> policy = new _Help();
                 break;
         }
         this -> policy -> description();

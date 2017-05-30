@@ -10,7 +10,7 @@
 #define help_help_h
 
 
-class _Help : public Help{
+class _Help : public Help {
     
 public:
     

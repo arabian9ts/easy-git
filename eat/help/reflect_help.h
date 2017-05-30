@@ -10,7 +10,7 @@
 #define reflect_help_h
 
 
-class _Reflect : public Help{
+class _Reflect : public Help {
     
 public:
     

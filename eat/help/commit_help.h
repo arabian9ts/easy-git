@@ -10,7 +10,7 @@
 #define commit_help_h
 
 
-class _Commit : public Help{
+class _Commit : public Help {
     
 public:
     

@@ -11,7 +11,7 @@
 #include "help.h"
 
 
-class _Init : public Help{
+class _Init : public Help {
     
 public:
     
