@@ -26,70 +26,41 @@ class Helper {
 private:
     
     Help* policy;
-    std::map<std::string, Help::commands> helper;
+    std::map<std::string, Help*> helper;
     
 public:
     
     Helper(){
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("init", Help::commands::init));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("add", Help::commands::add));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("commit", Help::commands::commit));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("reflect", Help::commands::reflect));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("merge", Help::commands::merge));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("log", Help::commands::log));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("reset", Help::commands::reset));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("branch", Help::commands::branch));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("checkout", Help::commands::checkout));
-        helper.insert(std::pair<std::string,Help::commands>
-                      ("help", Help::commands::help));
+        helper.insert(std::pair<std::string,Help*>
+                      ("init", new _Init()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("add", new _Add()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("commit", new _Commit()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("reflect", new _Reflect()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("merge", new _Merge()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("log", new _Log()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("reset", new _Reset()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("branch", new _Branch()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("checkout", new _Checkout()));
+        helper.insert(std::pair<std::string,Help*>
+                      ("help", new _Help()));
     }
     
     void describe(std::string cmd_str){
-        Help::commands command = helper[cmd_str];
-        
-        switch (command) {
-            case Help::commands::init:
-                this -> policy = new _Init();
-                break;
-            case Help::commands::add:
-                this -> policy = new _Add();
-                break;
-            case Help::commands::commit:
-                this -> policy = new _Commit();
-                break;
-            case Help::commands::reflect:
-                this -> policy = new _Reflect();
-                break;
-            case Help::commands::branch:
-                this -> policy = new _Branch();
-                break;
-            case Help::commands::checkout:
-                this -> policy = new _Checkout();
-                break;
-            case Help::commands::merge:
-                this -> policy = new _Merge();
-                break;
-            case Help::commands::log:
-                this -> policy = new _Log();
-                break;
-            default:
-                this -> policy = new _Help();
-                break;
-        }
+        this -> policy = helper[cmd_str];
         this -> policy -> description();
     }
     
     ~Helper(){
-        delete this -> policy;
+        for(std::map<std::string, Help*>::iterator v = this -> helper.begin(); v != this -> helper.end(); v++)
+            delete v -> second;
     }
     
 };
