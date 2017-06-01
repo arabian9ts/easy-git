@@ -1,33 +1,32 @@
 //
-//  log_help.h
+//  init_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef log_help_h
-#define log_help_h
+#ifndef init_help_hpp
+#define init_help_hpp
+#include "help.hpp"
 
 
-class _Log : public Help {
+class _Init : public Help {
     
 public:
     
-    _Log(){}
+    _Init(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "--------------- log help ---------------"
+        << "--------------- init help --------------"
         << std::endl
         << std::endl
-        << "Formula: eat log"
-        << std::endl
-        << "     or: eat log <N: Integer>"
+        << "Formula: eat init"
         << std::endl
         << std::endl
-        << "*** log cmd displays commit logs ***"
+        << "*** init cmd places under the management of eat system ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
@@ -37,5 +36,5 @@ public:
         
 };
 
-        
-#endif /* log_help_h */
+
+#endif /* init_help_hpp */

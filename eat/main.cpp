@@ -8,10 +8,10 @@
 
 #include "generator.hpp"
 #include "readerTest.hpp"
-#include "help/helper.h"
+#include "help/helper.hpp"
 
 
-Object* root=NULL;
+Object* root = NULL;
 
 /*----------------------------------------ファイル操作関数--------------------------------------------*/
 

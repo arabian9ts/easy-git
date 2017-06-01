@@ -1,41 +1,42 @@
 //
-//  reflect_help.h
+//  add_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef reflect_help_h
-#define reflect_help_h
+#ifndef add_help_hpp
+#define add_help_hpp
+#include "help.hpp"
 
 
-class _Reflect : public Help {
+class _Add : public Help {
     
 public:
     
-    _Reflect(){}
+    _Add(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "------------- reflect help -------------"
+        << "--------------- add help ---------------"
         << std::endl
         << std::endl
-        << "Formula: eat reflect"
+        << "Formula: eat add <file names ...>"
+        << std::endl
+        << "     or: eat add ."
         << std::endl
         << std::endl
-        << "*** reflect cmd adds all files and saves them ***"
-        << std::endl
-        << "*** then, you will be able to write commit message ***"
+        << "*** add cmd add files or dirs to repos ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
         << std::endl
         << std::endl;
     }
-        
+    
 };
 
-        
-#endif /* reflect_help_h */
+
+#endif /* add_help_hpp */

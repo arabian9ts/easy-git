@@ -1,13 +1,13 @@
 //
-//  Header.h
+//  help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/23.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef help_h
-#define help_h
+#ifndef help_hpp
+#define help_hpp
 
 class Help {
 
@@ -34,4 +34,4 @@ public:
 
 };
 
-#endif /* help_h */
+#endif /* help_hpp */

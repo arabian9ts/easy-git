@@ -1,36 +1,35 @@
 //
-//  reset_help.h
+//  branch_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef reset_help_h
-#define reset_help_h
+#ifndef branch_help_hpp
+#define branch_help_hpp
 
 
-class _Reset : public Help {
+class _Branch : public Help {
     
 public:
     
-    _Reset(){}
+    _Branch(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "-------------- reset help --------------"
+        << "------------- branch help --------------"
         << std::endl
         << std::endl
-        << "Formula: eat reset"
+        << "Formula: eat branch <branch_name>"
         << std::endl
-        << "     or: eat reset <N: Integer>"
-        << std::endl
-        << std::endl
-        << "*** reset cmd resets workspace status based on specified version ***"
+        << "     or: eat branch"
         << std::endl
         << std::endl
-        << "*** N is 0 in default. you can go back to N vers ago. ***"
+        << "*** branch cmd makes new working branch ***"
+        << std::endl
+        << "*** if no args, list-up existing working branches ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
@@ -41,4 +40,4 @@ public:
 };
 
 
-#endif /* reset_help_h */
+#endif /* branch_help_hpp */

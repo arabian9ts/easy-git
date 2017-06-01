@@ -9,7 +9,7 @@
 #ifndef util_hpp
 #define util_hpp
 
-#include "log.h"
+#include "log.hpp"
 #include "sha1.hpp"
 #include <dirent.h>
 

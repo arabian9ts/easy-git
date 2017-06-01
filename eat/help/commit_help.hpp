@@ -1,39 +1,41 @@
 //
-//  merge_help.h
+//  commit_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef merge_help_h
-#define merge_help_h
+#ifndef commit_help_hpp
+#define commit_help_hpp
 
 
-class _Merge : public Help {
+class _Commit : public Help {
     
 public:
     
-    _Merge(){}
+    _Commit(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "-------------- merge help --------------"
+        << "------------- commit help --------------"
         << std::endl
         << std::endl
-        << "Formula: eat merge <branch_name>"
+        << "Formula: eat commit"
         << std::endl
         << std::endl
-        << "*** merge cmd merges branches from specific to base_branch(now) ***"
+        << "*** commit cmd saves project tree structure ***"
+        << std::endl
+        << "*** then, you will be able to write commit message ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
         << std::endl
         << std::endl;
     }
-        
+    
 };
 
         
-#endif /* merge_help_h */
+#endif /* commit_help_hpp */

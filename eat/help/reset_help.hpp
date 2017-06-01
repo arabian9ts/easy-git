@@ -1,41 +1,44 @@
 //
-//  commit_help.h
+//  reset_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef commit_help_h
-#define commit_help_h
+#ifndef reset_help_hpp
+#define reset_help_hpp
 
 
-class _Commit : public Help {
+class _Reset : public Help {
     
 public:
     
-    _Commit(){}
+    _Reset(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "------------- commit help --------------"
+        << "-------------- reset help --------------"
         << std::endl
         << std::endl
-        << "Formula: eat commit"
+        << "Formula: eat reset"
+        << std::endl
+        << "     or: eat reset <N: Integer>"
         << std::endl
         << std::endl
-        << "*** commit cmd saves project tree structure ***"
+        << "*** reset cmd resets workspace status based on specified version ***"
         << std::endl
-        << "*** then, you will be able to write commit message ***"
+        << std::endl
+        << "*** N is 0 in default. you can go back to N vers ago. ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
         << std::endl
         << std::endl;
     }
-    
+        
 };
 
-        
-#endif /* commit_help_h */
+
+#endif /* reset_help_hpp */

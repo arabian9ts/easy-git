@@ -1,35 +1,33 @@
 //
-//  branch_help.h
+//  reflect_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef branch_help_h
-#define branch_help_h
+#ifndef reflect_help_hpp
+#define reflect_help_hpp
 
 
-class _Branch : public Help {
+class _Reflect : public Help {
     
 public:
     
-    _Branch(){}
+    _Reflect(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "------------- branch help --------------"
+        << "------------- reflect help -------------"
         << std::endl
         << std::endl
-        << "Formula: eat branch <branch_name>"
-        << std::endl
-        << "     or: eat branch"
+        << "Formula: eat reflect"
         << std::endl
         << std::endl
-        << "*** branch cmd makes new working branch ***"
+        << "*** reflect cmd adds all files and saves them ***"
         << std::endl
-        << "*** if no args, list-up existing working branches ***"
+        << "*** then, you will be able to write commit message ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
@@ -39,5 +37,5 @@ public:
         
 };
 
-
-#endif /* branch_help_h */
+        
+#endif /* reflect_help_hpp */

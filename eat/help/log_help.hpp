@@ -1,42 +1,41 @@
 //
-//  add_help.h
+//  log_help.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/27.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef add_help_h
-#define add_help_h
-#include "help.h"
+#ifndef log_help_hpp
+#define log_help_hpp
 
 
-class _Add : public Help {
+class _Log : public Help {
     
 public:
     
-    _Add(){}
+    _Log(){}
     
     void description() override {
         std::cout
         << std::endl
-        << "--------------- add help ---------------"
+        << "--------------- log help ---------------"
         << std::endl
         << std::endl
-        << "Formula: eat add <file names ...>"
+        << "Formula: eat log"
         << std::endl
-        << "     or: eat add ."
+        << "     or: eat log <N: Integer>"
         << std::endl
         << std::endl
-        << "*** add cmd add files or dirs to repos ***"
+        << "*** log cmd displays commit logs ***"
         << std::endl
         << std::endl
         << "----------------------------------------"
         << std::endl
         << std::endl;
     }
-    
+        
 };
 
-
-#endif /* add_help_h */
+        
+#endif /* log_help_hpp */

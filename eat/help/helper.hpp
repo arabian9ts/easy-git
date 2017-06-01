@@ -1,25 +1,25 @@
 //
-//  helper.h
+//  helper.hpp
 //  easy-git
 //
 //  Created by arabian9ts on 2017/05/28.
 //  Copyright © 2017年 arabian9ts. All rights reserved.
 //
 
-#ifndef helper_h
-#define helper_h
+#ifndef helper_hpp
+#define helper_hpp
 
-#include "init_help.h"
-#include "add_help.h"
-#include "commit_help.h"
-#include "reset_help.h"
-#include "log_help.h"
-#include "merge_help.h"
-#include "branch_help.h"
-#include "checkout_help.h"
-#include "merge_help.h"
-#include "reflect_help.h"
-#include "help_help.h"
+#include "init_help.hpp"
+#include "add_help.hpp"
+#include "commit_help.hpp"
+#include "reset_help.hpp"
+#include "log_help.hpp"
+#include "merge_help.hpp"
+#include "branch_help.hpp"
+#include "checkout_help.hpp"
+#include "merge_help.hpp"
+#include "reflect_help.hpp"
+#include "help_help.hpp"
 
 class Helper {
     
@@ -65,4 +65,4 @@ public:
     
 };
 
-#endif /* helper_h */
+#endif /* helper_hpp */
