@@ -11,6 +11,7 @@
 #define object_hpp
 
 #include "util.hpp"
+#include "compress.hpp"
 
 
 
