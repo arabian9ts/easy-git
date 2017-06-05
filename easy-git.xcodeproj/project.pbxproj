@@ -14,6 +14,7 @@
 		FF3E29091EA6798000F222A1 /* generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3E29071EA6798000F222A1 /* generator.cpp */; };
 		FF43FAB61EA3291600C99430 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF43FAB41EA3291600C99430 /* util.cpp */; };
 		FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB082291EBEF09100EC2F1B /* readerTest.cpp */; };
+		FFD6C6A51EE4ED6300E9D838 /* compress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD6C6A31EE4ED6300E9D838 /* compress.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,8 @@
 		FFB082291EBEF09100EC2F1B /* readerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readerTest.cpp; path = test/readerTest.cpp; sourceTree = "<group>"; };
 		FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = readerTest.hpp; path = test/readerTest.hpp; sourceTree = "<group>"; };
 		FFBB11F21ED415960077EDE9 /* help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = help.hpp; path = help/help.hpp; sourceTree = "<group>"; };
+		FFD6C6A31EE4ED6300E9D838 /* compress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress.cpp; sourceTree = "<group>"; };
+		FFD6C6A41EE4ED6300E9D838 /* compress.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = compress.hpp; sourceTree = "<group>"; };
 		FFEA645F1ED9CA5D00004817 /* add_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = add_help.hpp; path = help/add_help.hpp; sourceTree = "<group>"; };
 		FFEA64601ED9CA6A00004817 /* init_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = init_help.hpp; path = help/init_help.hpp; sourceTree = "<group>"; };
 		FFEA64611ED9CA7200004817 /* commit_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = commit_help.hpp; path = help/commit_help.hpp; sourceTree = "<group>"; };
@@ -112,6 +115,8 @@
 				FF3E29071EA6798000F222A1 /* generator.cpp */,
 				FF3E29081EA6798000F222A1 /* generator.hpp */,
 				FFA2156A1ED2868300C3946D /* log.hpp */,
+				FFD6C6A31EE4ED6300E9D838 /* compress.cpp */,
+				FFD6C6A41EE4ED6300E9D838 /* compress.hpp */,
 				FF0EB58D1EA2BDC00086BA6C /* test */,
 			);
 			path = eat;
@@ -194,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF2CCFC91E9904B300779690 /* object.cpp in Sources */,
+				FFD6C6A51EE4ED6300E9D838 /* compress.cpp in Sources */,
 				FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */,
 				FF2CCFC81E9904B300779690 /* main.cpp in Sources */,
 				FF0EB5901EA2BE630086BA6C /* sha1Test.cpp in Sources */,
