@@ -11,13 +11,17 @@
 
 #include <stdio.h>
 #include <string>
+#include <sstream>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/copy.hpp>
 
 namespace cmp {
     
-    /** 圧縮する文字列を指定したファイル名に圧縮 */
-    void compress(std::string tar, std::string named);
+    /** 渡した文字列を圧縮して返却 */
+    std::string compress(std::string tar);
     
-    /** 指定したファイル名のファイルを解答して、元の文字列を返却する */
+    /** 渡した文字列を解凍して返却する */
     std::string decompress(std::string named);
     
 }

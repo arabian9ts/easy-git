@@ -8,14 +8,24 @@
 
 #include "compress.hpp"
 
+
 /**
- * 圧縮する文字列を指定したファイル名に圧縮
+ * 渡した文字列を圧縮して返却
  * @param tar : 圧縮する文字列
- * @param named : 圧縮先のファイル名
+ * @return : 圧縮した文字列
  */
-void cmp::compress(std::string tar, std::string named){
+std::string cmp::compress(std::string tar){
+    std::stringstream compressed;
+    std::stringstream original;
+    original << tar;
+    boost::iostreams::filtering_streambuf<boost::iostreams::input> out;
+    out.push(boost::iostreams::zlib_compressor());
+    out.push(original);
+    boost::iostreams::copy(out, compressed);
     
+    return compressed.str();
 }
+
 
 /**
  * 指定したファイル名のファイルを解答して、元の文字列を返却する
