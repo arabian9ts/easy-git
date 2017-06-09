@@ -9,6 +9,11 @@
 #ifndef compressTest_hpp
 #define compressTest_hpp
 
-#include <stdio.h>
+#include "eat.hpp"
+#include "compress.hpp"
+
+
+void compressTest();
+
 
 #endif /* compressTest_hpp */

@@ -7,3 +7,10 @@
 //
 
 #include "compressTest.hpp"
+
+
+void compressTest(){
+    std::string comped;
+    comped = cmp::compress("aiueo");
+    std::cout << comped << std::endl;
+}

@@ -7,9 +7,15 @@
 //
 
 #include "generator.hpp"
-#include "readerTest.hpp"
 #include "help/helper.hpp"
 
+/*-------------------- test headers --------------------*/
+
+#include "sha1Test.hpp"
+#include "readerTest.hpp"
+#include "compressTest.hpp"
+
+/*------------------ end test headers ------------------*/
 
 Object* root = NULL;
 
@@ -389,8 +395,9 @@ int main(int argc, const char *argv[]) {
         std::cout << "ERROR : not eat command !  check formulae by using: eat help" << std::endl;
     }
     
-//    sha1Test();
-//    readerTest();
+    sha1Test();
+    readerTest();
+    compressTest();
     
     if(root != NULL)
         delete root;
