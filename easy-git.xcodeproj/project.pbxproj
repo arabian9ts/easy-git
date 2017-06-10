@@ -312,8 +312,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
-				HEADER_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.63.0/include\"";
-				LIBRARY_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.63.0/lib\"";
+				HEADER_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/include\"";
+				LIBRARY_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/lib\"";
 				OTHER_LDFLAGS = "-lboost_system-mt";
 				PRODUCT_NAME = eat;
 			};
@@ -324,8 +324,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
-				HEADER_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.63.0/include\"";
-				LIBRARY_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.63.0/lib\"";
+				HEADER_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/include\"";
+				LIBRARY_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/lib\"";
 				OTHER_LDFLAGS = "-lboost_system-mt";
 				PRODUCT_NAME = eat;
 			};
