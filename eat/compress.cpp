@@ -10,14 +10,14 @@
 
 
 /**
- * 渡した文字列を圧縮して返却
- * @param tar : 圧縮する文字列
+ * 渡した文字列をzlib圧縮して返却
+ * @param decomped : 圧縮する文字列
  * @return : 圧縮した文字列
  */
-std::string cmp::compress(std::string tar){
+std::string cmp::compress(std::string decomped){
     std::stringstream compressed;
     std::stringstream original;
-    original << tar;
+    original << decomped;
     boost::iostreams::filtering_streambuf<boost::iostreams::input> out;
     out.push(boost::iostreams::zlib_compressor());
     out.push(original);
@@ -28,14 +28,14 @@ std::string cmp::compress(std::string tar){
 
 
 /**
- * 指定したファイル名のファイルを解答して、元の文字列を返却する
- * @param named : 解答するファイル名
+ * zlib圧縮された文字列を解凍し、元の文字列を返却する
+ * @param comped : 解凍する文字列
  * @return : 解答した文字列
  */
-std::string cmp::decompress(std::string named){
+std::string cmp::decompress(std::string comped){
     std::stringstream compressed;
     std::stringstream decompressed;
-    compressed << named;
+    compressed << comped;
     boost::iostreams::filtering_streambuf<boost::iostreams::input> out;
     out.push(boost::iostreams::zlib_decompressor());
     out.push(compressed);

@@ -11,7 +11,9 @@
 /**
  * sha1ハッシュのテスト
  */
-int sha1Test(){
+void sha1Test(){
+    std::cout << "\n---------- SHA1 TEST ----------" << std::endl;
+    
     std::string testArray[] = {"abc","1243err33",":;ads"};
     std::string expected[] = {"a9993e364706816aba3e25717850c26c9cd0d89d",
         "4db093b7f24779a6c06d98f1e2a88ab66817b968",
@@ -26,8 +28,10 @@ int sha1Test(){
             std::cout << "OK : " << testArray[i] << " -> " << result << std::endl;
         }
         else{
-            std::cout << "ERROR : \n" << result << " should be -> " << std::endl << expected[i] << std::endl;
+            std::cerr << "ERROR : \n" << result << " should be -> " << std::endl << expected[i] << std::endl;
         }
     }
-    return 0;
+    
+    std::cout << "---------- SHA1 TEST END ----------\n" << std::endl;
+    
 }

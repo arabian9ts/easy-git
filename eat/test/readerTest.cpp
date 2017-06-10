@@ -11,7 +11,9 @@
 /**
  * read()関数のテスト
  */
-int readerTest(){
+void readerTest(){
+    std::cout << "\n---------- READER TEST ----------" << std::endl;
+    
     std::string data1 = util::read("read1", "", 0);
     std::string data2 = util::read("read1", "", 1);
     
@@ -21,12 +23,12 @@ int readerTest(){
     data1 = util::read("read2", "", 1);
     
     if(data1 != data2){
-        std::cout << "skip test ERROR" << std::endl;
-        return 1;
+        std::cerr << "skip test ERROR" << std::endl;
     }
     else{
         std::cout << "skip test passed OK" << std::endl;
     }
     
-    return 0;
+    std::cout << "---------- READER TEST END ----------\n" << std::endl;
+    
 }

@@ -13,6 +13,6 @@
 #include "util.hpp"
 
 /**　read()関数のテスト　*/
-int readerTest();
+void readerTest();
 
 #endif /* readerTest_hpp */

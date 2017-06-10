@@ -13,6 +13,6 @@
 #include "sha1.hpp"
 
 /**　sha1ハッシュのテスト　*/
-int sha1Test();
+void sha1Test();
 
 #endif /* sha1Test_hpp */
