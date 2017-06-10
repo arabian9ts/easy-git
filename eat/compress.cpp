@@ -33,5 +33,13 @@ std::string cmp::compress(std::string tar){
  * @return : 解答した文字列
  */
 std::string cmp::decompress(std::string named){
-    return "";
+    std::stringstream compressed;
+    std::stringstream decompressed;
+    compressed << named;
+    boost::iostreams::filtering_streambuf<boost::iostreams::input> out;
+    out.push(boost::iostreams::zlib_decompressor());
+    out.push(compressed);
+    boost::iostreams::copy(out, decompressed);
+    
+    return decompressed.str();
 }

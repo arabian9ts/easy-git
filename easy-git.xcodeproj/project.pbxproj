@@ -16,6 +16,7 @@
 		FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB082291EBEF09100EC2F1B /* readerTest.cpp */; };
 		FFD6C6A51EE4ED6300E9D838 /* compress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD6C6A31EE4ED6300E9D838 /* compress.cpp */; };
 		FFD6C6A81EE4F98500E9D838 /* compressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD6C6A61EE4F98500E9D838 /* compressTest.cpp */; };
+		FFE1F17F1EEC7AB000D4333C /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE1F17E1EEC7AB000D4333C /* libboost_iostreams-mt.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +53,7 @@
 		FFD6C6A41EE4ED6300E9D838 /* compress.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = compress.hpp; sourceTree = "<group>"; };
 		FFD6C6A61EE4F98500E9D838 /* compressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = compressTest.cpp; path = test/compressTest.cpp; sourceTree = "<group>"; };
 		FFD6C6A71EE4F98500E9D838 /* compressTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = compressTest.hpp; path = test/compressTest.hpp; sourceTree = "<group>"; };
+		FFE1F17E1EEC7AB000D4333C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../usr/local/Cellar/boost/1.64.0_1/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		FFEA645F1ED9CA5D00004817 /* add_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = add_help.hpp; path = help/add_help.hpp; sourceTree = "<group>"; };
 		FFEA64601ED9CA6A00004817 /* init_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = init_help.hpp; path = help/init_help.hpp; sourceTree = "<group>"; };
 		FFEA64611ED9CA7200004817 /* commit_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = commit_help.hpp; path = help/commit_help.hpp; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE1F17F1EEC7AB000D4333C /* libboost_iostreams-mt.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +97,7 @@
 			children = (
 				FF2CCFBA1E99047B00779690 /* eat */,
 				FF2CCFB91E99047B00779690 /* Products */,
+				FFE1F17D1EEC7AB000D4333C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,6 +148,14 @@
 				FFEA64691EDA050600004817 /* helper.hpp */,
 			);
 			name = help;
+			sourceTree = "<group>";
+		};
+		FFE1F17D1EEC7AB000D4333C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FFE1F17E1EEC7AB000D4333C /* libboost_iostreams-mt.dylib */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,11 +323,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
-				HEADER_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/include\"";
-				LIBRARY_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/lib\"";
+				HEADER_SEARCH_PATHS = "/usr/local/opt/boost/include\n";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/opt/boost/lib,
+					/usr/local/Cellar/boost/1.64.0_1/lib,
+				);
 				OTHER_LDFLAGS = "-lboost_system-mt";
 				PRODUCT_NAME = eat;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -323,11 +340,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
-				HEADER_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/include\"";
-				LIBRARY_SEARCH_PATHS = "\"/usr/local/Cellar/boost/1.64.0_1/lib\"";
+				HEADER_SEARCH_PATHS = "/usr/local/opt/boost/include\n";
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/opt/boost/lib,
+					/usr/local/Cellar/boost/1.64.0_1/lib,
+				);
 				OTHER_LDFLAGS = "-lboost_system-mt";
 				PRODUCT_NAME = eat;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

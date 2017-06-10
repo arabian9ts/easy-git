@@ -10,7 +10,25 @@
 
 
 void compressTest(){
+    std::cout << "---------- COMPRESS TEST ----------" << std::endl;
+    
+    std::string orig = "aiueo";
     std::string comped;
-    comped = cmp::compress("aiueo");
+    std::string decomped;
+    
+    comped = cmp::compress(orig);
     std::cout << comped << std::endl;
+    
+    decomped = cmp::decompress(comped);
+    std::cout << decomped << std::endl;
+    
+    if(decomped == orig){
+        std::cout << "OK: compress test passed" << std::endl;
+    }
+    else{
+        std::cerr << "ERROR: compress failed" << std::endl;
+    }
+    
+    std::cout << "---------- COMPRESS TEST END ----------" << std::endl;
+    
 }
