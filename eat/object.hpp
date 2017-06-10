@@ -76,7 +76,7 @@ public:
     void restore();
     
     /** 指定したファイルを指定した場所にコピーする */
-    void copy_obj(std::string from, std::string to);
+    void copy_obj(std::string from, std::string to, int compress = 0);
     
     /** オブジェクトファイルを書き出す */
     void make_copy_objects();

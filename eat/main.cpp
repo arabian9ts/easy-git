@@ -395,9 +395,9 @@ int main(int argc, const char *argv[]) {
         std::cout << "ERROR : not eat command !  check formulae by using: eat help" << std::endl;
     }
     
-    sha1Test();
-    readerTest();
-    compressTest();
+//    sha1Test();
+//    readerTest();
+//    compressTest();
     
     if(root != NULL)
         delete root;

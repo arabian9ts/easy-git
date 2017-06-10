@@ -133,7 +133,7 @@ void Object::dump(){
 void Object::restore(){
     
     if("blob" == getType())
-        copy_obj(".eat/objects/"+getHash(), getPath());
+        copy_obj(".eat/objects/"+getHash(), getPath(), -1);
     else if("tree" == getType())
         mkdir(getPath().c_str(), 0755);
     
@@ -149,7 +149,7 @@ void Object::restore(){
  */
 void Object::make_copy_objects(){
     if(type == blob)
-        copy_obj(getPath(), ".eat/objects/"+getHash());
+        copy_obj(getPath(), ".eat/objects/"+getHash(), 1);
     if(child != NULL)
         child -> make_copy_objects();
     if(next != NULL)
@@ -160,8 +160,9 @@ void Object::make_copy_objects(){
  * ファイルを.eat/objectsにコピー
  * @param from : ファイルのコピー元
  * @param to : ファイルのコピー先
+ * @param compress : 圧縮フラグ
  */
-void Object::copy_obj(std::string from, std::string to){
+void Object::copy_obj(std::string from, std::string to, int compress){
     struct stat st;
     std::ifstream ifs(from);
     if(!ifs){
@@ -174,7 +175,16 @@ void Object::copy_obj(std::string from, std::string to){
         return;
     }
     std::cout << "copy " << from << " to " << to <<std::endl;
-    ofs << ifs.rdbuf() << std::flush;
+    
+    std::ostringstream oss;
+    oss << ifs.rdbuf();
+    std::string targ = oss.str();
+    if(1 == compress)
+        ofs << cmp::compress(targ) << std::flush;
+    else if(-1 == compress)
+        ofs << cmp::decompress(targ) << std::flush;
+    else
+        ofs << targ << std::flush;
     
     ifs.close();
     ofs.close();

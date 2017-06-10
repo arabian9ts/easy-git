@@ -19,10 +19,10 @@
 namespace cmp {
     
     /** 渡した文字列を圧縮して返却 */
-    std::string compress(std::string tar);
+    std::string compress(std::string decomped);
     
     /** 渡した文字列を解凍して返却する */
-    std::string decompress(std::string named);
+    std::string decompress(std::string comped);
     
 }
 
