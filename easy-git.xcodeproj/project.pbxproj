@@ -7,15 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FF0EB5901EA2BE630086BA6C /* sha1Test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF0EB58E1EA2BE630086BA6C /* sha1Test.cpp */; };
 		FF2CCFC81E9904B300779690 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2CCFC31E9904B300779690 /* main.cpp */; };
 		FF2CCFC91E9904B300779690 /* object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2CCFC41E9904B300779690 /* object.cpp */; };
 		FF2CCFCA1E9904B300779690 /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF2CCFC61E9904B300779690 /* sha1.cpp */; };
 		FF3E29091EA6798000F222A1 /* generator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF3E29071EA6798000F222A1 /* generator.cpp */; };
 		FF43FAB61EA3291600C99430 /* util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FF43FAB41EA3291600C99430 /* util.cpp */; };
-		FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFB082291EBEF09100EC2F1B /* readerTest.cpp */; };
 		FFD6C6A51EE4ED6300E9D838 /* compress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD6C6A31EE4ED6300E9D838 /* compress.cpp */; };
-		FFD6C6A81EE4F98500E9D838 /* compressTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FFD6C6A61EE4F98500E9D838 /* compressTest.cpp */; };
 		FFE1F17F1EEC7AB000D4333C /* libboost_iostreams-mt.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE1F17E1EEC7AB000D4333C /* libboost_iostreams-mt.dylib */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +29,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FF0EB58E1EA2BE630086BA6C /* sha1Test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha1Test.cpp; path = test/sha1Test.cpp; sourceTree = "<group>"; };
 		FF0EB58F1EA2BE630086BA6C /* sha1Test.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = sha1Test.hpp; path = test/sha1Test.hpp; sourceTree = "<group>"; };
 		FF2CCFB81E99047B00779690 /* eat */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = eat; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF2CCFC21E9904B300779690 /* eat.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = eat.hpp; sourceTree = "<group>"; };
@@ -46,12 +42,10 @@
 		FF43FAB41EA3291600C99430 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = util.cpp; sourceTree = "<group>"; };
 		FF43FAB51EA3291600C99430 /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
 		FFA2156A1ED2868300C3946D /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = log.hpp; sourceTree = "<group>"; };
-		FFB082291EBEF09100EC2F1B /* readerTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = readerTest.cpp; path = test/readerTest.cpp; sourceTree = "<group>"; };
 		FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = readerTest.hpp; path = test/readerTest.hpp; sourceTree = "<group>"; };
 		FFBB11F21ED415960077EDE9 /* help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = help.hpp; path = help/help.hpp; sourceTree = "<group>"; };
 		FFD6C6A31EE4ED6300E9D838 /* compress.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compress.cpp; sourceTree = "<group>"; };
 		FFD6C6A41EE4ED6300E9D838 /* compress.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = compress.hpp; sourceTree = "<group>"; };
-		FFD6C6A61EE4F98500E9D838 /* compressTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = compressTest.cpp; path = test/compressTest.cpp; sourceTree = "<group>"; };
 		FFD6C6A71EE4F98500E9D838 /* compressTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = compressTest.hpp; path = test/compressTest.hpp; sourceTree = "<group>"; };
 		FFE1F17E1EEC7AB000D4333C /* libboost_iostreams-mt.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libboost_iostreams-mt.dylib"; path = "../../../usr/local/Cellar/boost/1.64.0_1/lib/libboost_iostreams-mt.dylib"; sourceTree = "<group>"; };
 		FFEA645F1ED9CA5D00004817 /* add_help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = add_help.hpp; path = help/add_help.hpp; sourceTree = "<group>"; };
@@ -82,11 +76,8 @@
 		FF0EB58D1EA2BDC00086BA6C /* test */ = {
 			isa = PBXGroup;
 			children = (
-				FF0EB58E1EA2BE630086BA6C /* sha1Test.cpp */,
 				FF0EB58F1EA2BE630086BA6C /* sha1Test.hpp */,
-				FFB082291EBEF09100EC2F1B /* readerTest.cpp */,
 				FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */,
-				FFD6C6A61EE4F98500E9D838 /* compressTest.cpp */,
 				FFD6C6A71EE4F98500E9D838 /* compressTest.hpp */,
 			);
 			name = test;
@@ -217,10 +208,7 @@
 			files = (
 				FF2CCFC91E9904B300779690 /* object.cpp in Sources */,
 				FFD6C6A51EE4ED6300E9D838 /* compress.cpp in Sources */,
-				FFB0822B1EBEF09100EC2F1B /* readerTest.cpp in Sources */,
 				FF2CCFC81E9904B300779690 /* main.cpp in Sources */,
-				FF0EB5901EA2BE630086BA6C /* sha1Test.cpp in Sources */,
-				FFD6C6A81EE4F98500E9D838 /* compressTest.cpp in Sources */,
 				FF43FAB61EA3291600C99430 /* util.cpp in Sources */,
 				FF2CCFCA1E9904B300779690 /* sha1.cpp in Sources */,
 				FF3E29091EA6798000F222A1 /* generator.cpp in Sources */,

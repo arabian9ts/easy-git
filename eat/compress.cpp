@@ -30,7 +30,7 @@ std::string cmp::compress(std::string decomped){
 /**
  * zlib圧縮された文字列を解凍し、元の文字列を返却する
  * @param comped : 解凍する文字列
- * @return : 解答した文字列
+ * @return : 解凍した文字列
  */
 std::string cmp::decompress(std::string comped){
     std::stringstream compressed;

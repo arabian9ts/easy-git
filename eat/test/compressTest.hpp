@@ -12,8 +12,34 @@
 #include "eat.hpp"
 #include "compress.hpp"
 
-
-void compressTest();
+/**
+ * zlib圧縮のテスト
+ */
+void compressTest(){
+    std::cout << "\n---------- COMPRESS TEST ----------" << std::endl;
+    
+    std::string orig = "aiueo";
+    std::string comped;
+    std::string decomped;
+    
+    std::cout << "original string: " << orig << std::endl;
+    
+    comped = cmp::compress(orig);
+    std::cout << "compressed string: " << comped << std::endl;
+    
+    decomped = cmp::decompress(comped);
+    std::cout << "decompressed string: " << decomped << std::endl;
+    
+    if(decomped == orig){
+        std::cout << "OK: compress test passed" << std::endl;
+    }
+    else{
+        std::cerr << "ERROR: compress failed" << std::endl;
+    }
+    
+    std::cout << "---------- COMPRESS TEST END ----------\n" << std::endl;
+    
+}
 
 
 #endif /* compressTest_hpp */
