@@ -41,6 +41,7 @@
 		FF3E29081EA6798000F222A1 /* generator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = generator.hpp; sourceTree = "<group>"; };
 		FF43FAB41EA3291600C99430 /* util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = util.cpp; sourceTree = "<group>"; };
 		FF43FAB51EA3291600C99430 /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
+		FF71542B1EEE2B1E0068BF21 /* color.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = color.hpp; sourceTree = "<group>"; };
 		FFA2156A1ED2868300C3946D /* log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = log.hpp; sourceTree = "<group>"; };
 		FFB0822A1EBEF09100EC2F1B /* readerTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = readerTest.hpp; path = test/readerTest.hpp; sourceTree = "<group>"; };
 		FFBB11F21ED415960077EDE9 /* help.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = help.hpp; path = help/help.hpp; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 				FFD6C6A31EE4ED6300E9D838 /* compress.cpp */,
 				FFD6C6A41EE4ED6300E9D838 /* compress.hpp */,
 				FF0EB58D1EA2BDC00086BA6C /* test */,
+				FF71542B1EEE2B1E0068BF21 /* color.hpp */,
 			);
 			path = eat;
 			sourceTree = "<group>";
