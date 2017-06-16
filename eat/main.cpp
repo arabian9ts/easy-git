@@ -8,6 +8,7 @@
 
 #include "generator.hpp"
 #include "help/helper.hpp"
+#include "color.hpp"
 
 /*-------------------- test headers --------------------*/
 
@@ -395,9 +396,11 @@ int main(int argc, const char *argv[]) {
         std::cout << "ERROR : not eat command !  check formulae by using: eat help" << std::endl;
     }
     
-    sha1Test();
-    readerTest();
-    compressTest();
+//    sha1Test();
+//    readerTest();
+//    compressTest();
+    
+    Clout(Color::pallet::blue) << "color test" << std::endl;
     
     if(root != NULL)
         delete root;

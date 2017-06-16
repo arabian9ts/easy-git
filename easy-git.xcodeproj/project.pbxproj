@@ -118,8 +118,8 @@
 				FFA2156A1ED2868300C3946D /* log.hpp */,
 				FFD6C6A31EE4ED6300E9D838 /* compress.cpp */,
 				FFD6C6A41EE4ED6300E9D838 /* compress.hpp */,
-				FF0EB58D1EA2BDC00086BA6C /* test */,
 				FF71542B1EEE2B1E0068BF21 /* color.hpp */,
+				FF0EB58D1EA2BDC00086BA6C /* test */,
 			);
 			path = eat;
 			sourceTree = "<group>";
