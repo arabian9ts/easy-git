@@ -45,9 +45,9 @@ public:
     }
     
     virtual int_type overflow(int_type ich) {
-        char ch[1];
+        char ch[2];
         ch[0] = (char)ich;
-//        ch[1] = '\0';
+        ch[1] = '\0';
         
         printf(color);
         printf("%s", ch);

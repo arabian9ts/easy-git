@@ -400,7 +400,7 @@ int main(int argc, const char *argv[]) {
 //    readerTest();
 //    compressTest();
     
-    Clout(Color::pallet::blue) << "color test" << std::endl;
+//    Clout(Color::pallet::blue) << "color test" << std::endl;
     
     if(root != NULL)
         delete root;

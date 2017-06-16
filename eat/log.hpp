@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "eat.hpp"
+#include "color.hpp"
 
 struct Log{
     
@@ -34,9 +35,11 @@ public:
     
     /** コミット履歴表示 */
     void dump(){
-        std::cout << "commit : " << hash << std::endl
-        << "date : " << date << std::endl
-        << "\n    message : " << message
+        Clout(Color::pallet::yellow)
+        << "commit: " << hash << std::endl;
+        std::cout
+        << "  date: " << date << std::endl
+        << "\n    message: " << message
         << std::endl
         << std::endl;
     }
