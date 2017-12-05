@@ -216,9 +216,14 @@ void log(int count = 5){
  */
 void reset(int version = 0){
     std::vector<std::string> rmlist = util::split(util::read(".eat/index", "\n", 1),  '\n');
+    
+    if(rmlist.size() == 0) {
+        return;
+    }
+    
     for(int i = 0; i < rmlist.size(); i++){
         rmlist[i] = util::split(rmlist[i], ' ')[0];
-        std::cout << "delete " << rmlist[i] << std::endl;
+//        std::cout << "delete " << rmlist[i] << std::endl;
     }
     util::rmfiles(rmlist);
     
@@ -228,11 +233,11 @@ void reset(int version = 0){
         version = commits.size()-1;
     
     std::string commithash = commits[version];
-    std::cout << commithash << std::endl;
+//    std::cout << commithash << std::endl;
     
     root = new Object(Object::Type::commit,"","");
     gen::commit2tree(root, commithash);
-    std::cout << "-------------------------" << std::endl;
+//    std::cout << "-------------------------" << std::endl;
     root -> dump();
     root -> restore();
     write_index(root -> index_path_set());
