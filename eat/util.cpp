@@ -212,7 +212,7 @@ void util::rmfiles(std::vector<std::string> filelist){
     for (auto file : filelist){
         if(isFile(file)){
             std::remove(file.c_str());
-            std::cout << count << " rm " << file << std::endl;
+//            std::cout << count << " rm " << file << std::endl;
             count++;
         }
     }

@@ -217,7 +217,7 @@ void log(int count = 5){
 void reset(int version = 0){
     std::vector<std::string> rmlist = util::split(util::read(".eat/index", "\n", 1),  '\n');
     
-    if(rmlist.size() == 0) {
+    if(rmlist.size() <= 0) {
         return;
     }
     
@@ -232,13 +232,17 @@ void reset(int version = 0){
     if(version > commits.size()-1)
         version = commits.size()-1;
     
+    if(commits.size() <= version) {
+        return;
+    }
+    
     std::string commithash = commits[version];
 //    std::cout << commithash << std::endl;
     
     root = new Object(Object::Type::commit,"","");
     gen::commit2tree(root, commithash);
 //    std::cout << "-------------------------" << std::endl;
-    root -> dump();
+//    root -> dump();
     root -> restore();
     write_index(root -> index_path_set());
 }
