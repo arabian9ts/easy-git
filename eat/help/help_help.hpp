@@ -33,7 +33,7 @@ public:
         << "            checkout \n"
         << "            help     \n"
         << std::endl
-        << "Formula: eat <command>"
+        << "Formula: eat help <command>"
         << std::endl
         << std::endl
         << "----------------------------------------"

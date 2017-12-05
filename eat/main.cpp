@@ -141,7 +141,7 @@ void add(int argc, const char *argv[]){
     
     root -> make_copy_objects();
     
-    root -> dump();
+//    root -> dump();
     
 }
 
@@ -321,7 +321,7 @@ int main(int argc, const char *argv[]) {
     
     /* without argument */
     if(1 == argc){
-        printf("Usage: hogehoge\n");
+        printf("Usage: eat help\n");
         return 0;
     }
     /* except for file_name */
@@ -342,7 +342,7 @@ int main(int argc, const char *argv[]) {
     }
     else if(strcmp(subcom, "add") == 0){
         add(argc, ++argv);
-        std::cout << "Warning : this formula is deprecated !" << std::endl;
+//        std::cout << "Warning : this formula is deprecated !" << std::endl;
     }
     else if(strcmp(subcom, "commit") == 0){
         commit(0);

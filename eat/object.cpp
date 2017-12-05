@@ -174,7 +174,7 @@ void Object::copy_obj(std::string from, std::string to, int compress){
         std::cout << "cannot open " << to << std::endl;
         return;
     }
-    std::cout << "copy " << from << " to " << to <<std::endl;
+//    std::cout << "copy " << from << " to " << to <<std::endl;
     
     std::ostringstream oss;
     oss << ifs.rdbuf();
